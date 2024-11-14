@@ -10,12 +10,13 @@
         #interactive {
             position: relative;
             width: 100%;
-            height: 100%;
+            height: 100vh;
+            /* Make interactive area full height for mobile */
         }
         
         canvas,
         video {
-            max-width: 100%;
+            width: 100%;
             height: auto;
         }
     </style>
@@ -48,18 +49,24 @@
             inputStream: {
                 type: "LiveStream",
                 constraints: {
-                    width: 640,
-                    height: 580,
+                    width: {
+                        min: 1280
+                    }, // Increased resolution for better accuracy
+                    height: {
+                        min: 720
+                    },
                     facingMode: "environment"
                 },
                 area: {
-                    top: "20%",
-                    right: "20%",
-                    left: "20%",
-                    bottom: "20%"
+                    top: "0%", // Full height and width for easier scanning
+                    right: "0%",
+                    left: "0%",
+                    bottom: "0%"
                 },
                 target: document.querySelector('#interactive')
             },
+            frequency: 10, // Increased frequency for higher sensitivity
+            locate: true, // Enable barcode locator to help with detection
             decoder: {
                 readers: ["code_128_reader", "ean_reader", "ean_8_reader", "upc_reader"]
             }
@@ -77,7 +84,7 @@
             const barcode = data.codeResult.code;
             document.getElementById("barcode-input").value = barcode; // 自動填入條碼
             console.log("條碼內容：", barcode);
-            Quagga.stop(); // 掃描到條碼後暫停
+            Quagga.stop(); // 暫停掃描
         });
 
         // 查詢條碼
@@ -87,10 +94,8 @@
             const barcodeInfo = savedBarcodes.find(info => info.barcode === searchBarcode);
 
             if (barcodeInfo) {
-                // 彈出條碼的商品資訊
                 alert(`條碼: ${barcodeInfo.barcode}\n商品名稱: ${barcodeInfo.productName}\n第幾排: ${barcodeInfo.row}\n第幾層: ${barcodeInfo.layer}\n位置: ${barcodeInfo.side}`);
 
-                // 將資料載入到表單
                 document.getElementById("product-name").value = barcodeInfo.productName;
                 document.getElementById("row").value = barcodeInfo.row;
                 document.getElementById("layer").value = barcodeInfo.layer;
@@ -155,7 +160,6 @@
                 const li = document.createElement("li");
                 li.textContent = `條碼: ${barcodeInfo.barcode}, 商品名稱: ${barcodeInfo.productName}, 排: ${barcodeInfo.row}, 層: ${barcodeInfo.layer}, 位置: ${barcodeInfo.side}`;
 
-                // 修改按鈕
                 const editBtn = document.createElement("button");
                 editBtn.textContent = "修改";
                 editBtn.onclick = function() {
@@ -163,7 +167,6 @@
                 };
                 li.appendChild(editBtn);
 
-                // 刪除按鈕
                 const deleteBtn = document.createElement("button");
                 deleteBtn.textContent = "刪除";
                 deleteBtn.onclick = function() {
