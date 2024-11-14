@@ -11,7 +11,6 @@
             position: relative;
             width: 100%;
             height: 100vh;
-            /* Make interactive area full height for mobile */
         }
         
         canvas,
@@ -51,22 +50,22 @@
                 constraints: {
                     width: {
                         min: 1280
-                    }, // Increased resolution for better accuracy
+                    },
                     height: {
                         min: 720
                     },
                     facingMode: "environment"
                 },
                 area: {
-                    top: "0%", // Full height and width for easier scanning
+                    top: "0%",
                     right: "0%",
                     left: "0%",
                     bottom: "0%"
                 },
                 target: document.querySelector('#interactive')
             },
-            frequency: 10, // Increased frequency for higher sensitivity
-            locate: true, // Enable barcode locator to help with detection
+            frequency: 10,
+            locate: true,
             decoder: {
                 readers: ["code_128_reader", "ean_reader", "ean_8_reader", "upc_reader"]
             }
@@ -82,9 +81,9 @@
         // 當檢測到條碼時觸發
         Quagga.onDetected(function(data) {
             const barcode = data.codeResult.code;
-            document.getElementById("barcode-input").value = barcode; // 自動填入條碼
+            document.getElementById("barcode-input").value = barcode;
             console.log("條碼內容：", barcode);
-            Quagga.stop(); // 暫停掃描
+            Quagga.stop();
         });
 
         // 查詢條碼
@@ -94,12 +93,11 @@
             const barcodeInfo = savedBarcodes.find(info => info.barcode === searchBarcode);
 
             if (barcodeInfo) {
-                alert(`條碼: ${barcodeInfo.barcode}\n商品名稱: ${barcodeInfo.productName}\n第幾排: ${barcodeInfo.row}\n第幾層: ${barcodeInfo.layer}\n位置: ${barcodeInfo.side}`);
-
                 document.getElementById("product-name").value = barcodeInfo.productName;
                 document.getElementById("row").value = barcodeInfo.row;
                 document.getElementById("layer").value = barcodeInfo.layer;
                 document.getElementById("side").value = barcodeInfo.side;
+                alert(`找到條碼資訊：\n商品名稱: ${barcodeInfo.productName}\n第幾排: ${barcodeInfo.row}\n第幾層: ${barcodeInfo.layer}\n位置: ${barcodeInfo.side}`);
             } else {
                 alert("未找到該條碼資訊。");
             }
