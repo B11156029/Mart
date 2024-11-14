@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>條碼掃描並新增條碼資料</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+</head>
+
+<body>
+    <h2>條碼掃描器</h2>
+    <div id="scanner" style="width: 300px; height: 300px; background-color: #eee;"></div>
+    <button onclick="startScanner()">開始掃描</button>
+    <button onclick="stopScanner()">停止掃描</button>
+
+    <h3>掃描結果</h3>
+    <input type="text" id="barcodeData" placeholder="掃描到的條碼將顯示在此" readonly>
+    <button onclick="addBarcodeData()">新增條碼資料</button>
+
+    <h3>條碼資料庫</h3>
+    <ul id="barcodeList"></ul>
+
+    <script>
+        let lastScannedCode = "";
+
+        function startScanner() {
+            Quagga.init({
+                inputStream: {
+                    type: "LiveStream",
+                    target: document.querySelector('#scanner'),
+                    constraints: {
+                        width: 300,
+                        height: 300,
+                        facingMode: "environment" // 使用後置鏡頭
+                    }
+                },
+                decoder: {
+                    readers: ["code_128_reader", "ean_reader", "ean_8_reader", "code_39_reader", "upc_reader"]
+                },
+                locate: true // 自動定位條碼位置
+            }, function(err) {
+                if (err) {
+                    console.error("Quagga init error:", err);
+                    return;
+                }
+                Quagga.start();
+                console.log("Quagga started successfully.");
+            });
+
+            // 檢查是否成功讀取條碼
+            Quagga.onProcessed(function(result) {
+                if (result) {
+                    if (result.boxes) {
+                        result.boxes.forEach(box => {
+                            console.log("Detected box:", box);
+                        });
+                    }
+                    if (result.codeResult && result.codeResult.code) {
+                        console.log("Code detected:", result.codeResult.code);
+                    } else {
+                        console.log("No code detected in current frame.");
+                    }
+                }
+            });
+
+            // 成功掃描條碼時呼叫
+            Quagga.onDetected(function(data) {
+                const scannedCode = data.codeResult.code;
+                if (scannedCode !== lastScannedCode) {
+                    lastScannedCode = scannedCode;
+                    document.getElementById("barcodeData").value = scannedCode;
+                    addBarcodeData();
+                    console.log("Scanned code:", scannedCode);
+                }
+            });
+        }
+
+        function stopScanner() {
+            Quagga.stop();
+            lastScannedCode = ""; // Reset last scanned code when stopping
+            console.log("Quagga stopped.");
+        }
+
+        function addBarcodeData() {
+            const barcodeData = document.getElementById("barcodeData").value;
+            if (barcodeData) {
+                const listItem = document.createElement("li");
+                listItem.textContent = barcodeData;
+                document.getElementById("barcodeList").appendChild(listItem);
+                document.getElementById("barcodeData").value = "";
+            }
+        }
+    </script>
+</body>
+
+</html>
