@@ -150,7 +150,7 @@
 
         // 查詢條碼
         function searchBarcode() {
-            const keyword = document.getElementById("barcode-input").value;
+            const keyword = document.getElementById("barcode-input").value.trim(); // 確保去掉前後空格
             const savedBarcodes = JSON.parse(localStorage.getItem("savedBarcodes")) || [];
             const results = savedBarcodes.filter(item =>
                 item.barcode.includes(keyword) || item.name.includes(keyword)
@@ -162,7 +162,6 @@
                     `名稱: ${item.name}\n` +
                     `第幾排: ${item.row}\n` +
                     `第幾層: ${item.shelf}\n` +
-                    `左右: ${item.side}\n` +
                     `圖片: ${item.imageURL}\n`
                 ).join("\n\n");
 
@@ -171,6 +170,7 @@
                 alert("查無條碼！");
             }
         }
+
 
         // 初始載入儲存的條碼
         loadSavedBarcodes();
