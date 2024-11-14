@@ -26,15 +26,21 @@
     <div id="interactive" class="viewport"></div>
     <div id="barcode-result">條碼內容：<span id="barcode"></span></div>
 
-    <h2>已儲存條碼</h2>
-    <ul id="saved-barcodes"></ul>
+    <h2>條碼資訊</h2>
+    <input type="text" id="barcode-input" placeholder="輸入條碼或關鍵字">
+    <input type="text" id="name-input" placeholder="名稱">
+    <input type="text" id="row-input" placeholder="第幾排">
+    <input type="text" id="shelf-input" placeholder="第幾層">
+    <input type="text" id="side-input" placeholder="左邊/右邊">
+    <input type="text" id="image-url-input" placeholder="商品圖片網址">
 
     <h3>功能</h3>
-    <input type="text" id="barcode-input" placeholder="輸入條碼或關鍵字">
-    <button onclick="addBarcode()">新增</button>
-    <button onclick="updateBarcode()">修改</button>
+    <button onclick="addOrUpdateBarcode()">新增/修改</button>
     <button onclick="deleteBarcode()">刪除</button>
     <button onclick="searchBarcode()">查詢</button>
+
+    <h2>已儲存條碼</h2>
+    <ul id="saved-barcodes"></ul>
 
     <script>
         // 初始化 Quagga
@@ -80,44 +86,50 @@
             const savedBarcodes = JSON.parse(localStorage.getItem("savedBarcodes")) || [];
             const barcodeList = document.getElementById("saved-barcodes");
             barcodeList.innerHTML = ""; // 清空列表
-            savedBarcodes.forEach(barcode => {
+            savedBarcodes.forEach(item => {
                 const li = document.createElement("li");
-                li.textContent = barcode;
+                li.innerHTML = `
+                    條碼: ${item.barcode} - 名稱: ${item.name} - 位置: ${item.row}排 ${item.shelf}層 ${item.side} <br>
+                    <img src="${item.imageURL}" alt="商品圖片" style="width:50px;height:50px;">
+                `;
                 barcodeList.appendChild(li);
             });
         }
 
-        // 新增條碼
-        function addBarcode() {
+        // 新增或修改條碼
+        function addOrUpdateBarcode() {
             const barcode = document.getElementById("barcode-input").value;
+            const name = document.getElementById("name-input").value;
+            const row = document.getElementById("row-input").value;
+            const shelf = document.getElementById("shelf-input").value;
+            const side = document.getElementById("side-input").value;
+            const imageURL = document.getElementById("image-url-input").value;
+
             if (barcode) {
                 let savedBarcodes = JSON.parse(localStorage.getItem("savedBarcodes")) || [];
-                if (!savedBarcodes.includes(barcode)) {
-                    savedBarcodes.push(barcode);
-                    localStorage.setItem("savedBarcodes", JSON.stringify(savedBarcodes));
-                    loadSavedBarcodes();
-                    alert("條碼已新增！");
-                } else {
-                    alert("條碼已存在！");
-                }
-            }
-        }
+                const index = savedBarcodes.findIndex(item => item.barcode === barcode);
 
-        // 修改條碼
-        function updateBarcode() {
-            const barcode = document.getElementById("barcode-input").value;
-            let savedBarcodes = JSON.parse(localStorage.getItem("savedBarcodes")) || [];
-            const index = savedBarcodes.indexOf(barcode);
-            if (index !== -1) {
-                const newBarcode = prompt("請輸入新的條碼", barcode);
-                if (newBarcode) {
-                    savedBarcodes[index] = newBarcode;
-                    localStorage.setItem("savedBarcodes", JSON.stringify(savedBarcodes));
-                    loadSavedBarcodes();
+                const barcodeData = {
+                    barcode,
+                    name,
+                    row,
+                    shelf,
+                    side,
+                    imageURL
+                };
+
+                if (index !== -1) {
+                    savedBarcodes[index] = barcodeData; // 更新現有條碼
                     alert("條碼已更新！");
+                } else {
+                    savedBarcodes.push(barcodeData); // 新增新條碼
+                    alert("條碼已新增！");
                 }
+
+                localStorage.setItem("savedBarcodes", JSON.stringify(savedBarcodes));
+                loadSavedBarcodes();
             } else {
-                alert("條碼不存在！");
+                alert("請掃描條碼或輸入條碼！");
             }
         }
 
@@ -125,7 +137,7 @@
         function deleteBarcode() {
             const barcode = document.getElementById("barcode-input").value;
             let savedBarcodes = JSON.parse(localStorage.getItem("savedBarcodes")) || [];
-            const index = savedBarcodes.indexOf(barcode);
+            const index = savedBarcodes.findIndex(item => item.barcode === barcode);
             if (index !== -1) {
                 savedBarcodes.splice(index, 1);
                 localStorage.setItem("savedBarcodes", JSON.stringify(savedBarcodes));
@@ -159,7 +171,6 @@
                 alert("查無條碼！");
             }
         }
-
 
         // 初始載入儲存的條碼
         loadSavedBarcodes();
