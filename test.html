@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>條碼查詢、新增與修改</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        table,
+        th,
+        td {
+            border: 1px solid #ccc;
+        }
+        
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+        }
+        
+        img {
+            max-width: 50px;
+            max-height: 50px;
+        }
+        
+        label {
+            font-size: 20px;
+        }
+        
+        button {
+            font-size: 20px;
+        }
+        
+        input {
+            height: 20px;
+            width: 150px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>條碼查詢、新增與修改</h1>
+
+    <!-- 查詢功能 -->
+    <div class="input-section">
+        <label for="barcode">輸入條碼查詢商品：</label>
+        <input type="text" id="barcode" placeholder="輸入條碼">
+        <button onclick="searchBarcode()">查詢</button>
+        <button onclick="startBarcodeScanner()">掃描條碼</button>
+    </div>
+    <div id="table-container"></div>
+
+    <!-- 條碼掃描功能 -->
+    <div id="scanner-container" style="display: none;">
+        <h2>條碼掃描</h2>
+        <video id="scanner-video" style="width: 100%; max-width: 400px;" autoplay></video>
+        <button onclick="stopBarcodeScanner()">停止掃描</button>
+    </div>
+
+    <!-- 新增功能 -->
+    <h2>新增商品資料</h2>
+    <div class="input-section">
+        <label for="add-barcode">條碼：</label>
+        <input type="text" id="add-barcode">
+        <p>
+            <label for="add-product-name">商品名稱：</label>
+            <input type="text" id="add-product-name">
+            <label for="add-row">第幾排：</label>
+            <input type="text" id="add-row">
+            <label for="add-lr">L/R：</label>
+            <input type="text" id="add-lr">
+            <label for="add-column">第幾座：</label>
+            <input type="text" id="add-column">
+            <label for="add-level">第幾層：</label>
+            <input type="text" id="add-level">
+            <p>
+                <label for="add-image">圖片：</label>
+                <input type="text" id="add-image">
+                <label for="add-notes">備註：</label>
+                <textarea id="add-notes"></textarea>
+                <p>
+                    <button onclick="addRecord()">新增資料</button>
+    </div>
+
+    <!-- 修改功能 -->
+    <h2>修改商品資料</h2>
+    <div class="input-section">
+        <label for="edit-barcode">輸入條碼以修改：</label>
+        <input type="text" id="edit-barcode" placeholder="輸入條碼">
+        <button onclick="loadRecordForEdit()">載入資料</button>
+        <p>
+            <label for="edit-product-name">商品名稱：</label>
+            <input type="text" id="edit-product-name">
+            <label for="edit-row">第幾排：</label>
+            <input type="text" id="edit-row">
+            <label for="edit-lr">L/R：</label>
+            <input type="text" id="edit-lr">
+            <label for="edit-column">第幾座：</label>
+            <input type="text" id="edit-column">
+            <label for="edit-level">第幾層：</label>
+            <input type="text" id="edit-level">
+            <p>
+                <label for="edit-image">圖片：</label>
+                <input type="text" id="edit-image">
+                <label for="edit-notes">備註：</label>
+                <textarea id="edit-notes"></textarea>
+                <p>
+                    <button onclick="updateRecord()">確定修改</button>
+    </div>
+
+    <script src="https://unpkg.com/@zxing/library@latest"></script>
+    <script>
+        const scannerContainer = document.getElementById('scanner-container');
+        const scannerVideo = document.getElementById('scanner-video');
+        let codeReader;
+
+        // 開啟條碼掃描器
+        function startBarcodeScanner() {
+            scannerContainer.style.display = 'block';
+            codeReader = new ZXing.BrowserMultiFormatReader();
+            codeReader.decodeFromVideoDevice(null, scannerVideo, (result, err) => {
+                if (result) {
+                    document.getElementById('barcode').value = result.text;
+                    stopBarcodeScanner();
+                    searchBarcode();
+                }
+            });
+        }
+
+        // 停止條碼掃描器
+        function stopBarcodeScanner() {
+            scannerContainer.style.display = 'none';
+            if (codeReader) {
+                codeReader.reset();
+            }
+        }
+
+        function searchBarcode() {
+            const barcode = document.getElementById('barcode').value.trim();
+            if (!barcode) {
+                alert('請輸入條碼！');
+                return;
+            }
+
+            google.script.run.withSuccessHandler(renderTable).searchByBarcode(barcode);
+        }
+
+        function renderTable(data) {
+            const container = document.getElementById('table-container');
+            if (data.length === 0 || (data.length === 1 && data[0][0] === '查無符合資料')) {
+                container.innerHTML = '<p>查無符合資料。</p>';
+                return;
+            }
+
+            let table = '<table><thead><tr>';
+            data[0].forEach(header => {
+                table += `<th>${header}</th>`;
+            });
+            table += '</tr></thead><tbody>';
+
+            data.slice(1).forEach(row => {
+                table += '<tr>';
+                row.forEach((cell, index) => {
+                    if (data[0][index] === '圖片') {
+                        table += `<td><img src="${cell}" alt="圖片"></td>`;
+                    } else {
+                        table += `<td>${cell}</td>`;
+                    }
+                });
+                table += '</tr>';
+            });
+            table += '</tbody></table>';
+
+            container.innerHTML = table;
+        }
+
+        function addRecord() {
+            const record = {
+                barcode: document.getElementById('add-barcode').value.trim(),
+                productName: document.getElementById('add-product-name').value.trim(),
+                row: document.getElementById('add-row').value.trim(),
+                lr: document.getElementById('add-lr').value.trim(),
+                column: document.getElementById('add-column').value.trim(),
+                level: document.getElementById('add-level').value.trim(),
+                imageURL: document.getElementById('add-image').value.trim(),
+                notes: document.getElementById('add-notes').value.trim(),
+            };
+
+            google.script.run
+                .withSuccessHandler((message) => alert(message))
+                .addRecord(record);
+        }
+
+        function loadRecordForEdit() {
+            const barcode = document.getElementById('edit-barcode').value.trim();
+            if (!barcode) {
+                alert('請輸入條碼！');
+                return;
+            }
+
+            google.script.run.withSuccessHandler(fillEditForm).getRecordByBarcode(barcode);
+        }
+
+        function fillEditForm(data) {
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
+
+            const record = data.record;
+            document.getElementById('edit-product-name').value = record[1];
+            document.getElementById('edit-row').value = record[2];
+            document.getElementById('edit-lr').value = record[3];
+            document.getElementById('edit-column').value = record[4];
+            document.getElementById('edit-level').value = record[5];
+            document.getElementById('edit-image').value = record[6];
+            document.getElementById('edit-notes').value = record[7];
+        }
+
+        function updateRecord() {
+            const record = {
+                barcode: document.getElementById('edit-barcode').value.trim(),
+                productName: document.getElementById('edit-product-name').value.trim(),
+                row: document.getElementById('edit-row').value.trim(),
+                lr: document.getElementById('edit-lr').value.trim(),
+                column: document.getElementById('edit-column').value.trim(),
+                level: document.getElementById('edit-level').value.trim(),
+                imageURL: document.getElementById('edit-image').value.trim(),
+                notes: document.getElementById('edit-notes').value.trim(),
+            };
+
+            google.script.run
+                .withSuccessHandler((message) => alert(message))
+                .updateRecord(record);
+        }
+    </script>
+</body>
+
+</html>
