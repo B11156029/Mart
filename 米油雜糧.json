@@ -1,0 +1,74 @@
+[
+    {
+        "image": "https://image.pxgo.com.tw/pic/2024/02/02/b25ec11f-133b-4ab0-9af7-10be69ac8647.jpg",
+        "price": "NT$249",
+        "name": "三好米台灣越光米 1.5kg(一等米)",
+        "specialOffers": {
+            "1": 249,
+            "2": 249
+        }
+    },
+    {
+        "image": "https://image.pxgo.com.tw/pxmart-pic/4711045228996/4711045228996.jpg",
+        "price": "NT$238",
+        "name": "中興米履歷桂馥牛奶香米(二等米) 1.5Kg",
+        "specialOffers": {
+            "1": 238,
+            "2": 238
+        }
+    },
+    {
+        "image": "https://image.pxgo.com.tw/pxmart-pic/4901117515028/4901117515028.jpg",
+        "price": "NT$99",
+        "name": "生活良好生切麻糬(薄片) 180g(60g*3份)",
+        "specialOffers": {
+            "1": 99,
+            "2": 99
+        }
+    },
+    {
+        "image": "https://image.pxgo.com.tw/pic/2024/07/11/9bb121e0-4684-4ab4-aa82-fdd2d7d8c176.jpg",
+        "price": "NT$399",
+        "name": "FINDER SUNNY葵花油 1L",
+        "specialOffers": {
+            "1": 399,
+            "2": 399
+        }
+    },
+    {
+        "image": "https://image.pxgo.com.tw/pic/2024/10/31/7e13df1a17964bcebbef0a87f33af8a8.jpg",
+        "price": "NT$239",
+        "name": "大倉米鋪本番大粒米 1.5kg",
+        "specialOffers": {
+            "1": 239,
+            "2": 239
+        }
+    },
+    {
+        "image": "https://image.pxgo.com.tw/pic/2023/12/07/87ec9ccb-afcc-4e7a-a2e9-a5f4dff0fdd4.jpg",
+        "price": "NT$39",
+        "name": "生活良好焙煎黑芝麻 ６０ｇ",
+        "specialOffers": {
+            "1": 39,
+            "2": 39
+        }
+    },
+    {
+        "image": "https://image.pxgo.com.tw/pic/2023/12/07/9be43fd4-8a1b-49a9-be53-4e0cb78dfeba.jpg",
+        "price": "NT$69",
+        "name": "生活良好宮崎縣白蘿蔔絲 40g",
+        "specialOffers": {
+            "1": 69,
+            "2": 69
+        }
+    },
+    {
+        "image": "https://image.pxgo.com.tw/pxmart-pic/4901117523023/4901117523023.jpg",
+        "price": "NT$189",
+        "name": "生活良好生切麻糬(方形) 400g",
+        "specialOffers": {
+            "1": 189,
+            "2": 189
+        }
+    }
+]
