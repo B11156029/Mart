@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水豚君搜尋引擎</title>
+    <link href="main.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+</head>
+
+<body>
+    <div id="app" class="container">
+        <div class="navbar">
+            <div class="navbar-right">
+                <button @click="toggleCart" class="cart-toggle-button">
+                    <img src="購物車.png" alt="購物車" class="cart-icon">
+                </button>
+            </div>
+        </div>
+
+        <h1>水豚君搜尋引擎</h1>
+        <input type="text" v-model="searchKeyword" placeholder="請輸入商品名稱">
+        <div>
+            <label for="attribute">選擇屬性:</label>
+            <select id="attribute" v-model="selectedAttribute">
+                <option value="">全部</option>
+                <option value="new">買一送一</option>
+                <option value="popular">熱門</option>
+                <option value="sale">促銷</option>
+            </select>
+        </div>
+        <div id="productList" class="product-list">
+            <div v-for="product in filteredProducts" :key="product.name" class="product-item">
+                <h3>{{ product.name }}</h3>
+                <img :src="product.image" :alt="product.name" class="product-image">
+                <p>{{ product.description }}</p>
+                <div class="quantity-container">
+                    <button @click="decreaseQuantity(product)" class="quantity-button">
+                        <img src="remove.png" alt="減少" class="quantity-image">
+                    </button>
+                    <span>{{ getProductQuantity(product) }}</span>
+                    <button @click="increaseQuantity(product)" class="quantity-button">
+                        <img src="add.png" alt="增加" class="quantity-image">
+                    </button>
+                </div>
+                <p class="price">價格: <span class="price-amount">${{ parsePrice(product.price) }}</span></p>
+                <button @click="addToCart(product)">加入購物車</button>
+            </div>
+        </div>
+
+        <div id="cart" class="cart" :class="{ show: isCartVisible }">
+            <h2>購物車</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>商品</th>
+                        <th>單價</th>
+                        <th>數量</th>
+                        <th>小計</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in cart" :key="item.product.name" class="cart-item">
+                        <td style="display: flex; flex-direction: column; align-items: center;">
+                            <span class="cart-item-name">{{ item.product.name }}</span>
+                            <img :src="item.product.image" :alt="item.product.name" class="cart-image">
+                        </td>
+                        <td>${{ parsePrice(item.product.price) }}</td>
+                        <td>
+                            <div class="quantity-container">
+                                <button @click="decreaseQuantity(item.product)" class="quantity-button">
+                                    <img src="remove.png" alt="減少" class="quantity-image">
+                                </button>
+                                <span>{{ item.quantity }}</span>
+                                <button @click="increaseQuantity(item.product)" class="quantity-button">
+                                    <img src="add.png" alt="增加" class="quantity-image">
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            ${{ item.subtotal.toFixed(2) }}
+                            <button @click="editSubtotal(item)" class="edit-subtotal-button">修改</button>
+                        </td>
+                        <td>
+                            <button @click="removeFromCart(item)">刪除</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="cart-total">
+                <h3>總計: ${{ cartTotal.toFixed(2) }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                searchKeyword: '',
+                selectedAttribute: 'new',
+                products: [],
+                cart: [],
+                isCartVisible: false
+            },
+            computed: {
+                filteredProducts() {
+                    const keyword = this.searchKeyword.trim().toLowerCase();
+                    const attribute = this.selectedAttribute.trim().toLowerCase();
+                    return Object.values(this.products).flat().filter(product => {
+                        const nameMatches = product.name.toLowerCase().includes(keyword);
+                        const barcodeMatches = product.barcode && product.barcode.includes(keyword);
+                        const attributeMatches = attribute === '' ||
+                            (product.attributes && product.attributes.includes(attribute));
+                        return (nameMatches || barcodeMatches) && attributeMatches;
+                    });
+                },
+                cartTotal() {
+                    return this.cart.reduce((total, item) => total + item.subtotal, 0);
+                }
+            },
+            methods: {
+                parsePrice(priceString) {
+                    return parseFloat(priceString.replace(/[^\d.-]/g, ''));
+                },
+                addToCart(product) {
+                    const cartItem = this.cart.find(item => item.product.name === product.name);
+                    if (cartItem) {
+                        cartItem.quantity++;
+                        cartItem.subtotal = cartItem.quantity * this.parsePrice(product.price);
+                    } else {
+                        this.cart.push({
+                            product,
+                            quantity: 1,
+                            subtotal: this.parsePrice(product.price)
+                        });
+                    }
+                },
+                increaseQuantity(product) {
+                    const cartItem = this.cart.find(item => item.product.name === product.name);
+                    if (cartItem) {
+                        cartItem.quantity++;
+                        cartItem.subtotal = cartItem.quantity * this.parsePrice(product.price);
+                    }
+                },
+                decreaseQuantity(product) {
+                    const cartItem = this.cart.find(item => item.product.name === product.name);
+                    if (cartItem && cartItem.quantity > 1) {
+                        cartItem.quantity--;
+                        cartItem.subtotal = cartItem.quantity * this.parsePrice(product.price);
+                    } else if (cartItem) {
+                        this.cart = this.cart.filter(item => item.product.name !== product.name);
+                    }
+                },
+                removeFromCart(item) {
+                    this.cart = this.cart.filter(cartItem => cartItem !== item);
+                },
+                toggleCart() {
+                    this.isCartVisible = !this.isCartVisible;
+                },
+                getProductQuantity(product) {
+                    const cartItem = this.cart.find(item => item.product.name === product.name);
+                    return cartItem ? cartItem.quantity : 0;
+                },
+                editSubtotal(item) {
+                    const newSubtotal = prompt(`請輸入新的小計金額 (目前為 $${item.subtotal.toFixed(2)}):`);
+                    if (newSubtotal !== null && !isNaN(newSubtotal) && newSubtotal >= 0) {
+                        item.subtotal = parseFloat(newSubtotal);
+                    } else {
+                        alert('請輸入有效的小計金額');
+                    }
+                },
+
+            },
+            created() {
+                fetch('main.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        this.products = data;
+                    })
+                    .catch(error => console.error('加載數據時出錯：', error));
+            }
+        });
+    </script>
+</body>
+
+</html>
