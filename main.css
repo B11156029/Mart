@@ -1,0 +1,263 @@
+/* 全局樣式 */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.container {
+    text-align: center;
+    padding: 80px 20px 20px;
+}
+
+h1 {
+    margin-top: 20px;
+    font-size: 32px;
+    color: #444;
+}
+
+
+/* 搜索框 */
+
+input[type="text"] {
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 50px;
+    outline: none;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 400px;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:hover,
+input[type="text"]:focus {
+    border-color: #007bff;
+}
+
+
+/* 產品列表 */
+
+#productList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 0;
+}
+
+.product-item {
+    margin: 10px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: calc(25% - 20px);
+    background-color: #fff;
+    box-sizing: border-box;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-image {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.product-item h3 {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #222;
+}
+
+.product-item .price {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.product-item .price-amount {
+    color: #d32f2f;
+    font-size: 20px;
+}
+
+.product-footer {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* 數量控制按鈕 */
+
+.quantity-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quantity-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #f1f1f1;
+    transition: background-color 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.quantity-button:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.1);
+}
+
+.quantity-image {
+    width: 20px;
+    height: 20px;
+}
+
+.quantity-display {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    /* 字體大小 */
+    margin-left: 4px;
+    margin-right: 4px;
+    font-weight: bold;
+    /* 字體加粗 */
+}
+
+
+/* 購物車 */
+
+.cart {
+    display: none;
+    position: fixed;
+    top: 60px;
+    width: 80%;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 999;
+    transition: transform 0.3s ease-in-out;
+}
+
+.cart.show {
+    display: block;
+    width: 90%;
+}
+
+.cart h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.cart table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.cart th,
+.cart td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+}
+
+.cart th {
+    background-color: #f4f4f4;
+}
+
+.cart-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
+
+.cart-total h3 {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #d32f2f;
+    text-align: right;
+}
+
+
+/* 導航欄 */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+
+.navbar a:hover {
+    color: #007bff;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.cart-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+
+/* 響應式設計 */
+
+@media only screen and (max-width: 768px) {
+    .product-item {
+        width: calc(50% - 20px);
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .product-item {
+        width: calc(100% - 20px);
+    }
+    .cart {
+        width: 100%;
+        left: 0;
+        top: 0;
+    }
+}
