@@ -1,5 +1,3 @@
-/* 全局樣式 */
-
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -19,9 +17,6 @@ h1 {
     color: #444;
 }
 
-
-/* 搜索框 */
-
 input[type="text"] {
     display: block;
     margin: 20px auto;
@@ -40,9 +35,6 @@ input[type="text"]:hover,
 input[type="text"]:focus {
     border-color: #007bff;
 }
-
-
-/* 產品列表 */
 
 #productList {
     display: flex;
@@ -98,9 +90,6 @@ input[type="text"]:focus {
     justify-content: center;
 }
 
-
-/* 數量控制按鈕 */
-
 .quantity-container {
     display: flex;
     align-items: center;
@@ -137,15 +126,10 @@ input[type="text"]:focus {
     align-items: center;
     justify-content: center;
     font-size: 24px;
-    /* 字體大小 */
     margin-left: 4px;
     margin-right: 4px;
     font-weight: bold;
-    /* 字體加粗 */
 }
-
-
-/* 購物車 */
 
 .cart {
     display: none;
@@ -163,7 +147,7 @@ input[type="text"]:focus {
 
 .cart.show {
     display: block;
-    width: 90%;
+    width: 100%;
 }
 
 .cart h2 {
@@ -190,11 +174,10 @@ input[type="text"]:focus {
 }
 
 .cart-image {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
-    display: block;
-    margin: 0 auto;
+    border-radius: 5px;
 }
 
 .cart-total h3 {
@@ -203,9 +186,6 @@ input[type="text"]:focus {
     color: #d32f2f;
     text-align: right;
 }
-
-
-/* 導航欄 */
 
 .navbar {
     display: flex;
@@ -242,9 +222,6 @@ input[type="text"]:focus {
     cursor: pointer;
 }
 
-
-/* 響應式設計 */
-
 @media only screen and (max-width: 768px) {
     .product-item {
         width: calc(50% - 20px);
@@ -260,4 +237,155 @@ input[type="text"]:focus {
         left: 0;
         top: 0;
     }
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 1fr 2fr auto;
+    align-items: center;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+}
+
+.product-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.product-info img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.product-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-grow: 1;
+}
+
+.product-details .name {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.product-details .price {
+    color: #555;
+    font-size: 14px;
+}
+
+.quantity-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.cart-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+}
+
+.cart-item-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    /* 增加間距 */
+    flex: 3;
+}
+
+.cart-item-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* 增加數量按鈕的間距 */
+}
+
+.cart-item-subtotal {
+    flex: 1;
+    text-align: center;
+}
+
+.remove-button {
+    background: #ff4d4f;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.remove-button:hover {
+    background: #d32f2f;
+}
+
+@media (max-width: 768px) {
+    .cart-item {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "image details" "actions actions";
+        gap: 10px;
+    }
+    .cart-image {
+        grid-area: image;
+        width: 80px;
+        height: 80px;
+    }
+    .cart-item-details {
+        grid-area: details;
+    }
+    .cart-item-actions {
+        grid-area: actions;
+        justify-content: space-between;
+    }
+}
+
+.cart-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.cart-item-subtotal {
+    color: #555;
+    font-weight: bold;
+}
+
+.remove-button {
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.remove-button:hover {
+    background-color: #d32f2f;
+}
+
+.cart-subtotal {
+    text-align: right;
 }

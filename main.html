@@ -55,142 +55,128 @@
 
         <div id="cart" class="cart" :class="{ show: isCartVisible }">
             <h2>購物車</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>商品</th>
-                        <th>單價</th>
-                        <th>數量</th>
-                        <th>小計</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="item in cart" :key="item.product.name" class="cart-item">
-                        <td style="display: flex; flex-direction: column; align-items: center;">
+            <div class="cart-content">
+                <div v-for="item in cart" :key="item.product.name" class="cart-item">
+                    <div class="cart-item-info">
+                        <img :src="item.product.image" :alt="item.product.name" class="cart-image">
+                        <div class="cart-item-details">
                             <span class="cart-item-name">{{ item.product.name }}</span>
-                            <img :src="item.product.image" :alt="item.product.name" class="cart-image">
-                        </td>
-                        <td>${{ parsePrice(item.product.price) }}</td>
-                        <td>
-                            <div class="quantity-container">
-                                <button @click="decreaseQuantity(item.product)" class="quantity-button">
-                                    <img src="remove.svg" alt="減少" class="quantity-image">
-                                </button>
-                                <span>{{ item.quantity }}</span>
-                                <button @click="increaseQuantity(item.product)" class="quantity-button">
-    <img src="add.svg" alt="增加" class="quantity-image">
-</button>
-                            </div>
-                        </td>
-                        <td>
-                            ${{ item.subtotal.toFixed(2) }}
-                            <button @click="editSubtotal(item)" class="edit-subtotal-button">修改</button>
-                        </td>
-                        <td>
-                            <button @click="removeFromCart(item)">刪除</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                            <span class="cart-item-price">單價: ${{ parsePrice(item.product.price) }}</span>
+                        </div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <div class="cart-item-quantity">
+                            <button @click="decreaseQuantity(item.product)" class="quantity-button">
+                        <img src="remove.svg" alt="減少" class="quantity-image">
+                    </button>
+                            <span>{{ item.quantity }}</span>
+                            <button @click="increaseQuantity(item.product)" class="quantity-button">
+                        <img src="add.svg" alt="增加" class="quantity-image">
+                    </button>
+                        </div>
+                        <span class="cart-item-subtotal">小計: ${{ item.subtotal.toFixed(2) }}</span>
+                        <button @click="removeFromCart(item)" class="remove-button">刪除</button>
+                    </div>
+                </div>
+            </div>
             <div class="cart-total">
                 <h3>總計: ${{ cartTotal.toFixed(2) }}</h3>
             </div>
         </div>
-    </div>
 
-    <script>
-        new Vue({
-            el: '#app',
-            data: {
-                searchKeyword: '',
-                selectedAttribute: 'new',
-                products: [],
-                cart: [],
-                isCartVisible: false
-            },
-            computed: {
-                filteredProducts() {
-                    const keyword = this.searchKeyword.trim().toLowerCase();
-                    const attribute = this.selectedAttribute.trim().toLowerCase();
-                    return Object.values(this.products).flat().filter(product => {
-                        const nameMatches = product.name.toLowerCase().includes(keyword);
-                        const barcodeMatches = product.barcode && product.barcode.includes(keyword);
-                        const attributeMatches = attribute === '' ||
-                            (product.attributes && product.attributes.includes(attribute));
-                        return (nameMatches || barcodeMatches) && attributeMatches;
-                    });
+
+        <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    searchKeyword: '',
+                    selectedAttribute: 'new',
+                    products: [],
+                    cart: [],
+                    isCartVisible: false
                 },
-                cartTotal() {
-                    return this.cart.reduce((total, item) => total + item.subtotal, 0);
-                }
-            },
-            methods: {
-                parsePrice(priceString) {
-                    return parseFloat(priceString.replace(/[^\d.-]/g, ''));
-                },
-                addToCart(product) {
-                    const cartItem = this.cart.find(item => item.product.name === product.name);
-                    if (cartItem) {
-                        cartItem.quantity++;
-                        cartItem.subtotal = cartItem.quantity * this.parsePrice(product.price);
-                    } else {
-                        this.cart.push({
-                            product,
-                            quantity: 1,
-                            subtotal: this.parsePrice(product.price)
+                computed: {
+                    filteredProducts() {
+                        const keyword = this.searchKeyword.trim().toLowerCase();
+                        const attribute = this.selectedAttribute.trim().toLowerCase();
+                        return Object.values(this.products).flat().filter(product => {
+                            const nameMatches = product.name.toLowerCase().includes(keyword);
+                            const barcodeMatches = product.barcode && product.barcode.includes(keyword);
+                            const attributeMatches = attribute === '' ||
+                                (product.attributes && product.attributes.includes(attribute));
+                            return (nameMatches || barcodeMatches) && attributeMatches;
                         });
+                    },
+                    cartTotal() {
+                        return this.cart.reduce((total, item) => total + item.subtotal, 0);
                     }
                 },
-                increaseQuantity(product) {
-                    const cartItem = this.cart.find(item => item.product.name === product.name);
-                    if (cartItem) {
-                        cartItem.quantity++;
-                        cartItem.subtotal = cartItem.quantity * this.parsePrice(product.price);
-                    } else {
-                        // 如果商品不在購物車中，可以選擇直接加入購物車
-                        this.addToCart(product);
-                    }
-                },
-                decreaseQuantity(product) {
-                    const cartItem = this.cart.find(item => item.product.name === product.name);
-                    if (cartItem && cartItem.quantity > 1) {
-                        cartItem.quantity--;
-                        cartItem.subtotal = cartItem.quantity * this.parsePrice(product.price);
-                    } else if (cartItem) {
-                        this.cart = this.cart.filter(item => item.product.name !== product.name);
-                    }
-                },
-                removeFromCart(item) {
-                    this.cart = this.cart.filter(cartItem => cartItem !== item);
-                },
-                toggleCart() {
-                    this.isCartVisible = !this.isCartVisible;
-                },
-                getProductQuantity(product) {
-                    const cartItem = this.cart.find(item => item.product.name === product.name);
-                    return cartItem ? cartItem.quantity : 0;
-                },
-                editSubtotal(item) {
-                    const newSubtotal = prompt(`請輸入新的小計金額 (目前為 $${item.subtotal.toFixed(2)}):`);
-                    if (newSubtotal !== null && !isNaN(newSubtotal) && newSubtotal >= 0) {
-                        item.subtotal = parseFloat(newSubtotal);
-                    } else {
-                        alert('請輸入有效的小計金額');
-                    }
-                },
+                methods: {
+                    parsePrice(priceString) {
+                        return parseFloat(priceString.replace(/[^\d.-]/g, ''));
+                    },
+                    addToCart(product) {
+                        const cartItem = this.cart.find(item => item.product.name === product.name);
+                        if (cartItem) {
+                            cartItem.quantity++;
+                            cartItem.subtotal = cartItem.quantity * this.parsePrice(product.price);
+                        } else {
+                            this.cart.push({
+                                product,
+                                quantity: 1,
+                                subtotal: this.parsePrice(product.price)
+                            });
+                        }
+                    },
+                    increaseQuantity(product) {
+                        const cartItem = this.cart.find(item => item.product.name === product.name);
+                        if (cartItem) {
+                            cartItem.quantity++;
+                            cartItem.subtotal = cartItem.quantity * this.parsePrice(product.price);
+                        } else {
+                            // 如果商品不在購物車中，可以選擇直接加入購物車
+                            this.addToCart(product);
+                        }
+                    },
+                    decreaseQuantity(product) {
+                        const cartItem = this.cart.find(item => item.product.name === product.name);
+                        if (cartItem && cartItem.quantity > 1) {
+                            cartItem.quantity--;
+                            cartItem.subtotal = cartItem.quantity * this.parsePrice(product.price);
+                        } else if (cartItem) {
+                            this.cart = this.cart.filter(item => item.product.name !== product.name);
+                        }
+                    },
+                    removeFromCart(item) {
+                        this.cart = this.cart.filter(cartItem => cartItem !== item);
+                    },
+                    toggleCart() {
+                        this.isCartVisible = !this.isCartVisible;
+                    },
+                    getProductQuantity(product) {
+                        const cartItem = this.cart.find(item => item.product.name === product.name);
+                        return cartItem ? cartItem.quantity : 0;
+                    },
+                    editSubtotal(item) {
+                        const newSubtotal = prompt(`請輸入新的小計金額 (目前為 $${item.subtotal.toFixed(2)}):`);
+                        if (newSubtotal !== null && !isNaN(newSubtotal) && newSubtotal >= 0) {
+                            item.subtotal = parseFloat(newSubtotal);
+                        } else {
+                            alert('請輸入有效的小計金額');
+                        }
+                    },
 
-            },
-            created() {
-                fetch('main.json')
-                    .then(response => response.json())
-                    .then(data => {
-                        this.products = data;
-                    })
-                    .catch(error => console.error('加載數據時出錯：', error));
-            }
-        });
-    </script>
+                },
+                created() {
+                    fetch('main.json')
+                        .then(response => response.json())
+                        .then(data => {
+                            this.products = data;
+                        })
+                        .catch(error => console.error('加載數據時出錯：', error));
+                }
+            });
+        </script>
 </body>
 
 </html>
