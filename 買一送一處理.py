@@ -1,7 +1,7 @@
 import json
 
 # 本地檔案路徑
-file_path = "糖果零食.json"  # 確保此檔案與程式放在同一資料夾，或提供完整路徑
+file_path = "個人清潔.json"  # 確保此檔案與程式放在同一資料夾，或提供完整路徑
 
 # 從本地檔案讀取 JSON 資料
 with open(file_path, "r", encoding="utf-8") as file:
@@ -23,7 +23,7 @@ def apply_bogo_discount_fixed(item):
 updated_data_fixed = [apply_bogo_discount_fixed(item) for item in data]
 
 # 將更新後的資料存回新的本地檔案
-output_path_fixed = "糖果零食.json"
+output_path_fixed = "個人清潔.json"
 with open(output_path_fixed, "w", encoding="utf-8") as file:
     json.dump(updated_data_fixed, file, ensure_ascii=False, indent=4)
 

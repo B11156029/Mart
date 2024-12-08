@@ -1,5 +1,9 @@
 /* styles.css */
 
+h3 {
+    size: 12px
+}
+
 .progress-container {
     width: 100%;
     background-color: #e0e0e0;
