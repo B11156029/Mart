@@ -368,7 +368,7 @@ input[type="text"]:focus {
     text-align: center;
     /* 將文字靠右對齊 */
     padding: 0.5rem;
-    margin-left: 1px;
+    margin-left: 0.5rem;
     /* 將整個元素推到右側 */
 }
 
