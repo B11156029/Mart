@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <h1>水豚君搜尋引擎</h1>
+        <h1 style="color: black;font-weight: 700;">水豚君搜尋引擎</h1>
         <input type="text" v-model="searchKeyword" placeholder="請輸入商品名稱">
         <div>
             <label for="attribute">選擇屬性:</label>
@@ -54,7 +54,7 @@
 
 
         <div id="cart" class="cart" :class="{ show: isCartVisible }">
-            <h2 style="margin-top: 100px;">購物車</h2>
+            <h2 style="margin-top: 100px; margin-left: -50px;">購物車</h2>
             <div class="cart-content">
                 <div v-for="item in cart" :key="item.product.name" class="cart-item">
                     <div class="cart-item-info">
@@ -93,7 +93,7 @@
                 el: '#app',
                 data: {
                     searchKeyword: '',
-                    selectedAttribute: 'new',
+                    selectedAttribute: '',
                     products: [],
                     cart: [],
                     isCartVisible: false
