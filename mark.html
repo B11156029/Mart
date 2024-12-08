@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品截圖功能</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9f9;
+        }
+        
+        .product-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 15px;
+            position: relative;
+        }
+        
+        .product-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+        }
+        
+        .product-name {
+            font-size: 16px;
+            color: #333;
+            margin: 10px 0;
+        }
+        
+        .product-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e63946;
+        }
+        
+        .quantity-control {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        .quantity-control button {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ddd;
+            background: #f1f1f1;
+            color: #333;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .add-to-cart-button {
+            background: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .add-to-cart-button:hover {
+            background: #2980b9;
+        }
+        
+        .screenshot-button {
+            background: #2ecc71;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .screenshot-button:hover {
+            background: #27ae60;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="product-card" id="product-card">
+        <img src="https://i.imgur.com/xP6ikY2.png" alt="泡打粉" class="product-image">
+        <h3 class="product-name">日正DIY泡打粉</h3>
+        <p class="product-price">$35</p>
+        <div class="quantity-control">
+            <button class="btn-decrease">-</button>
+            <span class="quantity">0</span>
+            <button class="btn-increase">+</button>
+        </div>
+        <button class="add-to-cart-button">🛒 加入購物車</button>
+        <button class="screenshot-button" id="screenshot-button">📸 截圖商品</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script>
+        document.getElementById('screenshot-button').addEventListener('click', function() {
+            const productCard = document.getElementById('product-card');
+            html2canvas(productCard).then(canvas => {
+                // 將截圖保存為圖片
+                const link = document.createElement('a');
+                link.download = 'product-screenshot.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        });
+    </script>
+</body>
+
+</html>
