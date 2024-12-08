@@ -366,10 +366,11 @@ input[type="text"]:focus {
 .cart-item-subtotal {
     flex: 1;
     text-align: center;
-    /* 將文字靠右對齊 */
     padding: 0.5rem;
-    margin-right: 1rem;
+    margin-right: 0px;
     /* 將整個元素推到右側 */
+    white-space: nowrap;
+    /* 禁止內容換行 */
 }
 
 .remove-button {
