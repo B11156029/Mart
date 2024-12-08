@@ -367,7 +367,7 @@ input[type="text"]:focus {
     flex: 1;
     text-align: center;
     padding: 0.5rem;
-    margin-right: 0.5rem;
+    margin-right: 2rem;
     /* 將整個元素推到右側 */
     white-space: nowrap;
     /* 禁止內容換行 */
