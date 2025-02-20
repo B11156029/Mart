@@ -1,0 +1,47 @@
+[
+    {
+        "image": "https://image.pxgo.com.tw/pic/2023/08/31/3c677dfc-3167-4ebf-bd88-1fb96757f2a5.jpg",
+        "price": "NT$209",
+        "name": "胡同元氣韓式結頭泡菜 600g",
+        "specialOffers": {
+            "1": 209,
+            "2": 209
+        }
+    },
+    {
+        "image": "https://image.pxgo.com.tw/pxmart-pic/4713012681421/4713012681421.jpg",
+        "price": "NT$189",
+        "name": "胡同元氣泡菜 600g",
+        "specialOffers": {
+            "1": 189,
+            "2": 189
+        }
+    },
+    {
+        "image": "https://image.pxgo.com.tw/pic/2024/01/18/2abd365b-7597-4107-bf7d-f975128cfba1.jpg",
+        "price": "NT$199",
+        "name": "CJ bibigo韓式白菜切片泡菜 500g",
+        "specialOffers": {
+            "1": 199,
+            "2": 199
+        }
+    },
+    {
+        "image": "https://image.pxgo.com.tw/pxmart-pic/8801045581828/8801045581828.jpg",
+        "price": "NT$459",
+        "name": "不倒翁韓式脆皮起司年糕熱狗 500g(5入)",
+        "specialOffers": {
+            "1": 459,
+            "2": 459
+        }
+    },
+    {
+        "image": "https://image.pxgo.com.tw/pxmart-pic/8801045931883/8801045931883.jpg",
+        "price": "NT$289",
+        "name": "不倒翁海苔冬粉捲 400g",
+        "specialOffers": {
+            "1": 289,
+            "2": 289
+        }
+    }
+]

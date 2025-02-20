@@ -1,0 +1,571 @@
+[
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/09/03506d4cf6ca453896df3a2ce9d94c80.jpg",
+    "price": "NT$165",
+    "name": "石二鍋-經典爆香石頭鍋火鍋湯底 750g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/03/55d71789c04d4fd09a945e65dba5f8ea.jpg",
+    "price": "NT$229",
+    "name": "雅方紅燒羊肉爐 1000g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/11/08/3504ed2d-8ffc-4046-90b6-5aca67a477bd.jpg",
+    "price": "NT$139",
+    "name": "小蒙牛蒙古養生鍋火鍋湯底 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/18/053c82de-5dad-42e9-a157-aa80eed7878c.jpg",
+    "price": "NT$135",
+    "name": "雅方東北酸菜白肉鍋 1000g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/04/20/d2b9872d-6960-45ba-9e6b-c51fc0cd9c77.jpg",
+    "price": "NT$139",
+    "name": "馬辣麻辣鍋火鍋湯底 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/14/7ce8d197fa724501874d75dcab80ec79.jpg",
+    "price": "NT$180",
+    "name": "太和殿大骨煲湯火鍋湯底 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/03/d8b223f9baf04075bc9dcea2e684c8fa.jpg",
+    "price": "NT$139",
+    "name": "小蒙牛蒙古麻辣鍋火鍋湯底 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/18/e4f1726a-bf9f-48aa-b87b-0c84daf58b0e.jpg",
+    "price": "NT$145",
+    "name": "義美酸白菜鍋底 1000g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/14/0982fa36f3ce4747b80fc2e4c62135fe.jpg",
+    "price": "NT$165",
+    "name": "石二鍋-鮮菇百味蔬食鍋火鍋湯底(全素) 750g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/24/5b6458677e3d47bfbbee7d4bd93e1714.jpg",
+    "price": "NT$229",
+    "name": "雅方特級紅燒羊肉爐 １０００ｇ"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/11/08/68910bc1-a2f9-43f6-8773-408b4f8b81ce.jpg",
+    "price": "NT$165",
+    "name": "太和殿麻辣紅湯火鍋湯底 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/14/b76018a41c3146a1a7b662c1c50d8a94.jpg",
+    "price": "NT$180",
+    "name": "太和殿花膠雞湯火鍋湯底 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/03/ff5b03f9dc634db88c6a136314009029.jpg",
+    "price": "NT$180",
+    "name": "這一鍋秘藏老火湯火鍋湯底 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/14/83d564a518524714b06e66b970b7429f.jpg",
+    "price": "NT$180",
+    "name": "太和殿胡椒豬肚火鍋湯底 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/03/d2e3bb24dd054c56be7e11cea006bd3a.jpg",
+    "price": "NT$180",
+    "name": "無老鍋無老豆腐白湯鍋火鍋湯底 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/24/3513708ee4fe4da8b98ec9203c6cebb6.jpg",
+    "price": "NT$159",
+    "name": "雅方特級薑母鴨 １０００ｇ"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/01/19/0e1ff01b-ba83-4c5f-a062-9eca0a9e6ebd.jpg",
+    "price": "NT$314",
+    "name": "康寶酸白菜火鍋湯底 750g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/08/92f7b953eca2455b8032da7020f6a811.jpg",
+    "price": "NT$114",
+    "name": "一風堂監製鹽味豚骨鍋 760ml"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/18/e777960b-11d0-43df-a088-e5bc4975a539.jpg",
+    "price": "NT$139",
+    "name": "馬辣宮廷花雕雞火鍋湯底 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/22/69fab3ff-f7ad-427d-96f1-8982962eed40.jpg",
+    "price": "NT$149",
+    "name": "聚-北海道藥膳滋養鍋火鍋湯底 750g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/24/87bf3a6db93d4dbd877d02132b59fd03.jpg",
+    "price": "NT$202",
+    "name": "台塑岡山羊肉爐 1200g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/11/2f1100402ac042db983ad18a45268aa9.jpg",
+    "price": "NT$104",
+    "name": "山頭火監製豆乳鍋(全素) 760ml"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/07/1d92b003d3db4ec8a7aa3d390ac8989d.jpg",
+    "price": "NT$105",
+    "name": "海底撈酸香番茄鍋底 200g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/18/3567e19f-182f-456d-9142-ffe075f2dd47.jpg",
+    "price": "NT$145",
+    "name": "十味觀正宗東北風味酸菜白肉鍋 600g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/cdaf555dc1304c72ae9ff583a0a749a4.jpg",
+    "price": "NT$130",
+    "name": "森泉甕釀酸菜白肉鍋 1200g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/04/20/3d2ba2f4-7e8e-4a48-bc77-4cfbb5537e65.jpg",
+    "price": "NT$139",
+    "name": "太和殿麻辣鴨血 600g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/01/06/be242238-9d94-43c3-9aa0-88d5d8d03e6c.jpg",
+    "price": "NT$180",
+    "name": "海底撈麻辣血旺豆腐火鍋湯底 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/18/61963963-2c55-4d2b-bc08-f7158173096a.jpg",
+    "price": "NT$309",
+    "name": "石二鍋爆香石頭鍋 1170g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/22/cd099a16-bc64-463c-a7e8-524338a64d8e.jpg",
+    "price": "NT$149",
+    "name": "聚-北海道蒜香豚骨鍋火鍋湯底 750g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/24/0fd6c2ff15f34014a2960244c178520c.jpg",
+    "price": "NT$115",
+    "name": "森泉珍中饌紅燒羊肉爐 1000g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2025/01/02/0e416fae36e14ea6877bbad79f8aabc8.jpg",
+    "price": "NT$139",
+    "name": "小蒙牛-素食養生鍋火鍋湯底 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/24/f79738a83d124994be4059526ffa3863.jpg",
+    "price": "NT$209",
+    "name": "桂冠濃醇牛乳鍋 400g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/18/b8c20871-64b0-4a3e-8169-a4c2b849e9e2.jpg",
+    "price": "NT$114",
+    "name": "一風堂監製辛味豚骨鍋 755ml"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/01/19/5f8e04c2-3ede-49dd-9ffb-9cb1013795b8.jpg",
+    "price": "NT$314",
+    "name": "康寶爆炒風味蒜頭雞白湯火鍋湯底 750g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/24/f9c308f8a1684e248d5d8b6577d28e3e.jpg",
+    "price": "NT$209",
+    "name": "桂冠韓式部隊鍋 480g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/e802911bd90443b99dcd8c63849225bc.jpg",
+    "price": "NT$115",
+    "name": "珍中饌肉骨茶火鍋 1000g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/24/37c7e2c702ef49fda891f33358201670.jpg",
+    "price": "NT$222",
+    "name": "台塑原汁羊肉爐 1200g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/24/11e83ac7ad8a418585166c2bfbf044e1.jpg",
+    "price": "NT$209",
+    "name": "桂冠Laksa叻沙鍋 400g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/18/6c99583b-862c-4284-a056-99bc557f4ffb.jpg",
+    "price": "NT$165",
+    "name": "紅豆食府竹笙干貝雞湯火鍋湯底 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/18/58043ab1-34f9-44db-942c-4f51175b5969.jpg",
+    "price": "NT$135",
+    "name": "春野郭主義老火湯火鍋湯底 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/d4aceb6a185b457da3c669a3e21bb8a9.jpg",
+    "price": "NT$339",
+    "name": "石二鍋酸菜白肉鍋 1130g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/03/4dc5190abfb94954ae672972ecaca00c.jpg",
+    "price": "NT$104",
+    "name": "桂冠山頭火監製-鹽味豚骨鍋 745ml"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2025/01/02/d5d9d185a684475c9b6d80c04c0d1254.jpg",
+    "price": "NT$220",
+    "name": "隨緣-椒香燕麥奶火鍋湯底 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/18/83e984ff-9481-45c2-bd60-ce16a195f39f.jpg",
+    "price": "NT$179",
+    "name": "牛頭牌沙茶鍋火鍋湯底 350g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/18/dcc154c9-1278-491f-8edf-3b28adda2932.jpg",
+    "price": "NT$180",
+    "name": "無老鍋無老辣香鍋火鍋湯底 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/e604d30371c545a9aa7bba25003fb4f1.jpg",
+    "price": "NT$349",
+    "name": "王品嚴選醇香老酒麻油雞鍋 1760g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/33352d353b2c45eb94ff7f4c2dbf9f31.jpg",
+    "price": "NT$169",
+    "name": "冰冰好料理-特級紅燒羊肉爐 1200g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/ed95ae11742e4ad69c6952a2873f1ce7.jpg",
+    "price": "NT$339",
+    "name": "石二鍋剝皮辣椒雞肉鍋 1225g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/d6a82578efba4c959a8de3843279feaa.jpg",
+    "price": "NT$279",
+    "name": "義美紅燒羊肉爐 1050g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/24/2d93ba64cdcc434ca59ac7ff6cb2b711.jpg",
+    "price": "NT$222",
+    "name": "台塑藥膳羊肉爐 1200g+-5%"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/24/220a622981b445e5833141551f1d50f8.jpg",
+    "price": "NT$209",
+    "name": "桂冠東北酸白鍋 400g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/18/032e6ec3-5343-4365-a961-1745fcab9a52.jpg",
+    "price": "NT$104",
+    "name": "桂冠山頭火監製-豚骨綜合鍋 750ml"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/24f31504c24349b18153fe844ef5f905.jpg",
+    "price": "NT$279",
+    "name": "義美清燉羊肉爐 1050g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/94a1c45509d0434c8c4993f65936d8ba.jpg",
+    "price": "NT$229",
+    "name": "雅方極品薑母羊肉爐 １０００ｇ"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/18/b7a2829c-e845-4f0f-b92f-7344a2834165.jpg",
+    "price": "NT$104",
+    "name": "山頭火監製-海鮮貝類鍋 740ml"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/09/15/b5edd446-85ac-49cd-a2a8-729dc7a2c267.jpg",
+    "price": "NT$139",
+    "name": "小蒙牛蒙古麻辣鴨血 600g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/18/96a3766c-a672-4688-9a50-f9e05f73e1f5.jpg",
+    "price": "NT$180",
+    "name": "這一鍋一品酸菜鍋火鍋湯底 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/22536854234b4c59aafcc21b885b20b0.jpg",
+    "price": "NT$411",
+    "name": "雅方特級小山羊羊肉爐 １４００ｇ"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/11/25/7fd0402337e54042a441cdc15519233c.jpg",
+    "price": "NT$199",
+    "name": "台酒酒粕花雕雞風味火鍋湯底調理包 750g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/18/5dd072e7-b720-4a30-8b9b-c24cf0b089a3.jpg",
+    "price": "NT$179",
+    "name": "牛頭牌蒙古鍋火鍋湯底 270g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/01/04/a90af38c-f335-4cb3-901e-f243fa9796c8.jpg",
+    "price": "NT$180",
+    "name": "海底撈番茄牛肉煲 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/18/ed89d4df-b5ad-450c-8b42-edfa586b77b5.jpg",
+    "price": "NT$179",
+    "name": "牛頭牌濃湯底-叻沙鍋 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/18/dd2eff97-cba1-43aa-ba13-b15def115b58.jpg",
+    "price": "NT$185",
+    "name": "千葉火鍋沙茶鍋火鍋湯底 800g",
+    "description": "任2件277元"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/24/3bc2a080d5fa4b5ca1cc6f1151063675.jpg",
+    "price": "NT$125",
+    "name": "良金牧場金門高梁牛三寶 640g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/7aa178ebc11747eeaa6ee510c11eef8d.jpg",
+    "price": "NT$148",
+    "name": "My料理所胡椒豬肚火鍋湯底 900g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/817d54532e15441dbbad33522a8fb75c.jpg",
+    "price": "NT$130",
+    "name": "森泉清燉羊肉湯 1200g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/d92b9c384c6f4222a733861d120faccf.jpg",
+    "price": "NT$130",
+    "name": "森泉漢方羊肉壚 1200g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/11/25/381bcc3c653348a59ad5708375c518e3.jpg",
+    "price": "NT$199",
+    "name": "台酒酒粕酸菜魚風味火鍋湯底調理包 750g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/d366ef0c114a4677a613957f878a648b.jpg",
+    "price": "NT$319",
+    "name": "撈王胡椒豬肚雞 1000g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/6b342ff254554711988c5074dda9903b.jpg",
+    "price": "NT$319",
+    "name": "石二鍋汕頭沙茶鍋 1318g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/7087810c6ec94d5c9eaf5e4140e05a28.jpg",
+    "price": "NT$159",
+    "name": "冰冰好料理-東北酸菜白肉鍋 1200g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/24/4baa0abc6e73477f80dec9175aff5507.jpg",
+    "price": "NT$219",
+    "name": "潮魯坊漢方紅燒羊肉爐 1200g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/fba34b80e4a547d29ae42b3655dc5693.jpg",
+    "price": "NT$169",
+    "name": "老撈神仙胡椒豬肚雞火鍋湯底 600g(固形物50g)"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/70db26e1c5c7483d847cc81539de32c2.jpg",
+    "price": "NT$159",
+    "name": "尬鍋剝皮辣椒風味雞湯火鍋湯底 800g(固形量30g)"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/9428e1afcc23456381677eb3a17f9474.jpg",
+    "price": "NT$319",
+    "name": "撈王藤椒酸菜魚 1000g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/18/c1bcb24f-44b8-40f2-97b4-81b0d8ebe73a.jpg",
+    "price": "NT$149",
+    "name": "石研室台式爆炒石頭火鍋經典湯底 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/09/25/10fcb21a58954f2eadbe443e8a98e0ca.jpg",
+    "price": "NT$189",
+    "name": "得意的一天剝皮辣椒蓮子熬雞湯 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/09/15/67100167-8c5b-4a3d-b52a-f73c875ac618.jpg",
+    "price": "NT$104",
+    "name": "山頭火監製-松茸風味鍋 735ml"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/04a146d8acb34775836fa66e52d35f53.jpg",
+    "price": "NT$135",
+    "name": "寒舍集團豚骨胡椒豬肚鍋火鍋湯底 800g(固形物30g)"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/11/12/7ec547ea-8bad-4440-bd6b-cf8b5ce9b05f.jpg",
+    "price": "NT$128",
+    "name": "德莊青一色鮮椒火鍋底料52度 220g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/24/6f05a69feccd4d0abde7ad01b8bf84fb.jpg",
+    "price": "NT$299",
+    "name": "潮魯坊眷香酸菜白肉鍋 1200g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pxmart-pic/4550512040545/4550512040545.jpg",
+    "price": "NT$89",
+    "name": "無印良品雪濃牛骨湯底 350g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/08/08d92981-8ee2-4ab9-8f37-773635e33e12.jpg",
+    "price": "NT$99",
+    "name": "一引膠原蛋白雞湯野菜高湯包 720g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/30/0431a3d795fa4c86b073a2a066e4e90e.jpg",
+    "price": "NT$180",
+    "name": "海底撈酸菜白肉煲 800g(固形物150g)"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/ff6429ba48c14bacae62994756af4687.jpg",
+    "price": "NT$130",
+    "name": "森泉紅燒羊雜鍋 1200g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/01/be33f0de1c6c45de9b6824d738126a6e.jpg",
+    "price": "NT$189",
+    "name": "得意的一天香草羅宋牛腱燉湯 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/34f51f42c62a4b508fdfde9631123b1d.jpg",
+    "price": "NT$148",
+    "name": "My料理所藤椒酸菜火鍋湯底 900g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/30/4aee616a727b4839a8ddd80cc2a0ca5c.jpg",
+    "price": "NT$135",
+    "name": "春野郭主義素食麻辣鍋火鍋湯底(全素) 800g(固形物80g)"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/11/01/40cd67fadbff4b1194e8b1ee66dc16cc.jpg",
+    "price": "NT$195",
+    "name": "十味觀&狂一鍋-爆炒蒜頭蛤蠣雞鍋 600g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/02/a892d663244042018bac44c867ddc0d9.jpg",
+    "price": "NT$280",
+    "name": "博仁堂南洋風味肉骨茶 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/11/01/259788334e734588b5a35ce951202090.jpg",
+    "price": "NT$199",
+    "name": "牛頭牌胡椒豚骨鍋 960g",
+    "description": "任2件374元"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/08/5e8af4b41d344ccebb0c33c73703c79b.jpg",
+    "price": "NT$179",
+    "name": "匠研究匠煮動力火鍋-搖滾麻辣血旺鍋 750g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/08759d4a66914532930d44dc1adbad04.jpg",
+    "price": "NT$159",
+    "name": "老撈名媛牛尾湯火鍋湯底 600g(固形物50g)"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/02/0ff6a0b93c5a40ccbf2227a7f2b6841f.jpg",
+    "price": "NT$280",
+    "name": "博仁堂四物雙寶藥膳盅 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/11/01/fda934de26f44cc0aa38c2d02e649262.jpg",
+    "price": "NT$160",
+    "name": "十味觀石頭火鍋 600g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/30/e3d0ebec29f64fc2aa568838fd5a966f.jpg",
+    "price": "NT$189",
+    "name": "雅媽吉鹽味地雞火鍋湯 700g",
+    "description": "2件283元"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pxmart-pic/4550512943877/4550512943877.jpg",
+    "price": "NT$89",
+    "name": "無印良品麻油雞湯底 350g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/11/28/f384e70d517c4fdf9067d2eddab8f85c.jpg",
+    "price": "NT$230",
+    "name": "洽富x環記麻油雞湯 600g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/05/24/0dc2e763-8492-4d9d-a0a3-4c571e2c185b.jpg",
+    "price": "NT$189",
+    "name": "得意的一天有料熬鮮湯-韓式人蔘糯米雞湯 780g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/05/e3bf3b18f09b4d81af7532c88c68d36a.jpg",
+    "price": "NT$230",
+    "name": "洽富砂勞越白胡椒雞湯 600g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pxmart-pic/4550512943884/4550512943884.jpg",
+    "price": "NT$89",
+    "name": "無印良品薑母鴨湯底 350g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/01/19/8a1a979e-345d-4e51-8ca2-7f1d6e49c9a3.jpg",
+    "price": "NT$314",
+    "name": "康寶胡椒豚骨火鍋湯底 750g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/02/02/2b892434-3fcf-412f-bf01-5185a94c912c.jpg",
+    "price": "NT$315",
+    "name": "康寶麻辣鴨血火鍋湯底 750g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/01/17/d12483f1-6897-4f31-8c4b-c513827c89b4.jpg",
+    "price": "NT$180",
+    "name": "海底撈-麻辣鴨血煲 800g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/10/02/3101bf2dfe4d49039c23e6164ce7aeb0.jpg",
+    "price": "NT$128",
+    "name": "德莊番茄火鍋底料 220g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2023/12/18/451f26d6-4ca6-4620-a61c-e7a95c45b7df.jpg",
+    "price": "NT$99",
+    "name": "牡丹峰蟹味海鮮鍋高湯包 750g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/6240c6f605204fbbba588422828adee9.jpg",
+    "price": "NT$159",
+    "name": "尬鍋蒜頭蛤蜊風味雞湯火鍋湯底 800g(固形量15g)"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/38f55504d61544c1a3fc4e2432b4c050.jpg",
+    "price": "NT$135",
+    "name": "寒舍集團和風昆布鍋火鍋湯底 800g(固形物50g)"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/11/01/3cf95510160145dd9f1e59fa1df1741e.jpg",
+    "price": "NT$128",
+    "name": "德莊清油麻辣火鍋底料52度 220g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/11/01/6bd69e0900994c53b95caf9fb7d6701d.jpg",
+    "price": "NT$199",
+    "name": "牛頭牌干貝蒜頭雞 960g",
+    "description": "任2件374元"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/11/12/fbc8e697-f6b1-494e-a1fa-a9038f7d9f6e.jpg",
+    "price": "NT$128",
+    "name": "德莊清油麻辣火鍋底料12度 220g"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pic/2024/12/06/029a27e51cc04d6388574ccecbedb2d4.jpg",
+    "price": "NT$169",
+    "name": "老撈總裁麻辣鴨血火鍋湯底 600g(固形量300g)"
+  },
+  {
+    "image": "https://image.pxgo.com.tw/pxmart-pic/4550512943891/4550512943891.jpg",
+    "price": "NT$89",
+    "name": "無印良品剝皮辣椒湯底 350g"
+  }
+]

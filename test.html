@@ -1,24 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>團購進度條</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>固定搜尋框</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .search-container {
+            position: relative;
+            width: 100%;
+            background: white;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .search-box {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .content {
+            height: 1500px;
+            padding: 20px;
+        }
+        
+        .sticky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="progress-container">
-        <div class="progress-bar" id="progress-bar"></div>
-        <span id="progress-text">0 / 10</span>
+    <div class="search-container" id="searchContainer">
+        <img src="logo.png" alt="Logo" class="logo">
+        <input type="text" class="search-box" placeholder="搜尋...">
     </div>
-    <div class="price-container">
-        當前價格: <span id="current-price">100</span> 元
+    <div class="content">
+        <p>這是一些內容。向下滾動看看搜尋框的效果。</p>
     </div>
-    <button onclick="incrementProgress()">加一</button>
-
-    <script src="script.js"></script>
+    <script>
+        window.addEventListener("scroll", function() {
+            var searchContainer = document.getElementById("searchContainer");
+            if (window.scrollY > 50) {
+                searchContainer.classList.add("sticky");
+            } else {
+                searchContainer.classList.remove("sticky");
+            }
+        });
+    </script>
 </body>
 
 </html>
