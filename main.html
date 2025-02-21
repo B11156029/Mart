@@ -50,6 +50,7 @@
                 <option value="sale">促銷</option>
             </select>
         </div>
+        <div id="scanner-container"></div>
         <div id="productList" class="product-list">
             <div v-for="product in filteredProducts" :key="product.name" class="product-item">
                 <img :src="'downloaded_images/' + product.image" :alt="product.name" class="product-image">
