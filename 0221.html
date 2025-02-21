@@ -9,8 +9,8 @@
     <style>
         #scanner-container {
             width: 100%;
-            max-width: 400px;
-            height: 300px;
+            max-width: 600px;
+            height: 400px;
             border: 2px solid #000;
             margin: 10px auto;
             display: none;
@@ -38,7 +38,9 @@
                     type: "LiveStream",
                     target: document.querySelector("#scanner-container"),
                     constraints: {
-                        facingMode: "environment"
+                        facingMode: "environment",
+                        width: 600,
+                        height: 400
                     }
                 },
                 decoder: {
