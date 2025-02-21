@@ -8,6 +8,8 @@
     <link href="main.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- 條碼掃描 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
 </head>
 
 <body>
@@ -21,10 +23,14 @@
 
                 <div style="display: flex; align-items: center; justify-content: center; text-align: center; height: 60px;margin: 20px;">
                     <img src="capy.png" alt="水豚" class="logo-icon" style="margin-right: -30px;margin-bottom: 20px;">
-                    <h1 style="color: black; font-weight: 700;width: 100%;">水豚君搜尋引擎</h1> <input type="text" v-model="searchKeyword" placeholder="請輸入商品名稱" class="search-input">
-                    <img src="camera.svg" alt="相機" class="camera-icon">
+                    <h1 style="color: black; font-weight: 700;width: 100%;">水豚君搜尋引擎</h1>
+                    <input type="text" v-model="searchKeyword" placeholder="請輸入商品名稱" class="search-input">
+
+                    <button onclick="startScanner()"><img src="camera.svg" alt="相機" class="camera-icon"></button>
+
+
+
                     <button @click="toggleCart" class="cart-toggle-button">
-                    
                     <img src="cart.png" alt="購物車" class="cart-icon">
                 </button>
                 </div>
@@ -112,60 +118,43 @@
         </div>
 
         <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const cameraIcon = document.querySelector(".camera-icon");
+            function startScanner() {
+                document.getElementById("scanner-container").style.display = "block";
 
-                if (cameraIcon) {
-                    cameraIcon.addEventListener("click", async() => {
-                        try {
-                            const stream = await navigator.mediaDevices.getUserMedia({
-                                video: {
-                                    facingMode: "environment"
-                                }
-                            });
-                            const video = document.createElement("video");
-                            video.srcObject = stream;
-                            video.setAttribute("playsinline", "");
-                            document.body.appendChild(video);
-                            video.play();
-
-                            const canvas = document.createElement("canvas");
-                            const context = canvas.getContext("2d");
-
-                            function scanBarcode() {
-                                if (video.readyState === video.HAVE_ENOUGH_DATA) {
-                                    canvas.width = video.videoWidth;
-                                    canvas.height = video.videoHeight;
-                                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-                                    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-                                    const code = jsQR(imageData.data, imageData.width, imageData.height);
-
-                                    if (code) {
-                                        alert("條碼內容: " + code.data);
-                                        stopCamera();
-                                    } else {
-                                        requestAnimationFrame(scanBarcode);
-                                    }
-                                } else {
-                                    requestAnimationFrame(scanBarcode);
-                                }
+                Quagga.init({
+                    inputStream: {
+                        name: "Live",
+                        type: "LiveStream",
+                        target: document.querySelector("#scanner-container"),
+                        constraints: {
+                            facingMode: "environment",
+                            width: {
+                                ideal: 1080
+                            },
+                            height: {
+                                ideal: 1080
                             }
-
-                            function stopCamera() {
-                                video.pause();
-                                stream.getTracks().forEach(track => track.stop());
-                                video.remove();
-                            }
-
-                            scanBarcode();
-                        } catch (error) {
-                            console.error("無法開啟相機", error);
                         }
-                    });
-                }
-            });
+                    },
+                    decoder: {
+                        readers: ["ean_reader", "code_128_reader", "upc_reader"]
+                    }
+                }, function(err) {
+                    if (err) {
+                        console.error("Quagga 初始化失敗:", err);
+                        return;
+                    }
+                    Quagga.start();
+                });
 
+                Quagga.onDetected(function(result) {
+                    let code = result.codeResult.code;
+                    document.querySelector(".barcode-input").value = code;
+
+                    Quagga.stop();
+                    document.getElementById("scanner-container").style.display = "none";
+                });
+            }
 
             new Vue({
                 el: '#app',
@@ -326,6 +315,12 @@
                         }, 500); // 500 毫秒後滾動，確保使用者輸入已完成
                     }
                 },
+
+
+
+
+
+
             });
         </script>
 </body>
