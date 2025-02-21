@@ -8,13 +8,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
     <style>
         #scanner-container {
-            width: 100%;
-            max-width: 200px;
+            width: 200px;
+            /* 小畫面 */
             height: 250px;
             border: 2px solid #000;
             margin: 10px auto;
-            display: none;
             position: relative;
+            display: none;
+            overflow: hidden;
+            /* 防止超出 */
+        }
+        
+        #scanner-container video {
+            width: auto;
+            /* 確保畫質不變 */
+            height: 100%;
         }
         
         #result {
@@ -29,9 +37,11 @@
     <button onclick="startScanner()">打開相機掃描條碼</button>
     <div id="scanner-container"></div>
     <div id="result">掃描結果: 無</div>
+
     <script>
         function startScanner() {
             document.getElementById("scanner-container").style.display = "block";
+
             Quagga.init({
                 inputStream: {
                     name: "Live",
@@ -39,8 +49,12 @@
                     target: document.querySelector("#scanner-container"),
                     constraints: {
                         facingMode: "environment",
-                        width: 200,
-                        height: 250
+                        width: {
+                            ideal: 1920
+                        }, // 設定高解析度
+                        height: {
+                            ideal: 1080
+                        }
                     }
                 },
                 decoder: {
@@ -48,7 +62,7 @@
                 }
             }, function(err) {
                 if (err) {
-                    console.error(err);
+                    console.error("Quagga 初始化失敗:", err);
                     return;
                 }
                 Quagga.start();
