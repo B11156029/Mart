@@ -9,19 +9,16 @@
     <style>
         #scanner-container {
             width: 250px;
-            /* 小畫面 */
             height: 250px;
             border: 2px solid #000;
             margin: 10px auto;
             position: relative;
             display: none;
             overflow: hidden;
-            /* 防止超出 */
         }
         
         #scanner-container video {
             width: 250px;
-            /* 確保畫質不變 */
             height: 250px;
         }
         
@@ -36,7 +33,7 @@
 <body>
     <button onclick="startScanner()">打開相機掃描條碼</button>
     <div id="scanner-container"></div>
-    <div id="result">掃描結果: 無</div>
+    <input type="text" id="barcode-input" placeholder="掃描結果" readonly>
 
     <script>
         function startScanner() {
@@ -51,7 +48,7 @@
                         facingMode: "environment",
                         width: {
                             ideal: 1080
-                        }, // 設定高解析度
+                        },
                         height: {
                             ideal: 1080
                         }
@@ -70,7 +67,7 @@
 
             Quagga.onDetected(function(result) {
                 let code = result.codeResult.code;
-                document.getElementById("result").innerText = "掃描結果: " + code;
+                document.getElementById("barcode-input").value = code;
                 Quagga.stop();
                 document.getElementById("scanner-container").style.display = "none";
             });
