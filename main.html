@@ -138,7 +138,19 @@
                         }
                     },
                     decoder: {
-                        readers: ["ean_reader", "code_128_reader", "upc_reader"]
+                        readers: [
+                            "ean_reader", // EAN-13 條碼
+                            "ean_8_reader", // EAN-8 條碼
+                            "upc_reader", // UPC-A 條碼
+                            "upc_e_reader", // UPC-E 短版條碼
+                            "code_128_reader", // 通用 Code 128 條碼
+                            "code_39_reader", // Code 39 條碼
+                            "code_39_vin_reader", // VIN Code 39 條碼
+                            "codabar_reader", // Codabar 條碼
+                            "i2of5_reader", // Interleaved 2 of 5 條碼
+                            "2of5_reader", // 標準 2 of 5 條碼
+                            "code_93_reader" // Code 93 條碼
+                        ]
                     }
                 }, function(err) {
                     if (err) {
