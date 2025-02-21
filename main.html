@@ -112,6 +112,61 @@
         </div>
 
         <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const cameraIcon = document.querySelector(".camera-icon");
+
+                if (cameraIcon) {
+                    cameraIcon.addEventListener("click", async() => {
+                        try {
+                            const stream = await navigator.mediaDevices.getUserMedia({
+                                video: {
+                                    facingMode: "environment"
+                                }
+                            });
+                            const video = document.createElement("video");
+                            video.srcObject = stream;
+                            video.setAttribute("playsinline", "");
+                            document.body.appendChild(video);
+                            video.play();
+
+                            const canvas = document.createElement("canvas");
+                            const context = canvas.getContext("2d");
+
+                            function scanBarcode() {
+                                if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                                    canvas.width = video.videoWidth;
+                                    canvas.height = video.videoHeight;
+                                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                                    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                                    const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+                                    if (code) {
+                                        alert("條碼內容: " + code.data);
+                                        stopCamera();
+                                    } else {
+                                        requestAnimationFrame(scanBarcode);
+                                    }
+                                } else {
+                                    requestAnimationFrame(scanBarcode);
+                                }
+                            }
+
+                            function stopCamera() {
+                                video.pause();
+                                stream.getTracks().forEach(track => track.stop());
+                                video.remove();
+                            }
+
+                            scanBarcode();
+                        } catch (error) {
+                            console.error("無法開啟相機", error);
+                        }
+                    });
+                }
+            });
+
+
             new Vue({
                 el: '#app',
                 data: {
