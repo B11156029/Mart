@@ -149,21 +149,19 @@
                 });
 
                 Quagga.onDetected((result) => {
-                    let code = result.codeResult.code;
+                    const code = result.codeResult.code;
                     console.log("條碼識別成功:", code);
 
-                    // 正確更新 Vue 實例中的 searchKeyword
                     if (app && app.$data) {
-                        app.$data.searchKeyword = code;
+                        app.searchKeyword = code; // 這裡修正為 app.searchKeyword 而非 app.$data.searchKeyword
                     }
 
-                    // 停止掃描並隱藏掃描器
                     Quagga.stop();
                     document.getElementById("scanner-container").style.display = "none";
                 });
             }
 
-            new Vue({
+            const app = new Vue({
                 el: '#app',
                 data: {
                     searchKeyword: '',
