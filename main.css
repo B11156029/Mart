@@ -634,8 +634,10 @@ hr {
 }
 
 #scanner-container video {
-    width: 150px;
-    height: 150px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* 確保畫面縮放但不變形 */
 }
 
 #result {
