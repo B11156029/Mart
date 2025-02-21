@@ -24,7 +24,7 @@
                 <div style="display: flex; align-items: center; justify-content: center; text-align: center; height: 60px;margin: 20px;">
                     <img src="capy.png" alt="水豚" class="logo-icon" style="margin-right: -30px;margin-bottom: 20px;">
                     <h1 style="color: black; font-weight: 700;width: 100%;">水豚君搜尋引擎</h1>
-                    <input type="text" id="barcode-input" v-model="searchKeyword" placeholder="請輸入商品名稱">
+                    <input type="text" id="barcode-input" v-model="searchKeyword" placeholder="請輸入商品名稱" class="search-input">
 
                     <button onclick="startScanner()"><img src="camera.svg" alt="相機" class="camera-icon"></button>
 
@@ -148,10 +148,14 @@
                     Quagga.start();
                 });
 
-                Quagga.onDetected(function(result) {
+                Quagga.onDetected((result) => {
                     let code = result.codeResult.code;
-                    document.getElementById("barcode-input").value = code;
+                    console.log("條碼識別成功:", code);
 
+                    // 直接更新 Vue 變數，Vue 會自動同步到輸入框
+                    app.searchKeyword = code;
+
+                    // 停止掃描並隱藏掃描器
                     Quagga.stop();
                     document.getElementById("scanner-container").style.display = "none";
                 });
