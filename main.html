@@ -24,7 +24,7 @@
                 <div style="display: flex; align-items: center; justify-content: center; text-align: center; height: 60px;margin: 20px;">
                     <img src="capy.png" alt="水豚" class="logo-icon" style="margin-right: -30px;margin-bottom: 20px;">
                     <h1 style="color: black; font-weight: 700;width: 100%;">水豚君搜尋引擎</h1>
-                    <input type="text" v-model="searchKeyword" placeholder="請輸入商品名稱" class="search-input">
+                    <input type="text" id="barcode-input" v-model="searchKeyword" placeholder="請輸入商品名稱" class="search-input">
 
                     <button onclick="startScanner()"><img src="camera.svg" alt="相機" class="camera-icon"></button>
 
@@ -150,7 +150,7 @@
 
                 Quagga.onDetected(function(result) {
                     let code = result.codeResult.code;
-                    document.querySelector(".barcode-input").value = code;
+                    document.getElementById("barcode-input").value = code;
 
                     Quagga.stop();
                     document.getElementById("scanner-container").style.display = "none";
