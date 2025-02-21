@@ -152,8 +152,10 @@
                     let code = result.codeResult.code;
                     console.log("條碼識別成功:", code);
 
-                    // 直接更新 Vue 變數，Vue 會自動同步到輸入框
-                    app.searchKeyword = code;
+                    // 正確更新 Vue 實例中的 searchKeyword
+                    if (app && app.$data) {
+                        app.$data.searchKeyword = code;
+                    }
 
                     // 停止掃描並隱藏掃描器
                     Quagga.stop();
