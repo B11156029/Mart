@@ -2,7 +2,7 @@ import json
 import re
 
 # 讀取本地檔案
-with open("家用清潔(衣物).json", "r", encoding="utf-8") as infile:
+with open("豐富鍋底.json", "r", encoding="utf-8") as infile:
     data = json.load(infile)
 
 def update_item(item):
@@ -31,7 +31,7 @@ def update_item(item):
 updated_data = [update_item(item) for item in data]
 
 # 將結果寫入本地檔案
-with open("家用清潔(衣物).json", "w", encoding="utf-8") as outfile:
+with open("豐富鍋底.json", "w", encoding="utf-8") as outfile:
     json.dump(updated_data, outfile, ensure_ascii=False, indent=4)
 
-print("資料處理完成，已輸出至 output.json")
+print("資料處理完成")

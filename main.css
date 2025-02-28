@@ -120,8 +120,8 @@ input[type="text"]:focus {
 }
 
 .quantity-image {
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
 }
 
 .quantity-display {
@@ -202,6 +202,20 @@ input[type="text"]:focus {
     background: none;
     border: none;
     cursor: pointer;
+    padding: 0;
+    margin: 0px 0px 0px 0px;
+    height: 50px;
+    width: 50px;
+}
+
+.return-toggle-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0px 10px 30px -20px;
+    height: 50px;
+    width: 50px;
 }
 
 .cart-icon {
@@ -252,16 +266,20 @@ input[type="text"]:focus {
     width: 20px;
     height: 30px;
     margin: 10px;
-    cursor: pointer;
     /* 浮標為手指圖式 */
-    border: none;
+    cursor: pointer;
     /* 移除邊框 */
+    border: none;
+    /* 購物車背景透明無色 */
+    background-color: transparent;
 }
 
 .return-icon {
-    width: 20px;
-    height: 30px;
-    margin-right: 10px;
+    width: 80px;
+    /* 使用較大原圖尺寸 */
+    height: 80px;
+    transform: scale(0.25);
+    /* 縮小 50% */
     cursor: pointer;
     /* 浮標為手指圖式 */
     border: none;
@@ -449,6 +467,7 @@ input[type="text"]:focus {
     cursor: pointer;
     transition: background 0.3s ease;
     width: 60px;
+    font-weight: bold;
 }
 
 .remove-button:hover {
@@ -548,8 +567,50 @@ hr {
 }
 
 .screenshot-button {
-    width: 70%;
-    height: 50px;
+    background-color: white;
+    /* 白色背景 */
+    color: black;
+    /* 黑色文字 */
+    border: 2px solid black;
+    /* 黑色邊框 */
+    padding: 10px 20px;
+    /* 內邊距 */
+    font-size: 16px;
+    /* 文字大小 */
+    border-radius: 8px;
+    /* 圓角 */
+    cursor: pointer;
+    /* 滑鼠懸停時變成可點擊 */
+    transition: all 0.3s ease-in-out;
+    /* 過渡效果 */
+    font-weight: bold;
+    /* 讓字體更明顯 */
+}
+
+.screenshot-button:hover {
+    transform: scale(0.95);
+    /* 懸停時縮小 */
+}
+
+.edit-subtotal-button {
+    background-color: white;
+    /* 白色背景 */
+    color: black;
+    /* 黑色文字 */
+    border: 2px solid black;
+    /* 黑色邊框 */
+    padding: 4px 5px;
+    /* 內邊距 */
+    font-size: 12px;
+    /* 文字大小 */
+    border-radius: 8px;
+    /* 圓角 */
+    cursor: pointer;
+    /* 滑鼠懸停時變成可點擊 */
+    transition: all 0.3s ease-in-out;
+    /* 過渡效果 */
+    font-weight: bold;
+    /* 讓字體更明顯 */
 }
 
 
