@@ -123,7 +123,7 @@
                 const foundProduct = app.products.find(product => product.barcode === code);
 
                 if (foundProduct) {
-                    // 使用 SweetAlert2 顯示商品資訊，並新增加入購物車按鈕
+                    // 使用 SweetAlert2 顯示商品資訊，並新增數量輸入框
                     Swal.fire({
                         title: foundProduct.name,
                         text: foundProduct.description ? foundProduct.description : `價格: $${app.parsePrice(foundProduct.price)}`,
@@ -131,11 +131,20 @@
                         imageWidth: 150,
                         imageHeight: 150,
                         imageAlt: foundProduct.name,
+                        input: 'number',
+                        inputValue: 1,
+                        inputAttributes: {
+                            min: 1
+                        },
                         showCancelButton: true,
                         confirmButtonText: '加入購物車',
                         cancelButtonText: '取消',
-                        preConfirm: () => {
-                            app.addToCart(foundProduct);
+                        preConfirm: (quantity) => {
+                            if (!quantity || quantity < 1) {
+                                Swal.showValidationMessage('請輸入有效的數量');
+                                return false;
+                            }
+                            app.addToCart(foundProduct, parseInt(quantity));
                         }
                     });
                 } else {
@@ -205,14 +214,14 @@
                 parsePrice(priceString) {
                     return parseFloat(priceString.replace(/[^\d.-]/g, '')) || 0;
                 },
-                addToCart(product) {
+                addToCart(product, quantity = 1) {
                     const cartItem = this.cart.find(item => item.product.name === product.name);
                     if (cartItem) {
-                        cartItem.quantity++;
+                        cartItem.quantity += parseInt(quantity);
                     } else {
                         this.cart.push({
                             product,
-                            quantity: 1
+                            quantity: parseInt(quantity)
                         });
                     }
                     this.updateCartTotals();
