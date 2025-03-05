@@ -138,11 +138,8 @@
                     if (foundProduct) {
                         Swal.fire({
                             title: foundProduct.name,
-                            html: `
-                    <img src="新增資料夾/<span class="math-inline">\{foundProduct\.image\}" alt\="</span>{foundProduct.name}" style="max-width: 150px; height: auto;">
-                    <p>價格: $<span class="math-inline">\{app\.parsePrice\(foundProduct\.price\)\}</p\>
-<p\></span>{foundProduct.description || ''}</p>
-                `,
+                            text: foundProduct.description ? foundProduct.description : `價格: $${app.parsePrice(foundProduct.price)}`,
+                            imageUrl: '新增資料夾/' + foundProduct.image,
                             showCancelButton: true,
                             confirmButtonText: '加入購物車',
                             cancelButtonText: '取消',
