@@ -335,6 +335,7 @@ input[type="text"]:focus {
         padding: 15px;
         border-radius: 10px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        width: 100%;
     }
     .product-details .name {
         font-weight: bold;
@@ -348,9 +349,11 @@ input[type="text"]:focus {
         margin-right: 15px;
     }
     .cart-item-name {
-        width: 200px;
+        width: 180px;
         /* 根據需要調整寬度 */
-        margin-left: -20px;
+        text-align: left;
+        /* 靠左對齊 */
+        font-size: 14px;
     }
 }
 
@@ -364,7 +367,7 @@ input[type="text"]:focus {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     gap: 20px;
     border: 1px solid #ddd;
-    max-width: 92%;
+    max-width: 100%;
 }
 
 .product-info {
@@ -416,11 +419,16 @@ input[type="text"]:focus {
     display: flex;
     align-items: center;
     flex-grow: 1;
+    width: 100%;
     /* 讓商品資訊填滿 */
 }
 
 .cart-item-details {
-    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    /* 垂直排列文字 */
+    line-height: 1.5;
+    /* 設定一致的行高 */
 }
 
 .cart-controls {
@@ -462,6 +470,8 @@ input[type="text"]:focus {
     cursor: pointer;
     transition: background 0.3s ease;
     width: 60px;
+    height: 30px;
+    /* 設定按鈕高度 */
     font-weight: bold;
 }
 
@@ -535,9 +545,9 @@ input[type="text"]:focus {
 
 .cart-item-name {
     /* 確保文字在寬度不足時換行 */
-    width: 100%;
-    margin-left: -20px;
-    /* 根據需要調整寬度 */
+    width: 170px;
+    text-align: left;
+    /* 靠左對齊 */
 }
 
 hr {
@@ -711,7 +721,8 @@ hr {
 /* 條碼掃描器 */
 
 .quantity-input {
-    width: 30px;
+    margin-left: 5px;
+    width: 20px;
     /* 調小寬度 */
     padding: 6px 10px;
     /* 適當減少內邊距 */
@@ -756,4 +767,6 @@ hr {
     display: block;
     font-size: 14px;
     margin-top: 3px;
+    text-align: left;
+    /* 靠左對齊 */
 }
