@@ -123,6 +123,7 @@
                 const foundProduct = app.products.find(product => product.barcode === code);
 
                 if (foundProduct) {
+                    // 使用 SweetAlert2 顯示商品資訊，並新增加入購物車按鈕
                     Swal.fire({
                         title: foundProduct.name,
                         text: foundProduct.description ? foundProduct.description : `價格: $${app.parsePrice(foundProduct.price)}`,
@@ -130,9 +131,15 @@
                         imageWidth: 150,
                         imageHeight: 150,
                         imageAlt: foundProduct.name,
-                        confirmButtonText: '確定'
+                        showCancelButton: true,
+                        confirmButtonText: '加入購物車',
+                        cancelButtonText: '取消',
+                        preConfirm: () => {
+                            app.addToCart(foundProduct);
+                        }
                     });
                 } else {
+                    // 如果找不到匹配的商品
                     Swal.fire({
                         title: '找不到商品',
                         text: '未找到與此條碼匹配的商品。',
