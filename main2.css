@@ -467,11 +467,11 @@ input[type="text"]:focus {
     background: #ff4d4f;
     color: white;
     border: none;
-    padding: 8px 12px;
+    padding: 0;
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s ease;
-    width: 60px;
+    width: 50px;
     height: 30px;
     /* 設定按鈕高度 */
     font-weight: bold;
@@ -526,20 +526,6 @@ input[type="text"]:focus {
 .cart-item-subtotal {
     color: #555;
     font-weight: bold;
-}
-
-.remove-button {
-    background-color: #ff4d4f;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.remove-button:hover {
-    background-color: #d32f2f;
 }
 
 .cart-subtotal {
@@ -727,7 +713,7 @@ hr {
     margin-left: 5px;
     width: 20px;
     /* 調小寬度 */
-    padding: 6px 10px;
+    padding: 6px 6px;
     /* 適當減少內邊距 */
     border: 1px solid #d1d5db;
     /* gray-300 */
