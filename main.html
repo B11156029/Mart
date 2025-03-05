@@ -8,42 +8,27 @@
     <link href="main.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <!-- 條碼掃描 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
     <div id="app" class="container">
-        <!-- 固定在頂部的導航區塊 -->
         <div class="sticky-header">
-
-
-            <!-- 搜尋框也要固定 -->
             <div class="search-container">
-
                 <div style="display: flex; align-items: center; justify-content: center; text-align: center; height: 60px;margin: 20px;">
                     <img src="capy.png" alt="水豚" class="logo-icon" style="margin-right: -30px;margin-bottom: 20px;">
                     <h1 style="color: black; font-weight: 700;width: 100%;">水豚君搜尋引擎</h1>
                     <input type="text" id="barcode-input" v-model="searchKeyword" placeholder="請輸入商品名稱" class="search-input">
-
                     <button onclick="startScanner()" style="background: transparent; border: none; padding: 0; cursor: pointer;">
-    <img src="camera.svg" alt="相機" class="camera-icon">
-</button>
-
-
-
-
+                        <img src="camera.svg" alt="相機" class="camera-icon">
+                    </button>
                     <button @click="toggleCart" class="cart-toggle-button">
-                    <img src="cart.png" alt="購物車" class="cart-icon">
-                </button>
+                        <img src="cart.png" alt="購物車" class="cart-icon">
+                    </button>
                 </div>
-
-
             </div>
         </div>
-
-
-
         <div>
             <label for="attribute">選擇屬性:</label>
             <select id="attribute" v-model="selectedAttribute">
@@ -73,22 +58,13 @@
                 </div>
             </div>
         </div>
-
         <div id="cart" class="cart" :class="{ show: isCartVisible }">
-
-
             <div class="cart-header">
                 <button @click="toggleCart" class="return-toggle-button">
-        <img src="return.png" alt="return" class="return-icon">
-    </button>
-
+                    <img src="return.png" alt="return" class="return-icon">
+                </button>
                 <h2 style="margin:0px 10px 0px 0px;padding: 0;">購物車</h2><button @click="captureCart" class="screenshot-button">下載購物車截圖</button>
             </div>
-
-
-
-
-
             <div class="cart-content">
                 <div v-for="item in cart" :key="item.product.name" class="cart-item">
                     <div class="cart-item-info">
@@ -117,10 +93,8 @@
             </div>
             <div class="cart-total">
                 <h3>總計: ${{ cartTotal.toFixed(0) }}元</h3>
-
             </div>
         </div>
-
         <script>
             function startScanner() {
                 document.getElementById("scanner-container").style.display = "block";
@@ -142,17 +116,9 @@
                     },
                     decoder: {
                         readers: [
-                            "ean_reader", // EAN-13 條碼
-                            "ean_8_reader", // EAN-8 條碼
-                            "upc_reader", // UPC-A 條碼
-                            "upc_e_reader", // UPC-E 短版條碼
-                            "code_128_reader", // 通用 Code 128 條碼
-                            "code_39_reader", // Code 39 條碼
-                            "code_39_vin_reader", // VIN Code 39 條碼
-                            "codabar_reader", // Codabar 條碼
-                            "i2of5_reader", // Interleaved 2 of 5 條碼
-                            "2of5_reader", // 標準 2 of 5 條碼
-                            "code_93_reader" // Code 93 條碼
+                            "ean_reader", "ean_8_reader", "upc_reader", "upc_e_reader",
+                            "code_128_reader", "code_39_reader", "code_39_vin_reader",
+                            "codabar_reader", "i2of5_reader", "2of5_reader", "code_93_reader"
                         ]
                     }
                 }, function(err) {
@@ -167,8 +133,27 @@
                     const code = result.codeResult.code;
                     console.log("條碼識別成功:", code);
 
-                    if (app && app.$data) {
-                        app.searchKeyword = code; // 這裡修正為 app.searchKeyword 而非 app.$data.searchKeyword
+                    const foundProduct = app.products.find(product => product.barcode === code);
+
+                    if (foundProduct) {
+                        Swal.fire({
+                            title: foundProduct.name,
+                            html: `
+                    <img src="新增資料夾/<span class="math-inline">\{foundProduct\.image\}" alt\="</span>{foundProduct.name}" style="max-width: 150px; height: auto;">
+                    <p>價格: $<span class="math-inline">\{app\.parsePrice\(foundProduct\.price\)\}</p\>
+<p\></span>{foundProduct.description || ''}</p>
+                `,
+                            showCancelButton: true,
+                            confirmButtonText: '加入購物車',
+                            cancelButtonText: '取消',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                app.addToCart(foundProduct);
+                                Swal.fire('已加入購物車！', '', 'success');
+                            }
+                        });
+                    } else {
+                        Swal.fire('查無商品', '找不到條碼對應的商品。', 'error');
                     }
 
                     Quagga.stop();
@@ -181,19 +166,18 @@
                 data: {
                     searchKeyword: '',
                     selectedAttribute: '',
-                    products: [], // 原始全部商品資料
-                    visibleProducts: [], // 當前可見的商品
+                    products: [],
+                    visibleProducts: [],
                     cart: [],
                     isCartVisible: false,
-                    itemsPerLoad: 30, // 每次加載的商品數量
-                    currentIndex: 0, // 加載商品的起始索引
+                    itemsPerLoad: 30,
+                    currentIndex: 0,
                 },
                 computed: {
                     filteredProducts() {
                         const keyword = this.searchKeyword.trim().toLowerCase();
                         const attribute = this.selectedAttribute.trim().toLowerCase();
 
-                        // 遍歷所有商品，而不是只遍歷可見的商品
                         const allFilteredProducts = this.products.filter(product => {
                             const nameMatches = product.name.toLowerCase().includes(keyword);
                             const barcodeMatches = product.barcode && product.barcode.includes(keyword);
@@ -202,7 +186,6 @@
                             return (nameMatches || barcodeMatches) && attributeMatches;
                         });
 
-                        // 搜尋結果同時應該考慮當前的顯示限制
                         return allFilteredProducts.slice(0, this.currentIndex);
                     },
                     cartTotal() {
@@ -227,7 +210,6 @@
                             }
                         }
 
-                        // 處理剩餘數量（如果優惠無法完全涵蓋）
                         if (remainingQuantity > 0) {
                             subtotal += this.parsePrice(product.price) * remainingQuantity;
                         }
@@ -251,7 +233,7 @@
                     },
                     increaseQuantity(product) {
                         this.addToCart(product);
-                        this.updateCartTotals(); // 確保小計更新
+                        this.updateCartTotals();
                     },
                     decreaseQuantity(product) {
                         const cartItem = this.cart.find(item => item.product.name === product.name);
@@ -260,7 +242,7 @@
                         } else {
                             this.cart = this.cart.filter(item => item.product.name !== product.name);
                         }
-                        this.updateCartTotals(); // 確保小計更新
+                        this.updateCartTotals();
                     },
                     updateCartTotals() {
                         this.cart.forEach((item, index) => {
@@ -274,7 +256,6 @@
                     toggleCart() {
                         this.isCartVisible = !this.isCartVisible;
                     },
-
                     getProductQuantity(product) {
                         const cartItem = this.cart.find(item => item.product.name === product.name);
                         return cartItem ? cartItem.quantity : 0;
@@ -282,8 +263,8 @@
                     editSubtotal(item) {
                         const newSubtotal = prompt(`請輸入新的小計金額 (目前為 $${item.subtotal.toFixed(2)}):`);
                         if (newSubtotal !== null && !isNaN(newSubtotal) && newSubtotal >= 0) {
-                            this.$set(item, 'subtotal', parseFloat(newSubtotal)); // 確保 Vue 能偵測變更
-                            this.$forceUpdate(); // 強制 Vue 重新渲染，確保總計更新
+                            this.$set(item, 'subtotal', parseFloat(newSubtotal));
+                            this.$forceUpdate();
                         } else {
                             alert('請輸入有效的小計金額');
                         }
@@ -291,29 +272,25 @@
                     captureCart() {
                         const cartElement = document.querySelector('#cart');
                         if (cartElement) {
-                            // 暫時展開購物車的樣式
                             const originalStyle = cartElement.getAttribute("style") || "";
                             cartElement.style.height = "auto";
                             cartElement.style.overflow = "visible";
 
                             html2canvas(cartElement, {
-                                scale: 2, // 提高分辨率
-                                useCORS: true, // 確保跨域圖片顯示
-                                windowWidth: cartElement.scrollWidth, // 確保內容完整
-                                windowHeight: cartElement.scrollHeight, // 確保高度完整
+                                scale: 2,
+                                useCORS: true,
+                                windowWidth: cartElement.scrollWidth,
+                                windowHeight: cartElement.scrollHeight,
                             }).then(canvas => {
                                 const link = document.createElement('a');
                                 link.download = '購物車.png';
                                 link.href = canvas.toDataURL('image/png');
                                 link.click();
 
-                                // 恢復購物車原始樣式
                                 cartElement.setAttribute("style", originalStyle);
                             }).catch(error => {
                                 console.error('截圖失敗:', error);
                                 alert('截圖過程中出現錯誤，請稍後再試');
-
-                                // 恢復購物車原始樣式
                                 cartElement.setAttribute("style", originalStyle);
                             });
                         } else {
@@ -333,20 +310,35 @@
                     }
                 },
                 created() {
-                    fetch('main.json')
-                        .then(response => response.json())
-                        .then(data => {
-                            this.products = data;
-                            this.loadMoreProducts(); // 加載第一批商品
-                        })
-                        .catch(error => console.error('加載數據時出錯：', error));
 
-                    window.addEventListener('scroll', this.handleScroll); // 監聽滾動事件
+                    fetch('main.json')
+
+                    .then(response => response.json())
+
+                    .then(data => {
+
+                        this.products = data;
+
+                        this.loadMoreProducts();
+
+                    })
+
+                    .catch(error => console.error('加載數據時出錯：', error));
+
+
+
+                    window.addEventListener('scroll', this.handleScroll);
+
                 },
+
                 beforeDestroy() {
-                    window.removeEventListener('scroll', this.handleScroll); // 移除滾動事件
+
+                    window.removeEventListener('scroll', this.handleScroll);
+
                 },
+
                 watch: {
+
                     searchKeyword() {
                         clearTimeout(this.searchTimeout);
                         this.searchTimeout = setTimeout(() => {
@@ -354,17 +346,12 @@
                                 top: 0,
                                 behavior: 'smooth'
                             });
-                        }, 500); // 500 毫秒後滾動，確保使用者輸入已完成
+                        }, 500);
                     }
-                },
-
-
-
-
-
-
+                }
             });
         </script>
+    </div>
 </body>
 
 </html>
