@@ -148,7 +148,12 @@
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 app.addToCart(foundProduct);
-                                Swal.fire('已加入購物車！', '', 'success');
+                                Swal.fire({
+                                    title: '已加入購物車！',
+                                    icon: 'success',
+                                    showConfirmButton: false, // 隱藏 "確定" 按鈕
+                                    timer: 1000 // 1 秒後自動關閉
+                                });
                             }
                         });
                     } else {
