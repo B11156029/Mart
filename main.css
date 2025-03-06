@@ -681,17 +681,25 @@ hr {
 }
 
 
-/* 條碼掃描器 */
+/* 美化後的條碼掃描器 */
 
 #scanner-container {
     width: 250px;
     height: 250px;
-    border: 2px solid #000;
-    margin: 0px;
+    border: 2px dashed #888;
+    /* 虛線邊框 */
+    margin: 20px auto;
+    /* 置中 */
     position: relative;
     display: none;
     overflow: hidden;
-    padding: 0px;
+    padding: 10px;
+    border-radius: 10px;
+    /* 圓角 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* 陰影 */
+    background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+    /* 漸層背景 */
 }
 
 #scanner-container video {
