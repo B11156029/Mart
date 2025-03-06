@@ -8,7 +8,6 @@ body {
 
 .container {
     text-align: center;
-    padding: 20px 20px 20px 20px;
 }
 
 h1 {
@@ -39,7 +38,7 @@ input[type="text"]:focus {
 #productList {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 20px;
     padding: 10px;
 }
@@ -617,14 +616,15 @@ hr {
 /* 搜尋輸入框star */
 
 .search-container {
-    width: 100%;
-    padding: 10px;
-    margin: 10px;
+    max-width: 600px;
+    /* 設定最大寬度 */
+    width: 90%;
+    /* 如果max-width不夠寬，則用百分比設定寬度 */
     display: flex;
     align-items: center;
-    /* 垂直對齊 */
     gap: 10px;
-    /* 調整 input 和圖示之間的間距 */
+    margin: 0px 0px 0px 0px;
+    /* 水平置中 */
 }
 
 
@@ -669,10 +669,9 @@ hr {
 /* 搜尋輸入框end */
 
 .sticky-header {
-    margin-left: -20px;
     position: sticky;
     top: 0;
-    width: 105%;
+    width: 100%;
     /* 防止背景透明 */
     z-index: 1000;
     /* 確保始終在最上層 */
@@ -688,10 +687,11 @@ hr {
     width: 250px;
     height: 250px;
     border: 2px solid #000;
-    margin: 10px auto;
+    margin: 0px;
     position: relative;
     display: none;
     overflow: hidden;
+    padding: 0px;
 }
 
 #scanner-container video {
