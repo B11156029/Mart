@@ -17,10 +17,15 @@ const db = getDatabase(app);
 document.getElementById("submit").addEventListener('click', async function(e) {
     e.preventDefault();
 
-    const username = document.getElementById("username").value;
-    const name = document.getElementById("name").value;
-    const password = document.getElementById("password").value;
-    const compasswd = document.getElementById("compasswd").value;
+    const account_number = document.getElementById("account_number").value.trim();
+    const name = document.getElementById("name").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const compasswd = document.getElementById("compasswd").value.trim();
+
+    if (!account_number || !name || !password || !compasswd) {
+        alert("Please fill in all fields.");
+        return;
+    }
 
     if (password !== compasswd) {
         alert("Passwords do not match.");
@@ -28,9 +33,9 @@ document.getElementById("submit").addEventListener('click', async function(e) {
     }
 
     try {
-        await set(ref(db, 'user/' + username), {
-            username: username,
+        await set(ref(db, 'user/' + account_number), {
             name: name,
+            account_number: account_number,
             password: password
         });
         alert("Account created successfully!");

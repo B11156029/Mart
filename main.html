@@ -10,9 +10,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="main.js"></script>
 </head>
 
 <body>
+
     <div id="app" class="container">
         <div class="sticky-header">
             <div class="search-container">
@@ -26,9 +28,11 @@
                     <button @click="toggleCart" class="cart-toggle-button">
                         <img src="cart.png" alt="購物車" class="cart-icon">
                     </button>
+                    <div id="name-display"></div>
                 </div>
             </div>
         </div>
+
         <div>
             <label for="attribute">選擇屬性:</label>
             <select id="attribute" v-model="selectedAttribute">
@@ -38,6 +42,7 @@
                 <option value="sale">促銷</option>
             </select>
         </div>
+
         <div id="scanner-container"></div>
         <div id="productList" class="product-list">
             <div v-for="product in filteredProducts" :key="product.name" class="product-item">
@@ -65,10 +70,25 @@
                 </button>
                 <h2 style="margin:0px 10px 0px 0px;padding: 0;">購物車</h2><button @click="captureCart" class="screenshot-button">下載購物車截圖</button>
             </div>
+
+            <div id="app" class="container">
+                <button class="add-custom-product-button" @click="isAddingCustomProduct = true">新增自訂商品</button>
+
+
+                <div v-if="isAddingCustomProduct" class="custom-product-form">
+                    <h2>新增自訂商品</h2>
+                    <input type="text" v-model="customProduct.name" placeholder="商品名稱">
+                    <input type="number" v-model="customProduct.price" placeholder="價格">
+                    <input type="file" @change="onFileChange" accept="image/*">
+                    <button @click="addCustomProduct">加入購物車</button>
+                    <button @click="isAddingCustomProduct = false">取消</button>
+                </div>
+            </div>
+
             <div class="cart-content">
                 <div v-for="item in cart" :key="item.product.name" class="cart-item">
                     <div class="cart-item-info">
-                        <img :src="'新增資料夾/' + item.product.image" :alt="item.product.name" class="cart-image">
+                        <img :src="item.product.file ? item.product.image : '新增資料夾/' + item.product.image" :alt="item.product.name" class="cart-image">
                         <div class="cart-item-details">
                             <span class="cart-item-name">{{ item.product.name }}</span>
                             <span class="cart-item-price">單價: ${{ parsePrice(item.product.price) }}</span>
@@ -202,6 +222,17 @@
                     isCartVisible: false,
                     itemsPerLoad: 30,
                     currentIndex: 0,
+                    customProduct: {
+                        name: '',
+                        price: '',
+                        image: 'default.png', // 預設圖片
+
+                        barcode: null,
+                        attributes: [],
+                        specialOffers: null,
+                        file: null, // 新增 file 屬性
+                    },
+                    isAddingCustomProduct: false,
                 },
                 computed: {
                     filteredProducts() {
@@ -337,38 +368,50 @@
                         if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 50) {
                             this.loadMoreProducts();
                         }
-                    }
+                    },
+                    onFileChange(event) {
+                        const file = event.target.files[0];
+                        if (file) {
+                            this.customProduct.file = file;
+                            this.customProduct.image = URL.createObjectURL(file); // 預覽圖片
+                        }
+                    },
+                    addCustomProduct() {
+                        if (!this.customProduct.name || !this.customProduct.price) {
+                            alert('請輸入商品名稱和價格');
+                            return;
+                        }
+
+                        const newProduct = {...this.customProduct
+                        };
+                        this.addToCart(newProduct);
+                        this.customProduct = {
+                            name: '',
+                            price: '',
+                            image: 'default.png',
+
+                            barcode: null,
+                            attributes: [],
+                            specialOffers: null
+                        };
+                        this.isAddingCustomProduct = false;
+                    },
                 },
                 created() {
-
                     fetch('main.json')
-
-                    .then(response => response.json())
-
-                    .then(data => {
-
-                        this.products = data;
-
-                        this.loadMoreProducts();
-
-                    })
-
-                    .catch(error => console.error('加載數據時出錯：', error));
-
-
+                        .then(response => response.json())
+                        .then(data => {
+                            this.products = data;
+                            this.loadMoreProducts();
+                        })
+                        .catch(error => console.error('加載數據時出錯：', error));
 
                     window.addEventListener('scroll', this.handleScroll);
-
                 },
-
                 beforeDestroy() {
-
                     window.removeEventListener('scroll', this.handleScroll);
-
                 },
-
                 watch: {
-
                     searchKeyword() {
                         clearTimeout(this.searchTimeout);
                         this.searchTimeout = setTimeout(() => {

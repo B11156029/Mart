@@ -14,34 +14,30 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-document.getElementById("submit-btn").addEventListener('click', async function(e) {
+document.getElementById("submit-btn").addEventListener("click", async function(e) {
     e.preventDefault();
 
-    const username = document.getElementById("username").value;
+    const account_number = document.getElementById("account_number").value;
     const password = document.getElementById("password").value;
 
     try {
-        // 從 Firebase 資料庫中獲取使用者資料
-        const userRef = ref(db, 'user/' + username);
+        const userRef = ref(db, 'user/' + account_number);
         const snapshot = await get(userRef);
 
         if (snapshot.exists()) {
             const userData = snapshot.val();
             if (userData.password === password) {
-                // 登入成功
-                alert("Login successful!");
-                window.location.href = "https://b11156029.github.io/PX-Mart/main.html";
+                alert("登入成功！");
+                localStorage.setItem("account_number", account_number); // 🔹 存入 LocalStorage
+                window.location.href = "main.html";
             } else {
-                // 密碼錯誤
-                alert("Login failed: Incorrect password.");
+                alert("登入失敗：密碼錯誤。");
             }
         } else {
-            // 使用者不存在
-            alert("Login failed: User not found.");
+            alert("登入失敗：使用者不存在。");
         }
     } catch (error) {
-        // 登入失敗
-        console.error("Login error:", error);
-        alert("Login failed: An error occurred.");
+        console.error("登入錯誤：", error);
+        alert("登入失敗：發生錯誤。");
     }
 });
