@@ -336,7 +336,6 @@ input[type="text"]:focus {
         border-radius: 8px;
         box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
         gap: 20px;
-        margin-left: -10px;
         max-width: 100%;
     }
     .product-details .name {
@@ -351,11 +350,8 @@ input[type="text"]:focus {
         margin-left: -20px;
     }
     .cart-item-name {
-        display: block;
-        /* 確保文字在寬度不足時換行 */
-        width: 40px;
+        width: 170px;
         /* 根據需要調整寬度 */
-        margin-left: -20px;
     }
 }
 
@@ -369,7 +365,7 @@ input[type="text"]:focus {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     gap: 20px;
     border: 1px solid #ddd;
-    max-width: 92%;
+    max-width: 100%;
 }
 
 .product-info {
@@ -450,7 +446,7 @@ input[type="text"]:focus {
     flex: 1;
     text-align: center;
     padding: 0.5rem;
-    margin-left: -100px;
+    margin-left: -130px;
     margin-right: 0px;
     /* 將整個元素推到右側  */
     white-space: nowrap;
@@ -532,11 +528,10 @@ input[type="text"]:focus {
 }
 
 .cart-item-name {
-    display: block;
     /* 確保文字在寬度不足時換行 */
-    width: 100px;
-    margin-left: -20px;
-    /* 根據需要調整寬度 */
+    width: 170px;
+    text-align: left;
+    /* 靠左對齊 */
 }
 
 hr {
@@ -562,7 +557,7 @@ hr {
 }
 
 .cart-item-price {
-    margin-left: -10px;
+    text-align: left;
 }
 
 .screenshot-button {
@@ -717,3 +712,86 @@ hr {
 
 
 /* 條碼掃描器 */
+
+.custom-product-form {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+.custom-product-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.custom-product-form input[type="text"],
+.custom-product-form input[type="number"],
+.custom-product-form input[type="file"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.custom-product-form input[type="file"] {
+    border: none;
+}
+
+.custom-product-form img {
+    display: block;
+    margin: 10px auto;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.custom-product-form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.custom-product-form button:last-child {
+    background-color: #f44336;
+    margin-right: 0;
+}
+
+.custom-product-form button:hover {
+    opacity: 0.8;
+}
+
+.add-custom-product-button {
+    display: grid;
+    grid-template-columns: 1fr 2fr auto;
+    align-items: center;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+    border: 1px solid #ddd;
+    max-width: 100%;
+    cursor: pointer;
+    text-align: left;
+    /* 確保文字靠左對齊 */
+    font-size: 16px;
+    /* 根據購物車項目文字大小調整 */
+    color: #333;
+    /* 根據購物車項目文字顏色調整 */
+    margin-bottom: 10px;
+    /* 可選：增加按鈕之間的間距 */
+}
+
+.add-custom-product-button:hover {
+    background-color: #f0f0f0;
+    /* 可選：增加懸停效果 */
+}
