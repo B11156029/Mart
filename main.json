@@ -2,31 +2,18 @@
     {
         "name": "牛頭牌沙茶醬 127g 4.5oz",
         "image": "0991fc47-5cd9-4e36-977d-a3f36642946e.jpg",
-        "price": "52",
+        "price": "49",
         "barcode": "4711258001256",
-        "description": "",
-        "specialOffers": {
-            "1": 52
-        }
-    },
-    {
-        "name": "萬家香珍釀白醋(穀物釀造醋) 600ml",
-        "image": "0fde5718388f4f7e9d534cc0b9732adf.jpg",
-        "price": "33",
-        "barcode": "74261175203",
-        "description": "",
-        "specialOffers": {
-            "1": 33
-        }
+        "description": ""
     },
     {
         "name": "牛頭牌沙茶醬 250g",
         "image": "afa661924717482781f95357f5555442.jpg",
-        "price": "104",
+        "price": "100",
         "barcode": "4711258002505",
         "description": "",
         "specialOffers": {
-            "1": 104
+            "1": 100
         }
     },
     {

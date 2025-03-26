@@ -11,6 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="main.js"></script>
+    <script type="module" src="cart.js"></script>
 </head>
 
 <body>
@@ -92,6 +93,7 @@
                         <div class="cart-item-details">
                             <span class="cart-item-name">{{ item.product.name }}</span>
                             <span class="cart-item-price">單價: ${{ parsePrice(item.product.price) }}</span>
+                            <button @click="editPrice(item)" class="edit-price-button">修改單價</button>
                         </div>
                     </div>
                     <div class="cart-item-quantity">
@@ -106,13 +108,13 @@
                     </div>
                     <hr><br>
                     <div class="cart-item-subtotal">
-                        小計: ${{ item.subtotal.toFixed(2) }}
+                        小計: ${{ (Number(item.subtotal) || 0).toFixed(2) }}
                         <button @click="editSubtotal(item)" class="edit-subtotal-button">修改</button>
                     </div>
                 </div>
             </div>
             <div class="cart-total">
-                <h3>總計: ${{ cartTotal.toFixed(0) }}元</h3>
+                <h3>總計: ${{ (Number(cartTotal) || 0).toFixed(0) }}元</h3>
             </div>
         </div>
         <script>
@@ -233,6 +235,7 @@
                         file: null, // 新增 file 屬性
                     },
                     isAddingCustomProduct: false,
+                    cartModule: null, // 用於存儲導入的cart.js模塊
                 },
                 computed: {
                     filteredProducts() {
@@ -281,38 +284,76 @@
                         return parseFloat(priceString.replace(/[^\d.-]/g, '')) || 0;
                     },
                     addToCart(product) {
-                        const cartItem = this.cart.find(item => item.product.name === product.name);
-                        if (cartItem) {
-                            cartItem.quantity++;
+                        if (this.cartModule) {
+                            // 使用cart.js模塊添加商品
+                            this.cart = this.cartModule.addToCart(product);
                         } else {
-                            this.cart.push({
-                                product,
-                                quantity: 1
-                            });
+                            // 備用方案：直接操作cart數組
+                            const cartItem = this.cart.find(item => item.product.name === product.name);
+                            if (cartItem) {
+                                cartItem.quantity++;
+                            } else {
+                                this.cart.push({
+                                    product,
+                                    quantity: 1
+                                });
+                            }
+                            this.updateCartTotals();
                         }
-                        this.updateCartTotals();
                     },
                     increaseQuantity(product) {
-                        this.addToCart(product);
-                        this.updateCartTotals();
+                        if (this.cartModule) {
+                            // 使用cart.js模塊增加數量
+                            this.cart = this.cartModule.addToCart(product);
+                        } else {
+                            this.addToCart(product);
+                        }
                     },
                     decreaseQuantity(product) {
-                        const cartItem = this.cart.find(item => item.product.name === product.name);
-                        if (cartItem && cartItem.quantity > 1) {
-                            cartItem.quantity--;
+                        if (this.cartModule) {
+                            // 使用cart.js模塊減少數量
+                            const cartItem = this.cart.find(item => item.product.name === product.name);
+                            if (cartItem) {
+                                const newQuantity = cartItem.quantity - 1;
+                                if (newQuantity > 0) {
+                                    this.cart = this.cartModule.updateQuantity(product.name, newQuantity);
+                                } else {
+                                    this.cart = this.cartModule.removeFromCart(product.name);
+                                }
+                            }
                         } else {
-                            this.cart = this.cart.filter(item => item.product.name !== product.name);
+                            // 備用方案：直接操作cart數組
+                            const cartItem = this.cart.find(item => item.product.name === product.name);
+                            if (cartItem && cartItem.quantity > 1) {
+                                cartItem.quantity--;
+                            } else {
+                                this.cart = this.cart.filter(item => item.product.name !== product.name);
+                            }
+                            this.updateCartTotals();
                         }
-                        this.updateCartTotals();
                     },
                     updateCartTotals() {
-                        this.cart.forEach((item, index) => {
-                            this.$set(item, 'subtotal', this.calculateSubtotal(item.product, item.quantity));
-                        });
+                        if (this.cartModule) {
+                            // 使用cart.js模塊的計算方法
+                            this.cart.forEach((item, index) => {
+                                item.subtotal = this.cartModule.calculateSubtotal(item.product, item.quantity);
+                            });
+                        } else {
+                            // 備用方案：使用本地計算方法
+                            this.cart.forEach((item, index) => {
+                                this.$set(item, 'subtotal', this.calculateSubtotal(item.product, item.quantity));
+                            });
+                        }
                     },
                     removeFromCart(item) {
-                        this.cart = this.cart.filter(cartItem => cartItem !== item);
-                        this.updateCartTotals();
+                        if (this.cartModule) {
+                            // 使用cart.js模塊移除商品
+                            this.cart = this.cartModule.removeFromCart(item.product.name);
+                        } else {
+                            // 備用方案：直接操作cart數組
+                            this.cart = this.cart.filter(cartItem => cartItem !== item);
+                            this.updateCartTotals();
+                        }
                     },
                     toggleCart() {
                         this.isCartVisible = !this.isCartVisible;
@@ -322,12 +363,85 @@
                         return cartItem ? cartItem.quantity : 0;
                     },
                     editSubtotal(item) {
-                        const newSubtotal = prompt(`請輸入新的小計金額 (目前為 $${item.subtotal.toFixed(2)}):`);
+                        const newSubtotal = prompt(`請輸入新的小計金額 (目前為 $${(Number(item.subtotal) || 0).toFixed(2)}):`);
                         if (newSubtotal !== null && !isNaN(newSubtotal) && newSubtotal >= 0) {
-                            this.$set(item, 'subtotal', parseFloat(newSubtotal));
-                            this.$forceUpdate();
+                            if (this.cartModule) {
+                                // 使用cart.js模塊更新小計
+                                if (this.cartModule.updateSubtotal(item.product.name, parseFloat(newSubtotal))) {
+                                    // 更新Vue實例中的購物車數據
+                                    this.cart = this.cartModule.getCart();
+                                }
+                            } else {
+                                // 備用方案：直接更新小計
+                                this.$set(item, 'subtotal', parseFloat(newSubtotal));
+                            }
                         } else {
                             alert('請輸入有效的小計金額');
+                        }
+                    },
+                    editPrice(item) {
+                        const newPrice = prompt(`請輸入新的單價 (目前為 $${this.parsePrice(item.product.price)}):`); 
+                        if (newPrice !== null && !isNaN(newPrice) && newPrice >= 0) {
+                            // 導入cart.js中的updatePrice函數
+                            import('./cart.js')
+                                .then(cartModule => {
+                                    // 更新購物車中的價格
+                                    const result = cartModule.updatePrice(item.product.name, newPrice);
+                                    if (result.success) {
+                                        // 同步更新Vue實例中的購物車數據
+                                        this.cart = cartModule.getCart();
+                                        
+                                        // 同步更新原始products數組中的價格
+                                        const productIndex = this.products.findIndex(p => p.name === item.product.name);
+                                        if (productIndex !== -1) {
+                                            // 更新原始數據中的價格
+                                            this.$set(this.products[productIndex], 'price', newPrice);
+                                            // 如果原始數據中有特價信息，也需要清除
+                                            if (this.products[productIndex].specialOffers) {
+                                                this.$delete(this.products[productIndex], 'specialOffers');
+                                            }
+                                            console.log(`已更新商品 "${item.product.name}" 的價格為 ${newPrice}`);
+                                            
+                                            // 向服務器發送請求更新main.json文件
+                                            fetch('http://localhost:3002/update-price', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify({
+                                                    productName: item.product.name,
+                                                    newPrice: newPrice // 直接發送字符串格式的價格
+                                                })
+                                            })
+                                            .then(response => {
+                                                if (!response.ok) {
+                                                    return response.text().then(text => { throw new Error(text) });
+                                                }
+                                                return response.json();
+                                            })
+                                            .then(data => {
+                                                Swal.fire('成功', '價格已更新', 'success');
+                                            })
+                                            .catch(error => {
+                                                console.error('請求失敗:', error);
+                                                // 檢查是否為連接錯誤
+                                                if (error.message && error.message.includes('Failed to fetch')) {
+                                                    Swal.fire('連接錯誤', '無法連接到服務器，請確保服務器已啟動。價格已在購物車中更新，但未保存到數據庫。', 'warning');
+                                                } else {
+                                                    Swal.fire('錯誤', error.toString(), 'error');
+                                                }
+                                            });
+                                        }
+                                    } else {
+                                        Swal.fire('錯誤', result.message || '更新價格失敗', 'error');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('載入購物車模塊失敗:', error);
+                                    Swal.fire('錯誤', '載入購物車模塊失敗', 'error');
+                                });
+                        } else {
+                            alert('請輸入有效的價格');
                         }
                     },
                     captureCart() {
@@ -382,22 +496,30 @@
                             return;
                         }
 
-                        const newProduct = {...this.customProduct
-                        };
-                        this.addToCart(newProduct);
+                        const newProduct = {...this.customProduct};
+                        
+                        if (this.cartModule) {
+                            // 使用cart.js模塊添加自定義商品
+                            this.cart = this.cartModule.addToCart(newProduct);
+                        } else {
+                            // 備用方案：使用本地方法
+                            this.addToCart(newProduct);
+                        }
+                        
                         this.customProduct = {
                             name: '',
                             price: '',
                             image: 'default.png',
-
                             barcode: null,
                             attributes: [],
-                            specialOffers: null
+                            specialOffers: null,
+                            file: null
                         };
                         this.isAddingCustomProduct = false;
                     },
                 },
                 created() {
+                    // 加載商品數據
                     fetch('main.json')
                         .then(response => response.json())
                         .then(data => {
@@ -405,6 +527,15 @@
                             this.loadMoreProducts();
                         })
                         .catch(error => console.error('加載數據時出錯：', error));
+
+                    // 導入購物車模塊並初始化
+                    import('./cart.js')
+                        .then(module => {
+                            this.cartModule = module;
+                            // 初始化購物車，從localStorage加載數據
+                            this.cart = module.initCart();
+                        })
+                        .catch(error => console.error('加載購物車模塊時出錯：', error));
 
                     window.addEventListener('scroll', this.handleScroll);
                 },
