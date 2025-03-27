@@ -28,6 +28,8 @@ export function addToCart(product, quantity = 1) {
     const cartItem = cartData.find(item => item.product.name === product.name);
     if (cartItem) {
         cartItem.quantity += quantity;
+        // 更新 subtotal，根據最新的數量重新計算
+        cartItem.subtotal = calculateSubtotal(cartItem.product, cartItem.quantity);
     } else {
         // 創建購物車項目的深拷貝，避免引用原始商品對象
         const productCopy = JSON.parse(JSON.stringify(product));
@@ -101,6 +103,7 @@ export function updateSubtotal(productName, newSubtotal) {
 
 // 計算小計金額
 export function calculateSubtotal(product, quantity) {
+    // 如果沒有 specialOffers，就用原價乘數量
     if (!product.specialOffers) {
         return parsePrice(product.price) * quantity;
     }
@@ -108,8 +111,12 @@ export function calculateSubtotal(product, quantity) {
     let subtotal = 0;
     let remainingQuantity = quantity;
 
-    const offerKeys = Object.keys(product.specialOffers).map(Number).sort((a, b) => b - a);
+    // 取得所有特價數量，從大到小排序
+    const offerKeys = Object.keys(product.specialOffers)
+        .map(Number)
+        .sort((a, b) => b - a);
 
+    // 依據特價規則，計算可套用特價的金額
     for (let offerQty of offerKeys) {
         while (remainingQuantity >= offerQty) {
             subtotal += product.specialOffers[offerQty];
@@ -117,6 +124,7 @@ export function calculateSubtotal(product, quantity) {
         }
     }
 
+    // 剩餘不足以套用特價的部分，仍以原價計算
     if (remainingQuantity > 0) {
         subtotal += parsePrice(product.price) * remainingQuantity;
     }

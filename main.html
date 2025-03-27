@@ -12,6 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="main.js"></script>
     <script type="module" src="cart.js"></script>
+    <script type="module" src="cart-test.js"></script>
 </head>
 
 <body>
@@ -213,6 +214,7 @@
                 }
             }
 
+            // 創建Vue實例
             const app = new Vue({
                 el: '#app',
                 data: {
@@ -253,7 +255,7 @@
                         return allFilteredProducts.slice(0, this.currentIndex);
                     },
                     cartTotal() {
-                        return this.cart.reduce((total, item) => total + item.subtotal, 0);
+                        return this.cart.reduce((total, item) => total + Number(item.subtotal || 0), 0);
                     }
                 },
                 methods: {
@@ -336,7 +338,7 @@
                         if (this.cartModule) {
                             // 使用cart.js模塊的計算方法
                             this.cart.forEach((item, index) => {
-                                item.subtotal = this.cartModule.calculateSubtotal(item.product, item.quantity);
+                                this.$set(item, 'subtotal', this.cartModule.calculateSubtotal(item.product, item.quantity));
                             });
                         } else {
                             // 備用方案：使用本地計算方法
@@ -536,6 +538,13 @@
                             this.cart = module.initCart();
                         })
                         .catch(error => console.error('加載購物車模塊時出錯：', error));
+                        
+                    // 導入並初始化購物車測試功能
+                    import('./cart-test.js')
+                        .then(module => {
+                            module.initCartTest();
+                        })
+                        .catch(error => console.error('加載購物車測試模塊時出錯：', error));
 
                     window.addEventListener('scroll', this.handleScroll);
                 },
@@ -554,6 +563,9 @@
                     }
                 }
             });
+            
+            // 將Vue實例設置為全局變量，以便其他模塊可以訪問
+            window.app = app;
         </script>
     </div>
 </body>

@@ -46,9 +46,36 @@ const server = http.createServer((req, res) => {
     }
 });
 
+// 獲取本機IP地址
+function getLocalIpAddress() {
+    const { networkInterfaces } = require('os');
+    const nets = networkInterfaces();
+    const results = {};
+
+    for (const name of Object.keys(nets)) {
+        for (const net of nets[name]) {
+            // 跳過非IPv4和內部IP
+            if (net.family === 'IPv4' && !net.internal) {
+                if (!results[name]) {
+                    results[name] = [];
+                }
+                results[name].push(net.address);
+            }
+        }
+    }
+    return results;
+}
+
 // 啟動服務器
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
+    const ipAddresses = getLocalIpAddress();
     console.log(`服務器運行在 http://localhost:${PORT}`);
+    console.log('可通過以下IP地址從其他設備訪問：');
+    for (const [dev, addresses] of Object.entries(ipAddresses)) {
+        for (const addr of addresses) {
+            console.log(`http://${addr}:${PORT}`);
+        }
+    }
 });
 
 // 提供靜態文件
