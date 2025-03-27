@@ -681,37 +681,29 @@ hr {
     background-color: white;
 }
 
-#scanner-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* 半透明背景，可調整 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-}
+
 /* 美化後的條碼掃描器 */
 
 #scanner-container {
-    width: 250px;
-    height: 250px;
+    width: 100%;
+    height: 100%;
     border: 2px dashed #888;
     /* 虛線邊框 */
-    margin: 20px auto;
-    /* 置中 */
-    position: relative;
+    margin: 0;
+    /* 移除邊距 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
     display: none;
     overflow: hidden;
-    padding: 10px;
-    border-radius: 10px;
-    /* 圓角 */
+    padding: 0;
+    border-radius: 0;
+    /* 移除圓角 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     /* 陰影 */
-    background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
-    /* 漸層背景 */
+    background: rgba(0, 0, 0, 0.8);
+    /* 半透明黑色背景 */
 }
 
 #scanner-container video {
@@ -719,12 +711,28 @@ hr {
     height: 100%;
     object-fit: cover;
     /* 確保畫面縮放但不變形 */
+    position: relative;
+    z-index: 10000;
 }
 
 #result {
     text-align: center;
     font-size: 18px;
     margin-top: 10px;
+}
+
+.scanner-status {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px 0;
+    z-index: 10001;
 }
 
 
