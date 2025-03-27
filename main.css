@@ -681,7 +681,18 @@ hr {
     background-color: white;
 }
 
-
+#scanner-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* 半透明背景，可調整 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
 /* 美化後的條碼掃描器 */
 
 #scanner-container {

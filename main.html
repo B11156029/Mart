@@ -45,7 +45,9 @@
             </select>
         </div>
 
-        <div id="scanner-container"></div>
+        <div id="scanner-modal" style="display: none;">
+            <div id="scanner-container"></div>
+        </div>
         <div id="productList" class="product-list">
             <div v-for="product in filteredProducts" :key="product.name" class="product-item">
                 <img :src="'新增資料夾/' + product.image" :alt="product.name" class="product-image">
@@ -120,69 +122,66 @@
         </div>
         <script>
             function startScanner() {
-                document.getElementById("scanner-container").style.display = "block";
-
+                document.getElementById("scanner-modal").style.display = "flex"; // 顯示全屏 modal
                 let scanAttempts = 0;
                 const maxScanAttempts = 3; // 最大掃描嘗試次數
                 const scanDelay = 1000; // 每次掃描間隔 (毫秒)
                 let lastCode = null; // 儲存上次成功掃描的條碼
 
-                Quagga.init({
-                    inputStream: {
-                        name: "Live",
-                        type: "LiveStream",
-                        target: document.querySelector("#scanner-container"),
-                        constraints: {
-                            facingMode: "environment",
-                            width: {
-                                ideal: 1080
-                            },
-                            height: {
-                                ideal: 1080
-                            }
-                        }
-                    },
-                    decoder: {
-                        readers: [
-                            "ean_reader", "ean_8_reader", "upc_reader", "upc_e_reader",
-                            "code_128_reader", "code_39_reader", "code_39_vin_reader",
-                            "codabar_reader", "i2of5_reader", "2of5_reader", "code_93_reader"
-                        ]
-                    }
-                }, function(err) {
-                    if (err) {
-                        console.error("Quagga 初始化失敗:", err);
-                        return;
-                    }
-                    Quagga.start();
-                });
+                // 初始化 Quagga，目標指向 #scanner-container
+    Quagga.init({
+        inputStream: {
+            name: "Live",
+            type: "LiveStream",
+            target: document.querySelector("#scanner-container"),
+            constraints: {
+                facingMode: "environment",
+                width: { ideal: 1080 },
+                height: { ideal: 1080 }
+            }
+        },
+        decoder: {
+            readers: [
+                "ean_reader", "ean_8_reader", "upc_reader", "upc_e_reader",
+                "code_128_reader", "code_39_reader", "code_39_vin_reader",
+                "codabar_reader", "i2of5_reader", "2of5_reader", "code_93_reader"
+            ]
+        }
+    }, function(err) {
+        if (err) {
+            console.error("Quagga 初始化失敗:", err);
+            return;
+        }
+        Quagga.start();
+    });
 
-                Quagga.onDetected((result) => {
-                    const code = result.codeResult.code;
-                    console.log("條碼識別成功:", code);
 
-                    if (lastCode === code) {
-                        // 連續兩次掃描到相同的條碼，確認為有效
-                        Quagga.stop();
-                        document.getElementById("scanner-container").style.display = "none";
-                        processBarcode(code); // 處理條碼
-                    } else {
-                        lastCode = code;
-                        scanAttempts++;
-                        if (scanAttempts >= maxScanAttempts) {
-                            // 超過最大嘗試次數，停止掃描
-                            Quagga.stop();
-                            document.getElementById("scanner-container").style.display = "none";
-                            processBarcode(code); // 處理條碼
-                        } else {
-                            // 延遲後再次掃描
-                            setTimeout(() => {
-                                Quagga.stop();
-                                Quagga.start();
-                            }, scanDelay);
-                        }
-                    }
-                });
+    Quagga.onDetected((result) => {
+    const code = result.codeResult.code;
+    console.log("條碼識別成功:", code);
+
+    if (lastCode === code) {
+        // 連續兩次掃描到相同的條碼，確認為有效
+        Quagga.stop();
+        document.getElementById("scanner-modal").style.display = "none";
+        processBarcode(code); // 處理條碼
+    } else {
+        lastCode = code;
+        scanAttempts++;
+        if (scanAttempts >= maxScanAttempts) {
+            // 超過最大嘗試次數，停止掃描
+            Quagga.stop();
+            document.getElementById("scanner-modal").style.display = "none";
+            processBarcode(code); // 處理條碼
+        } else {
+            // 延遲後再次掃描
+            setTimeout(() => {
+                Quagga.stop();
+                Quagga.start();
+            }, scanDelay);
+        }
+    }
+});
 
                 function processBarcode(code) {
                     const foundProduct = app.products.find(product => product.barcode === code);
