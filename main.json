@@ -4,7 +4,8 @@
         "image": "0991fc47-5cd9-4e36-977d-a3f36642946e.jpg",
         "price": "49",
         "barcode": "4711258001256",
-        "description": ""
+        "description": "",
+        "attribute": "new"
     },
     {
         "name": "牛頭牌沙茶醬 250g",
@@ -78949,5 +78950,23 @@
         "specialOffers": {
             "1": 39
         }
+    },{
+        "name": "《預購》Apple iPhone 16 Pro Max( 1TB / 6.3吋 )",
+        "image": "sg-11134201-7rd5o-m7t1j39fmccj47@resize_w82_nl.jpg",
+        "price": "58900",
+        "barcode": "",
+        "description": "",
+        "attribute": "phone",
+        "link": "https://s.shopee.tw/8pXzaKyxd3"
+    },
+    {
+        "name": "Apple iPhone 16 Pro Max (512G / 6.9吋 )",
+        "image": "tw-11134207-7rasg-m5k77hg1ps5p7d.jpg",
+        "price": "49900",
+        "barcode": "",
+        "description": "",
+        "attribute": "phone",
+        "link": "https://s.shopee.tw/4VP0RSsBNK"
     }
+
 ]
