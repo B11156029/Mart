@@ -39,7 +39,7 @@
             <label for="attribute">選擇屬性:</label>
             <select id="attribute" v-model="selectedAttribute">
                 <option value="">全部</option>
-                <option value="new">買一送一</option>
+                <option value="phone">手機</option>
                 <option value="popular">熱門</option>
                 <option value="sale">促銷</option>
             </select>
@@ -63,6 +63,9 @@
                         <span class="quantity-display">{{ getProductQuantity(product) }}</span>
                         <button @click="increaseQuantity(product)" class="quantity-button">
                             <img src="add.svg" alt="增加" class="quantity-image">
+                        </button>
+                        <button class="quantity-button shopee-button" @click="goToLink(product.link)">
+                            <img src="shopee.svg" alt="蝦皮" class="shoppe-image">
                         </button>
                     </div>
                 </div>
@@ -108,6 +111,9 @@
                         <button @click="increaseQuantity(item.product)" class="quantity-button">
                             <img src="add.png" alt="增加" class="quantity-image">
                         </button>
+                        <button @click="goToLink(item.product.link)" class="quantity-button shopee-button">
+                            <img src="shopee.svg" alt="蝦皮" class="quantity-image">
+                        </button>
                         <button @click="removeFromCart(item)" class="remove-button">刪除</button>
                     </div>
                     <hr><br>
@@ -143,10 +149,10 @@
                         constraints: {
                             facingMode: "environment",
                             width: {
-                                ideal: 1080
+                                ideal: 720
                             },
                             height: {
-                                ideal: 1920
+                                ideal: 1280
                             }
                         }
                     },
@@ -212,7 +218,7 @@
                                     title: '已加入購物車！',
                                     icon: 'success',
                                     showConfirmButton: false,
-                                    timer: 1200
+                                    timer: 500
                                 });
                             }
                         });
@@ -248,25 +254,34 @@
                     cartModule: null, // 用於存儲導入的cart.js模塊
                 },
                 computed: {
-                    filteredProducts() {
-                        const keyword = this.searchKeyword.trim().toLowerCase();
-                        const attribute = this.selectedAttribute.trim().toLowerCase();
+  filteredProducts() {
+    const keyword = this.searchKeyword.trim().toLowerCase();
+    const attribute = this.selectedAttribute.trim().toLowerCase();
 
-                        const allFilteredProducts = this.products.filter(product => {
-                            const nameMatches = product.name.toLowerCase().includes(keyword);
-                            const barcodeMatches = product.barcode && product.barcode.includes(keyword);
-                            const attributeMatches = attribute === '' ||
-                                (product.attributes && product.attributes.includes(attribute));
-                            return (nameMatches || barcodeMatches) && attributeMatches;
-                        });
+    const allFilteredProducts = this.products.filter(product => {
+      const nameMatches = product.name.toLowerCase().includes(keyword);
+      const barcodeMatches = product.barcode && product.barcode.includes(keyword);
+      // 當下拉選單沒有選屬性時，不做篩選；否則直接比對 product.attribute
+      const attributeMatches = attribute === '' || 
+        (product.attribute && product.attribute.toLowerCase() === attribute);
+        
+      return (nameMatches || barcodeMatches) && attributeMatches;
+    });
 
-                        return allFilteredProducts.slice(0, this.currentIndex);
-                    },
-                    cartTotal() {
-                        return this.cart.reduce((total, item) => total + Number(item.subtotal || 0), 0);
-                    }
-                },
+    return allFilteredProducts.slice(0, this.currentIndex);
+  },
+  cartTotal() {
+    return this.cart.reduce((total, item) => total + Number(item.subtotal || 0), 0);
+  }
+}
+,
                 methods: {
+                    //蝦皮連結
+                    goToLink(url) {
+    if (url) {
+      window.open(url, "_blank"); // 或是 window.location.href = url;
+    }
+  },
                     calculateSubtotal(product, quantity) {
                         if (!product.specialOffers) {
                             return this.parsePrice(product.price) * quantity;
