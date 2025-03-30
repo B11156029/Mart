@@ -12,7 +12,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="main.js"></script>
     <script type="module" src="cart.js"></script>
-    <script type="module" src="cart-test.js"></script>
 </head>
 
 <body>
@@ -112,7 +111,7 @@
                             <img src="add.png" alt="增加" class="quantity-image">
                         </button>
                         <button @click="goToLink(item.product.link)" class="quantity-button shopee-button">
-                            <img src="shopee.svg" alt="蝦皮" class="quantity-image">
+                            <img src="Shopee.png" alt="蝦皮" class="quantity-image">
                         </button>
                         <button @click="removeFromCart(item)" class="remove-button">刪除</button>
                     </div>
@@ -428,7 +427,7 @@
                                             console.log(`已更新商品 "${item.product.name}" 的價格為 ${newPrice}`);
                                             
                                             // 向服務器發送請求更新main.json文件
-                                            fetch('http://localhost:3002/update-price', {
+                                            fetch('http://localhost:3003/update-price', {
                                                 method: 'POST',
                                                 headers: {
                                                     'Content-Type': 'application/json'
@@ -562,12 +561,7 @@
                         })
                         .catch(error => console.error('加載購物車模塊時出錯：', error));
                         
-                    // 導入並初始化購物車測試功能
-                    import('./cart-test.js')
-                        .then(module => {
-                            module.initCartTest();
-                        })
-                        .catch(error => console.error('加載購物車測試模塊時出錯：', error));
+
 
                     window.addEventListener('scroll', this.handleScroll);
                 },
