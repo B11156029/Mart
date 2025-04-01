@@ -16,5 +16,5 @@ def merge_json_from_directory(directory, output_file):
     print(f"Merged JSON saved to {output_file}")
 
 # 使用範例
-directory = 'json_folder'  # 指定存放 JSON 檔案的資料夾
-merge_json_from_directory(directory, 'merged.json')
+directory = 'TODAY'  # 指定存放 JSON 檔案的資料夾
+merge_json_from_directory(directory, 'TODAY.json')

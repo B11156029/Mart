@@ -2,7 +2,7 @@ import json
 import re
 
 # 讀取本地檔案
-with open("豐富鍋底.json", "r", encoding="utf-8") as infile:
+with open("main.json", "r", encoding="utf-8") as infile:
     data = json.load(infile)
 
 def update_item(item):
@@ -15,9 +15,10 @@ def update_item(item):
     price = int(item["price"].replace("NT$", "").replace(",", "").strip())
 
     # 使用正則表達式提取優惠資訊
-    match = re.search(r"任(\d+)件(\d+)元", item["description"])
+    match = re.search(r"(?:任(\d+)件|(?:(\d+)件))(\s*)(\d+)元", item["description"])
     if match:
-        quantity, offer_price = map(int, match.groups())
+        quantity = int(match.group(1) or match.group(2))  # 可能來自「任X件」或「X件」
+        offer_price = int(match.group(4))
         item["specialOffers"] = {
             "1": price,
             str(quantity): offer_price
@@ -31,7 +32,7 @@ def update_item(item):
 updated_data = [update_item(item) for item in data]
 
 # 將結果寫入本地檔案
-with open("豐富鍋底.json", "w", encoding="utf-8") as outfile:
+with open("main.json", "w", encoding="utf-8") as outfile:
     json.dump(updated_data, outfile, ensure_ascii=False, indent=4)
 
 print("資料處理完成")

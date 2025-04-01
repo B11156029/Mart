@@ -11,7 +11,9 @@ def csv_to_json(csv_file, json_file):
                 "name": row["name"].strip(),
                 "image": row["image"].strip(),
                 "price": row["price"].strip(),
-                "barcode": row.get("條碼", "Unknown").strip()
+                "barcode": row["barcode"].strip(),
+                "description": row["description"].strip(),
+                
             })
     
     with open(json_file, mode='w', encoding='utf-8') as file:

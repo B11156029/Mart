@@ -6,8 +6,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # 載入 CSV 檔案
 csv_file = "失敗的.csv"  # 替換為你的 CSV 檔案名稱
-output_folder = "失敗的"  # 圖片儲存資料夾
-failed_downloads_file = "失敗2次的.csv"  # 設定下載失敗資料的檔案名稱
+output_folder = "失敗二次的"  # 圖片儲存資料夾
+failed_downloads_file = "失敗3次的.csv"  # 設定下載失敗資料的檔案名稱
 
 # 建立儲存圖片的資料夾
 os.makedirs(output_folder, exist_ok=True)
