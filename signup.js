@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBdpDe32VGIgI4jm3qCixYmLshe1J84D6Y",
@@ -12,7 +12,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+const db = getFirestore(app);
 
 document.getElementById("submit").addEventListener('click', async function(e) {
     e.preventDefault();
@@ -33,7 +33,7 @@ document.getElementById("submit").addEventListener('click', async function(e) {
     }
 
     try {
-        await set(ref(db, 'user/' + account_number), {
+        await setDoc(doc(db, "users", account_number), {
             name: name,
             account_number: account_number,
             password: password
