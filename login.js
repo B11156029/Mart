@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
-import { getFirestore, collection, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBdpDe32VGIgI4jm3qCixYmLshe1J84D6Y",
@@ -12,7 +12,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db = getDatabase(app);
 
 document.getElementById("submit-btn").addEventListener("click", async function(e) {
     e.preventDefault();
@@ -21,11 +21,11 @@ document.getElementById("submit-btn").addEventListener("click", async function(e
     const password = document.getElementById("password").value;
 
     try {
-        const userRef = doc(db, "users", account_number);
-        const snapshot = await getDoc(userRef);
+        const userRef = ref(db, 'user/' + account_number);
+        const snapshot = await get(userRef);
 
         if (snapshot.exists()) {
-            const userData = snapshot.data();
+            const userData = snapshot.val();
             if (userData.password === password) {
                 alert("登入成功！");
                 localStorage.setItem("account_number", account_number); // 🔹 存入 LocalStorage
