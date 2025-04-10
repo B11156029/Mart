@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 
 <head>
     <link href="style.css" rel="stylesheet" type="text/css" />
@@ -39,15 +39,15 @@
                     </div>
 
                     <div>
-                        <button type="submit" class="submit-btn" id="submit">建立帳戶</button>
+                        <!-- 用 type="button" 讓它不會觸發預設提交行為，由 JS 接管 -->
+                        <button type="button" class="submit-btn" id="submit">建立帳戶</button>
                     </div>
-
-
                 </form>
             </div>
         </div>
     </div>
 
+    <!-- 確保 JS 是用 type="module" 引入，支援 import 語法 -->
     <script type="module" src="signup.js"></script>
 </body>
 

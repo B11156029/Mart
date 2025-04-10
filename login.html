@@ -1,42 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Login</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <link href="waterpig.png" rel="icon">
-    <script src="login.js" type="module"></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="style.css" rel="stylesheet" />
+  <link href="waterpig.png" rel="icon" />
+  <script src="login.js" type="module"></script>
 </head>
 
 <body>
-    <img src="waterpig.png" height="100" width="100" alt="Logo" />
-    <h1>水豚君搜尋引擎</h1>
+  <img src="waterpig.png" height="100" width="100" alt="Logo" />
+  <h1>水豚君搜尋引擎</h1>
 
-    <div class="form-structor">
-        <div class="signup">
-            <div class="form-holder">
-                <form style="width: 23rem;">
+  <div class="form-structor">
+    <div class="signup">
+      <div class="form-holder">
+        <!-- 不使用表單提交，因為用 JS 控制 -->
+        <form onsubmit="return false;" style="width: 23rem;">
+          <div>
+            <input type="text" id="account_number" placeholder="帳號" name="account_number" class="input" required />
+          </div>
 
-                    <div>
-                        <input type="text" id="account_number" placeholder="帳號" name="account_number" class="input" required>
-                    </div>
+          <div>
+            <input type="password" id="password" name="password" placeholder="密碼" class="input" required />
+          </div>
 
-                    <div>
-                        <input type="password" id="password" name="password" placeholder="密碼" class="input" required>
-                    </div>
+          <!-- 用 JavaScript 處理登入 -->
+          <button type="submit" id="submit-btn" class="submit-btn">登入</button>
 
-                    <button type="button" id="submit-btn" class="submit-btn">登入</button>
-
-                    <p><a href="Sign.html" class="submit-btn1">建立新帳號</a></p>
-                </form>
-            </div>
-        </div>
+          <p><a href="Sign.html" class="submit-btn1">建立新帳號</a></p>
+        </form>
+      </div>
     </div>
-
+  </div>
 </body>
 
 </html>
