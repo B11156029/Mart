@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
-import { getDatabase, ref, get, onValue } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+import { getFirestore, doc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDuNN0sGP4AaOe0ZoEX3liiA0ZMPr4myGY",
@@ -12,41 +12,38 @@ const firebaseConfig = {
   };
 
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+const db = getFirestore(app);
 
 const account_number = localStorage.getItem("account_number");
 
 if (!account_number) {
     window.location.href = "login.html";
 } else {
-    const userRef = ref(db, "user/" + account_number);
-    get(userRef).then((snapshot) => {
-        if (snapshot.exists()) {
-            const userData = snapshot.val();
-            console.log("使用者已登入:", userData);
-        } else {
-            console.log("使用者資料未找到");
+    // 修改這裡：確保集合名稱正確，並添加錯誤處理
+    const userRef = doc(db, "users", account_number); // 注意：集合名稱可能是 "users" 而不是 "user"
+    
+    getDoc(userRef)
+        .then((docSnap) => {
+            if (docSnap.exists()) {
+                const userData = docSnap.data();
+                console.log("使用者已登入:", userData);
+                
+                // 獲取並顯示用戶名稱
+                if (userData.name) {
+                    document.getElementById('name-display').textContent = userData.name;
+                    console.log("獲取的 name 值:", userData.name);
+                } else {
+                    console.log("name 值未找到");
+                }
+            } else {
+                console.log("使用者資料未找到");
+                localStorage.removeItem("account_number");
+                window.location.href = "login.html";
+            }
+        })
+        .catch((error) => {
+            console.error("獲取使用者資料時發生錯誤:", error);
             localStorage.removeItem("account_number");
             window.location.href = "login.html";
-        }
-    }).catch((error) => {
-        console.error("獲取使用者資料時發生錯誤:", error);
-        localStorage.removeItem("account_number");
-        window.location.href = "login.html";
-    });
-
-    // 獲取 Realtime Database 中的 name 值
-    const nameRef = ref(db, "user/" + account_number + "/name");
-
-    onValue(nameRef, (snapshot) => {
-        if (snapshot.exists()) {
-            const name = snapshot.val();
-            document.getElementById('name-display').textContent = name;
-            console.log("獲取的 name 值:", name);
-        } else {
-            console.log("name 值未找到");
-        }
-    }, (error) => {
-        console.error("獲取 name 值時發生錯誤:", error);
-    });
+        });
 }

@@ -1,0 +1,15 @@
+# Node modules
+node_modules/
+
+# 編譯輸出
+dist/
+build/
+
+# 環境變數
+.env
+
+# 系統檔案
+.DS_Store
+Thumbs.db
+新增資料夾/
+

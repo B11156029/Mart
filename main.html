@@ -12,7 +12,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="main.js"></script>
     <script type="module" src="cart.js"></script>
-    <script type="module" src="cart-test.js"></script>
 </head>
 
 <body>
@@ -539,13 +538,7 @@
                         })
                         .catch(error => console.error('加載購物車模塊時出錯：', error));
                         
-                    // 導入並初始化購物車測試功能
-                    import('./cart-test.js')
-                        .then(module => {
-                            module.initCartTest();
-                        })
-                        .catch(error => console.error('加載購物車測試模塊時出錯：', error));
-
+                    // 已移除 cart-test.js 的導入，因為不再使用
                     window.addEventListener('scroll', this.handleScroll);
                 },
                 beforeDestroy() {
