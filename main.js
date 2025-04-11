@@ -34,23 +34,25 @@ if (!account_number) {
           console.log("name 值未找到");
         }
 
-        // ✅ 在這裡載入 Firestore 商品資料
-        const productList = [];
-        getDocs(collection(db, "products"))
-          .then(snapshot => {
-            snapshot.forEach(doc => {
-              const data = doc.data();
-              data.docId = doc.id; // 記錄 document ID
-              productList.push(data);
-            });
-            if (window.app) {
-              window.app.products = productList;
-              window.app.loadMoreProducts();
-            }
-          })
-          .catch(error => {
-            console.error('從 Firestore 載入商品失敗:', error);
-          });
+       // ❌ 暫時關掉 Firestore 載入商品資料
+/*
+const productList = [];
+getDocs(collection(db, "products"))
+  .then(snapshot => {
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      data.docId = doc.id;
+      productList.push(data);
+    });
+    if (window.app) {
+      window.app.products = productList;
+      window.app.loadMoreProducts();
+    }
+  })
+  .catch(error => {
+    console.error('從 Firestore 載入商品失敗:', error);
+  });
+*/
 
       } else {
         console.log("使用者資料未找到");
