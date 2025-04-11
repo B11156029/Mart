@@ -1,5 +1,5 @@
 // scanner.js（模組化）
-import Quagga from 'https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js';
+// 不使用 ESM 匯入 Quagga，因為 cdn 不支援 module
 import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
 
 export function startScanner(appInstance) {
@@ -13,7 +13,8 @@ export function startScanner(appInstance) {
   const scanDelay = 1000;
   let lastCode = null;
 
-  Quagga.init({
+  // 使用全域 Quagga（需在 HTML 中 <script> 引入 Quagga）
+  window.Quagga.init({
     inputStream: {
       name: "Live",
       type: "LiveStream",
@@ -36,28 +37,28 @@ export function startScanner(appInstance) {
       console.error("Quagga 初始化失敗:", err);
       return;
     }
-    Quagga.start();
+    window.Quagga.start();
   });
 
-  Quagga.onDetected((result) => {
+  window.Quagga.onDetected((result) => {
     const code = result.codeResult.code;
     console.log("條碼識別成功:", code);
 
     if (lastCode === code) {
-      Quagga.stop();
+      window.Quagga.stop();
       scannerContainer.style.display = "none";
       processBarcode(code);
     } else {
       lastCode = code;
       scanAttempts++;
       if (scanAttempts >= maxScanAttempts) {
-        Quagga.stop();
+        window.Quagga.stop();
         scannerContainer.style.display = "none";
         processBarcode(code);
       } else {
         setTimeout(() => {
-          Quagga.stop();
-          Quagga.start();
+          window.Quagga.stop();
+          window.Quagga.start();
         }, scanDelay);
       }
     }
