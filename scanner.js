@@ -1,6 +1,6 @@
 // scanner.js（模組化）
 // 不使用 ESM 匯入 Quagga，因為 cdn 不支援 module
-import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
+const Swal = window.Swal;
 
 export function startScanner(appInstance) {
   const scannerContainer = document.getElementById("scanner-container");
