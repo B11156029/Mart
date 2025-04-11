@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>商品匯入工具 - Firebase</title>
+  <style>
+    #progress-bar {
+      width: 100%;
+      background-color: #ddd;
+      margin-top: 10px;
+    }
+    #progress-bar-fill {
+      height: 24px;
+      width: 0%;
+      background-color: #4caf50;
+      text-align: center;
+      color: white;
+      line-height: 24px;
+    }
+  </style>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+    import { getFirestore, doc, setDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDuNN0sGP4AaOe0ZoEX3liiA0ZMPr4myGY",
+      authDomain: "cart-75759.firebaseapp.com",
+      projectId: "cart-75759",
+      storageBucket: "cart-75759.firebasestorage.app",
+      messagingSenderId: "52529150826",
+      appId: "1:52529150826:web:fb5c117d824b70867cc313",
+      measurementId: "G-E35KRT7F04"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function editProductPrice(barcode, newPrice) {
+      if (!barcode) {
+        alert('請輸入條碼');
+        return;
+      }
+
+      const productRef = doc(db, "products", barcode);
+
+      try {
+        const productSnap = await getDoc(productRef);
+        if (!productSnap.exists()) {
+          alert("❌ 查無此商品");
+          return;
+        }
+
+        const productData = productSnap.data();
+        const currentPrice = productData.price;
+        document.getElementById('current-price').textContent = `目前價格：$${currentPrice}`;
+
+        if (!isNaN(parseFloat(newPrice))) {
+          await updateDoc(productRef, { price: parseFloat(newPrice) });
+          alert(`✅ 價格更新成功：${barcode} → $${newPrice}`);
+        }
+      } catch (err) {
+        console.error("❌ 更新價格失敗：", err);
+        alert("❌ 價格更新失敗，請查看 console 錯誤");
+      }
+    }
+
+    window.editProductPrice = editProductPrice;
+
+    document.getElementById('import-btn').addEventListener('click', () => {
+      const fileInput = document.getElementById('json-file');
+      const file = fileInput.files[0];
+      const progressFill = document.getElementById('progress-bar-fill');
+
+      if (!file) {
+        alert('請先選擇一個 JSON 檔案');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = async function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          const chunkSize = 100;
+          let successCount = 0;
+
+          for (let i = 0; i < data.length; i += chunkSize) {
+            const chunk = data.slice(i, i + chunkSize);
+            const batch = chunk.map(item => {
+              const docRef = doc(db, "products", item.barcode || item.name);
+              return setDoc(docRef, {
+                name: item.name,
+                image: item.image,
+                price: parseFloat(item.price),
+                barcode: item.barcode || '',
+                description: item.description || '',
+                specialOffers: item.specialOffers || null
+              }).then(() => successCount++);
+            });
+            await Promise.all(batch);
+            const progress = Math.round((successCount / data.length) * 100);
+            progressFill.style.width = progress + '%';
+            progressFill.textContent = progress + '%';
+          }
+
+          alert(`✅ 匯入完成！共 ${successCount} 筆商品`);
+        } catch (err) {
+          console.error('❌ 匯入錯誤:', err);
+          alert('❌ 匯入失敗，請確認 JSON 格式正確');
+        }
+      };
+
+      reader.readAsText(file);
+    });
+  </script>
+</head>
+<body>
+  <h1>🚀 分批商品匯入工具 + 進度條</h1>
+  <p>請選擇你要上傳的商品 JSON 檔案（例如 main.json）</p>
+  <input type="file" id="json-file" accept="application/json">
+  <button id="import-btn">開始匯入 Firebase</button>
+
+  <div id="progress-bar">
+    <div id="progress-bar-fill">0%</div>
+  </div>
+
+  <h2>✏️ 修改商品價格（測試功能）</h2>
+  <p>
+    條碼：<input type="text" id="barcode-edit"> 
+    新價格：<input type="number" id="price-edit"> 
+    <button onclick="editProductPrice(document.getElementById('barcode-edit').value, document.getElementById('price-edit').value)">查詢 / 更新價格</button>
+  </p>
+  <p id="current-price" style="font-weight: bold; color: green;"></p>
+
+  <p style="margin-top: 20px; font-size: 0.9em; color: gray;">＊請確認 Firebase 專案設定正確，且集合為 <code>products</code></p>
+</body>
+</html>

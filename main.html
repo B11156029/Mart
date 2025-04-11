@@ -118,100 +118,7 @@
             </div>
         </div>
         <script>
-            function startScanner() {
-                document.getElementById("scanner-container").style.display = "block";
 
-                let scanAttempts = 0;
-                const maxScanAttempts = 3; // 最大掃描嘗試次數
-                const scanDelay = 1000; // 每次掃描間隔 (毫秒)
-                let lastCode = null; // 儲存上次成功掃描的條碼
-
-                Quagga.init({
-                    inputStream: {
-                        name: "Live",
-                        type: "LiveStream",
-                        target: document.querySelector("#scanner-container"),
-                        constraints: {
-                            facingMode: "environment",
-                            width: {
-                                ideal: 1080
-                            },
-                            height: {
-                                ideal: 1080
-                            }
-                        }
-                    },
-                    decoder: {
-                        readers: [
-                            "ean_reader", "ean_8_reader", "upc_reader", "upc_e_reader",
-                            "code_128_reader", "code_39_reader", "code_39_vin_reader",
-                            "codabar_reader", "i2of5_reader", "2of5_reader", "code_93_reader"
-                        ]
-                    }
-                }, function(err) {
-                    if (err) {
-                        console.error("Quagga 初始化失敗:", err);
-                        return;
-                    }
-                    Quagga.start();
-                });
-
-                Quagga.onDetected((result) => {
-                    const code = result.codeResult.code;
-                    console.log("條碼識別成功:", code);
-
-                    if (lastCode === code) {
-                        // 連續兩次掃描到相同的條碼，確認為有效
-                        Quagga.stop();
-                        document.getElementById("scanner-container").style.display = "none";
-                        processBarcode(code); // 處理條碼
-                    } else {
-                        lastCode = code;
-                        scanAttempts++;
-                        if (scanAttempts >= maxScanAttempts) {
-                            // 超過最大嘗試次數，停止掃描
-                            Quagga.stop();
-                            document.getElementById("scanner-container").style.display = "none";
-                            processBarcode(code); // 處理條碼
-                        } else {
-                            // 延遲後再次掃描
-                            setTimeout(() => {
-                                Quagga.stop();
-                                Quagga.start();
-                            }, scanDelay);
-                        }
-                    }
-                });
-
-                function processBarcode(code) {
-                    const foundProduct = app.products.find(product => product.barcode === code);
-
-                    if (foundProduct) {
-                        Swal.fire({
-                            title: foundProduct.name,
-                            text: foundProduct.description ? foundProduct.description : `價格: $${app.parsePrice(foundProduct.price)}`,
-                            imageUrl: '新增資料夾/' + foundProduct.image,
-                            imageWidth: 150,
-                            imageHeight: 150,
-                            showCancelButton: true,
-                            confirmButtonText: '加入購物車',
-                            cancelButtonText: '取消',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                app.addToCart(foundProduct);
-                                Swal.fire({
-                                    title: '已加入購物車！',
-                                    icon: 'success',
-                                    showConfirmButton: false,
-                                    timer: 1200
-                                });
-                            }
-                        });
-                    } else {
-                        Swal.fire('查無商品', '找不到條碼對應的商品。', 'error');
-                    }
-                }
-            }
 
             // 創建Vue實例
             const app = new Vue({
@@ -520,30 +427,28 @@
                     },
                 },
                 created() {
-                    // 加載商品數據
-                    fetch('main.json')
-                        .then(response => response.json())
-                        .then(data => {
-                            this.products = data;
-                            this.loadMoreProducts();
-                        })
-                        .catch(error => console.error('加載數據時出錯：', error));
+  // 🔄 載入 main.json 商品資料
+  fetch('main.json')
+    .then(response => response.json())
+    .then(data => {
+      this.products = data;
+      this.loadMoreProducts(); // 初始分批載入
+    })
+    .catch(error => {
+      console.error('載入 main.json 時發生錯誤：', error);
+      alert('無法載入商品資料，請檢查 main.json 路徑');
+    });
 
-                    // 導入購物車模塊並初始化
-                    import('./cart.js')
-                        .then(module => {
-                            this.cartModule = module;
-                            // 初始化購物車，從localStorage加載數據
-                            this.cart = module.initCart();
-                        })
-                        .catch(error => console.error('加載購物車模塊時出錯：', error));
-                        
-                    // 已移除 cart-test.js 的導入，因為不再使用
-                    window.addEventListener('scroll', this.handleScroll);
-                },
-                beforeDestroy() {
-                    window.removeEventListener('scroll', this.handleScroll);
-                },
+  // 🛒 載入購物車模組
+  import('./cart.js')
+    .then(module => {
+      this.cartModule = module;
+      this.cart = module.initCart();
+    })
+    .catch(error => console.error('加載購物車模塊時出錯：', error));
+
+  window.addEventListener('scroll', this.handleScroll);
+},
                 watch: {
                     searchKeyword() {
                         clearTimeout(this.searchTimeout);
