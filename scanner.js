@@ -1,5 +1,5 @@
 // scanner.js（模組化）
-// 不使用 ESM 匯入 Quagga，因為 cdn 不支援 module
+// ✅ 使用全域 Swal（從 <script> 載入）
 const Swal = window.Swal;
 
 export function startScanner(appInstance) {
