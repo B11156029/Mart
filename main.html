@@ -26,6 +26,7 @@
                     <button onclick="startScanner()" style="background: transparent; border: none; padding: 0; cursor: pointer;">
                         <img src="camera.svg" alt="相機" class="camera-icon">
                     </button>
+                    
                     <button @click="toggleCart" class="cart-toggle-button">
                         <img src="cart.png" alt="購物車" class="cart-icon">
                     </button>
@@ -188,6 +189,11 @@
 
                         return subtotal;
                     },
+                    startScanner() {
+  import('./scanner.js').then(({ startScanner }) => {
+    startScanner(this);
+  });
+},
                     parsePrice(priceString) {
                         return parseFloat(priceString.replace(/[^\d.-]/g, '')) || 0;
                     },
