@@ -57,7 +57,7 @@ document.getElementById("submit").addEventListener('click', async function(e) {
       password: password
     });
     alert("帳戶創建成功！");
-    window.location.href = "login.html";
+    window.location.href = "html/login.html";
   } catch (error) {
     console.error("Firestore 寫入錯誤:", error);
     alert("帳戶創建失敗，請重試。");

@@ -101,11 +101,11 @@
                     </div>
                     <div class="cart-item-quantity">
                         <button @click="decreaseQuantity(item.product)" class="quantity-button">
-                            <img src="remove2.png" alt="減少" class="quantity-image" style="width: 20px;height: 5px;">
+                            <img src="cart-image/remove.svg" alt="減少" class="quantity-image" style="width: 20px;height: 5px;">
                         </button>
                         <span style="font-size: 20px;">{{ item.quantity }}</span>
                         <button @click="increaseQuantity(item.product)" class="quantity-button">
-                            <img src="add.png" alt="增加" class="quantity-image">
+                            <img src="cart-image/add.svg" alt="增加" class="quantity-image">
                         </button>
                         <button @click="removeFromCart(item)" class="remove-button">刪除</button>
                     </div>
