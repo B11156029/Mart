@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>水豚君搜尋引擎</title>
     <link href="main.css" rel="stylesheet">
+    <link href="cart.css" rel="stylesheet">
+    <link href="scanner.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
@@ -45,7 +47,17 @@
             </select>
         </div>
 
-        <div id="scanner-container"></div>
+        <!-- 全螢幕掃描容器 -->
+<div id="scanner-container" v-show="scannerVisible">
+    <video id="scanner-video" autoplay></video>
+    <div class="scanner-frame"></div>
+    <div class="scan-line"></div>
+    <div id="result">{{ scanResult }}</div>
+
+    <button @click="closeScanner" style="position:absolute; top:20px; right:20px; background:none; border:none; color:white; font-size:24px; z-index:10;">
+        ✕
+    </button>
+</div>
         <div id="productList" class="product-list">
             <div v-for="product in visibleProducts" :key="product.name" class="product-item">
                 <img loading="lazy" :src="'新增資料夾/' + product.image" :alt="product.name" class="product-image">

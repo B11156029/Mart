@@ -26,7 +26,34 @@ const app = new Vue({
         return this.cart.reduce((total, item) => total + Number(item.subtotal || 0), 0);
       }
     },
-    methods: {handleScroll() {
+    methods: {
+      
+      startScanner() {
+        this.scannerVisible = true;
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+          .then((stream) => {
+            const video = document.getElementById('scanner-video');
+            video.srcObject = stream;
+            video.setAttribute("playsinline", true);
+            video.play();
+          })
+          .catch(err => {
+            console.error("無法啟用攝影機", err);
+          });
+      },
+      closeScanner() {
+        this.scannerVisible = false;
+        const video = document.getElementById('scanner-video');
+        const stream = video.srcObject;
+        if (stream) {
+          stream.getTracks().forEach(track => track.stop());
+        }
+        video.srcObject = null;
+      },
+      
+      
+      
+      handleScroll() {
       const scrollPosition = window.scrollY + window.innerHeight;
       const bottomPosition = document.documentElement.scrollHeight;
     
