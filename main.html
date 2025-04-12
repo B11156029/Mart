@@ -10,10 +10,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script type="module" src="user.js" defer></script>
-    <script type="module" src="main.js" defer></script>
-
-    <script type="module" src="cart.js"></script>
+    <script type="module" src="javascript/user.js" defer></script>
+    <script type="module" src="javascript/main.js" defer></script>
 </head>
 
 <body>
@@ -30,7 +28,7 @@
                     </button>
                     
                     <button @click="toggleCart" class="cart-toggle-button">
-                        <img src="cart.png" alt="購物車" class="cart-icon">
+                        <img src="navbar-image/cart.png" alt="購物車" class="cart-icon">
                     </button>
                     <div id="name-display"></div>
                 </div>
@@ -81,7 +79,7 @@
                 <button class="add-custom-product-button" @click="isAddingCustomProduct = true">新增自訂商品</button>
 
 
-                <div v-if="isAddingCustomProduct" class="custom-product-form">
+                <div v-show="isAddingCustomProduct" class="custom-product-form">
                     <h2>新增自訂商品</h2>
                     <input type="text" v-model="customProduct.name" placeholder="商品名稱">
                     <input type="number" v-model="customProduct.price" placeholder="價格">
@@ -92,7 +90,7 @@
             </div>
 
             <div class="cart-content">
-                <div v-for="item in cart" :key="item.product.name" class="cart-item">
+                <div v-for="item in cart" :key="item.product.barcode || item.product.name" class="cart-item">
                     <div class="cart-item-info">
                         <img :src="item.product.file ? item.product.image : '新增資料夾/' + item.product.image" :alt="item.product.name" class="cart-image">
                         <div class="cart-item-details">

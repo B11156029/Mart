@@ -26,7 +26,15 @@ const app = new Vue({
         return this.cart.reduce((total, item) => total + Number(item.subtotal || 0), 0);
       }
     },
-    methods: {
+    methods: {handleScroll() {
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const bottomPosition = document.documentElement.scrollHeight;
+    
+      // 如果已接近底部，載入更多商品
+      if (scrollPosition >= bottomPosition - 100) {
+        this.loadMoreProducts();
+      }
+    },
       refreshVisibleProducts() {
         const keyword = this.searchKeyword.trim().toLowerCase();
         const attribute = this.selectedAttribute.trim().toLowerCase();
