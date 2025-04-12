@@ -245,4 +245,42 @@ h1 {
             -webkit-transition: all .3s ease;
         }
     }
+    
 }
+@media (max-width: 768px) {
+    .form-structor {
+      width: 90vw;
+      height: auto;
+      margin-left: 0;
+      padding: 20px 10px;
+      border-radius: 10px;
+    }
+  
+    .form-structor .signup,
+    .form-structor .login .center {
+      width: 90%;
+      transform: translate(-50%, -50%);
+    }
+  
+    .form-structor .submit-btn {
+      width: 100%;
+      margin: 15px 0;
+      padding: 15px 20px;
+    }
+  
+    h1 {
+      font-size: 36px;
+      text-align: center;
+    }
+  
+    body {
+      padding: 20px;
+      display: block;
+    }
+  
+    .password-hint {
+      font-size: 10px;
+      text-align: left;
+      margin-left: 5px;
+    }
+  }
