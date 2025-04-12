@@ -151,7 +151,7 @@
     .cart-item-name {
         width: 40px;
         display: block;
-        margin-left: -20px;
+        margin: 10px 0px 0px 0px;
         text-align: left;
         /* 根據需要調整寬度 */
     }
@@ -161,7 +161,7 @@
     display: grid;
     grid-template-columns: 1fr 2fr auto;
     align-items: center;
-    padding: 15px;
+    padding: 3px;
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -269,7 +269,7 @@
     display: block;
     /* 確保文字在寬度不足時換行 */
     width: 100px;
-    margin-left: -20px;
+    margin: 10px 0px 0px 0px;
     /* 根據需要調整寬度 */
     text-align: left;
 }
@@ -285,9 +285,7 @@
     margin: 10px 0;
 }
 
-.cart-item-price {
-    margin-left: -10px;
-}
+
 
 .screenshot-button {
     background-color: white;
