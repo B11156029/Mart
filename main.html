@@ -20,7 +20,7 @@
         <div class="sticky-header">
             <div class="search-container">
                 <div style="display: flex; align-items: center; justify-content: center; text-align: center; height: 60px;margin: 20px;">
-                    <img src="capy.png" alt="水豚" class="logo-icon" style="margin-right: -30px;margin-bottom: 20px;">
+                    <img src="navbar-image/capy.png" alt="水豚" class="logo-icon" style="margin-right: -30px;margin-bottom: 20px;">
                     <h1 style="color: black; font-weight: 700;width: 100%;font-size: 28px;">水豚君搜尋引擎</h1>
                     <input type="text" id="barcode-input" v-model="searchKeyword" placeholder="請輸入商品名稱" class="search-input">
                     <button @click="startScanner" style="background: transparent; border: none; padding: 0; cursor: pointer;">
@@ -56,11 +56,11 @@
                 <div class="product-footer">
                     <div class="quantity-container">
                         <button @click="decreaseQuantity(product)" class="quantity-button">
-                            <img src="remove.svg" alt="減少" class="quantity-image">
+                            <img src="cart-image/remove.svg" alt="減少" class="quantity-image">
                         </button>
                         <span class="quantity-display">{{ getProductQuantity(product) }}</span>
                         <button @click="increaseQuantity(product)" class="quantity-button">
-                            <img src="add.svg" alt="增加" class="quantity-image">
+                            <img src="cart-image/add.svg" alt="增加" class="quantity-image">
                         </button>
                     </div>
                 </div>
