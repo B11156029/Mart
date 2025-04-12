@@ -17,7 +17,7 @@ const db = getFirestore(app);
 const account_number = localStorage.getItem("account_number");
 
 if (!account_number) {
-  window.location.href = "html/login.html";
+  window.location.href = "/html/login.html";
 } else {
   const userRef = doc(db, "users", account_number);
 
@@ -57,12 +57,12 @@ getDocs(collection(db, "products"))
       } else {
         console.log("使用者資料未找到");
         localStorage.removeItem("account_number");
-        window.location.href = "html/login.html";
+        window.location.href = "/html/login.html";
       }
     })
     .catch((error) => {
       console.error("獲取使用者資料時發生錯誤:", error);
       localStorage.removeItem("account_number");
-      window.location.href = "html/login.html";
+      window.location.href = "/html/login.html";
     });
 }

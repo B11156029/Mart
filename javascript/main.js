@@ -20,6 +20,9 @@ const app = new Vue({
       },
       isAddingCustomProduct: false,
       cartModule: null,
+      // ✅ ⬇⬇⬇ 加在這邊
+      scannerVisible: false,
+      scanResult: "", // 如果你之後要顯示掃描結果也可以留這個
     },
     computed: {
       cartTotal() {
