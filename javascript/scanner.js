@@ -9,11 +9,12 @@ export function startScanner(appInstance) {
   scannerContainer.style.display = "block";
 
   let scanAttempts = 0;
-  const maxScanAttempts = 3;
+  const maxScanAttempts = 5;
   const scanDelay = 1000;
   let lastCode = null;
+  let lastScanTime = 0;
+  const scanInterval = 200; // 最小間隔 200 毫秒
 
-  // 使用全域 Quagga（需在 HTML 中 <script> 引入 Quagga）
   window.Quagga.init({
     inputStream: {
       name: "Live",
@@ -41,6 +42,10 @@ export function startScanner(appInstance) {
   });
 
   window.Quagga.onDetected((result) => {
+    const now = Date.now();
+    if (now - lastScanTime < scanInterval) return; // 若未達掃描間隔，忽略此次結果
+    lastScanTime = now;
+
     const code = result.codeResult.code;
     console.log("條碼識別成功:", code);
 
@@ -55,11 +60,6 @@ export function startScanner(appInstance) {
         window.Quagga.stop();
         scannerContainer.style.display = "none";
         processBarcode(code);
-      } else {
-        setTimeout(() => {
-          window.Quagga.stop();
-          window.Quagga.start();
-        }, scanDelay);
       }
     }
   });
