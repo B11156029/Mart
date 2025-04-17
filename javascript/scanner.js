@@ -11,9 +11,10 @@ export function startScanner(appInstance) {
   let scanAttempts = 0;
   const maxScanAttempts = 5;
   const scanDelay = 1000;
-  let lastCode = null;
+  const scanInterval = 200; // 每次掃描最小間隔（節流）
   let lastScanTime = 0;
-  const scanInterval = 200; // 最小間隔 200 毫秒
+  let lastCode = null;
+  let firstSeenTime = null;
 
   window.Quagga.init({
     inputStream: {
@@ -43,24 +44,24 @@ export function startScanner(appInstance) {
 
   window.Quagga.onDetected((result) => {
     const now = Date.now();
-    if (now - lastScanTime < scanInterval) return; // 若未達掃描間隔，忽略此次結果
+    if (now - lastScanTime < scanInterval) return;
     lastScanTime = now;
 
     const code = result.codeResult.code;
-    console.log("條碼識別成功:", code);
+    if (!code) return;
 
     if (lastCode === code) {
-      window.Quagga.stop();
-      scannerContainer.style.display = "none";
-      processBarcode(code);
-    } else {
-      lastCode = code;
+      const duration = now - firstSeenTime;
       scanAttempts++;
-      if (scanAttempts >= maxScanAttempts) {
+      if (duration >= scanDelay || scanAttempts >= maxScanAttempts) {
         window.Quagga.stop();
         scannerContainer.style.display = "none";
         processBarcode(code);
       }
+    } else {
+      lastCode = code;
+      firstSeenTime = now;
+      scanAttempts = 1;
     }
   });
 
