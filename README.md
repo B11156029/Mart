@@ -4,3 +4,5 @@
 # user.js     用來驗證使用者是否登入 沒有登入會回到login.html
 # signup.js   用來註冊的
 # login.js    用來登入的
+
+SVG 截圖 會有畫面損失問題

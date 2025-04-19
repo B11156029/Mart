@@ -9,7 +9,7 @@ export function startScanner(appInstance) {
   scannerContainer.style.display = "block";
 
   let scanAttempts = 0;
-  const maxScanAttempts = 5;
+  const maxScanAttempts = 4;
   const scanDelay = 1000;
   const scanInterval = 200; // 每次掃描最小間隔（節流）
   let lastScanTime = 0;
