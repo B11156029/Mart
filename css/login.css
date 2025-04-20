@@ -247,40 +247,45 @@ h1 {
     }
     
 }
+
+
+
 @media (max-width: 768px) {
-    .form-structor {
-      width: 90vw;
-      height: auto;
-      margin-left: 0;
-      padding: 20px 10px;
-      border-radius: 10px;
-    }
-  
-    .form-structor .signup,
-    .form-structor .login .center {
-      width: 90%;
-      transform: translate(-50%, -50%);
-    }
-  
-    .form-structor .submit-btn {
-      width: 100%;
-      margin: 15px 0;
-      padding: 15px 20px;
-    }
-  
-    h1 {
-      font-size: 36px;
-      text-align: center;
-    }
-  
-    body {
-      padding: 20px;
-      display: block;
-    }
-  
-    .password-hint {
-      font-size: 10px;
-      text-align: left;
-      margin-left: 5px;
-    }
+
+html,
+body {
+    position: relative;
+    min-height: 100vh;
+    background-color: #E1E8EE;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "Fira Sans", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+h1 {
+    font-size: 36px;
+    color: #61c6f4;
+}
+
+.header-box {
+    display: flex;
+    align-items: center; /* 垂直置中 */
   }
+
+
+  .form-structor {
+    background-color: #ffffff;
+    margin-left: auto;
+    margin-left: 0px;
+    border-radius: 15px;
+    height: 450px;
+    width: 350px;
+    position: relative;
+    overflow: hidden;
+}
+}
