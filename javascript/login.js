@@ -31,7 +31,7 @@ document.getElementById("submit-btn").addEventListener("click", async function (
       if (userData.password === password) {
         alert("登入成功！");
         localStorage.setItem("account_number", account_number);
-        window.location.href = location.origin + "../main.html";
+        window.location.href = location.origin + "/main.html";
       } else {
         alert("登入失敗：密碼錯誤。");
       }
