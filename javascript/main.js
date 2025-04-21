@@ -274,21 +274,61 @@ const app = new Vue({
           const originalStyle = cartElement.getAttribute("style") || "";
           cartElement.style.height = "auto";
           cartElement.style.overflow = "visible";
+          
+          // 顯示加載提示
+          Swal.fire({
+            title: '正在生成截圖...',
+            text: '請稍候',
+            allowOutsideClick: false,
+            didOpen: () => {
+              Swal.showLoading();
+            }
+          });
 
+          // 改善 html2canvas 配置
           html2canvas(cartElement, {
-            scale: 2,
-            useCORS: true,
+            scale: 2, // 提高解析度
+            useCORS: true, // 允許跨域圖片
+            allowTaint: true, // 允許污染畫布
+            backgroundColor: '#ffffff', // 設置白色背景
+            logging: false, // 關閉日誌以提高性能
             windowWidth: cartElement.scrollWidth,
             windowHeight: cartElement.scrollHeight,
+            onclone: (documentClone) => {
+              // 在克隆的文檔中處理可能的 SVG 元素
+              const clonedCart = documentClone.querySelector('#cart');
+              if (clonedCart) {
+                // 可以在這裡對克隆的元素進行預處理
+                // 例如將 SVG 轉換為 img 等
+              }
+            }
           }).then(canvas => {
-            const link = document.createElement('a');
-            link.download = '購物車.png';
-            link.href = canvas.toDataURL('image/png');
-            link.click();
+            // 關閉加載提示
+            Swal.close();
+            
+            try {
+              // 嘗試使用更高質量的輸出
+              const link = document.createElement('a');
+              link.download = '購物車.png';
+              link.href = canvas.toDataURL('image/png', 1.0); // 使用最高質量
+              link.click();
+              
+              // 成功提示
+              Swal.fire({
+                icon: 'success',
+                title: '截圖成功',
+                text: '購物車截圖已保存',
+                timer: 1500
+              });
+            } catch (e) {
+              console.error('保存截圖失敗:', e);
+              Swal.fire('錯誤', '保存截圖時出現問題', 'error');
+            }
+            
             cartElement.setAttribute("style", originalStyle);
           }).catch(error => {
             console.error('截圖失敗:', error);
-            alert('截圖過程中出現錯誤，請稍後再試');
+            Swal.fire('錯誤', '截圖過程中出現錯誤，請稍後再試', 'error');
             cartElement.setAttribute("style", originalStyle);
           });
         } else {
