@@ -19,21 +19,20 @@
 <body>
 
     <div id="app" class="container">
+        <!-- sticky-header用來固定導覽列在上方 -->
         <div class="sticky-header">
             <div class="search-container">
-                <div style="display: flex; align-items: center; justify-content: center; text-align: center; height: 60px;margin: 20px;">
-                    <img src="navbar-image/capy.png" alt="水豚" class="logo-icon" style="margin-right: -30px;margin-bottom: 20px;">
+                    <img src="navbar-image/capy.png" alt="水豚" class="logo-icon">
                     <h1 style="color: black; font-weight: 700;width: 100%;font-size: 28px;">水豚君搜尋引擎</h1>
                     <input type="text" id="barcode-input" v-model="searchKeyword" placeholder="請輸入商品名稱" class="search-input">
-                    <button @click="startScanner" style="background: transparent; border: none; padding: 0; cursor: pointer;">
+                    <button @click="startScanner" class="camera-toggle-button">
                         <img src="navbar-image/camera.svg" alt="相機" class="camera-icon">
                     </button>
-                    
+            
                     <button @click="toggleCart" class="cart-toggle-button">
-                        <img src="navbar-image/cart.png" alt="購物車" class="cart-icon">
+                        <img src="navbar-image/cart.svg" alt="購物車" class="cart-icon">
                     </button>
                     <div id="name-display"></div>
-                </div>
             </div>
         </div>
 
