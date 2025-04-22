@@ -2,7 +2,29 @@
 // ✅ 使用全域 Swal（從 <script> 載入）
 const Swal = window.Swal;
 
+// 保存appInstance的引用，以便在closeScanner中使用
+let currentAppInstance = null;
+
+export function closeScanner() {
+  // 停止Quagga掃描器
+  if (window.Quagga) {
+    window.Quagga.stop();
+  }
+  
+  // 隱藏掃描器容器
+  const scannerContainer = document.getElementById("scanner-container");
+  if (scannerContainer) {
+    scannerContainer.style.display = "none";
+  }
+  
+  // 更新Vue實例中的狀態
+  if (currentAppInstance) {
+    currentAppInstance.scannerVisible = false;
+  }
+}
+
 export function startScanner(appInstance) {
+  currentAppInstance = appInstance;
   const scannerContainer = document.getElementById("scanner-container");
   if (!scannerContainer) return;
 

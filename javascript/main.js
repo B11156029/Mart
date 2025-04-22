@@ -46,13 +46,9 @@ const app = new Vue({
           });
       },
       closeScanner() {
-        this.scannerVisible = false;
-        const video = document.getElementById('scanner-video');
-        const stream = video.srcObject;
-        if (stream) {
-          stream.getTracks().forEach(track => track.stop());
-        }
-        video.srcObject = null;
+        import('./scanner.js').then(({ closeScanner }) => {
+          closeScanner();
+        });
       },
       
       navigateToProfile() {
