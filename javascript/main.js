@@ -23,6 +23,7 @@ const app = new Vue({
       // ✅ ⬇⬇⬇ 加在這邊
       scannerVisible: false,
       scanResult: "", // 如果你之後要顯示掃描結果也可以留這個
+      isProfileVisible: false, // 控制會員資料div的顯示狀態
     },
     computed: {
       cartTotal() {
@@ -54,7 +55,14 @@ const app = new Vue({
         video.srcObject = null;
       },
       
-      
+      navigateToProfile() {
+        // 切換會員資料div的顯示狀態
+        this.isProfileVisible = !this.isProfileVisible;
+        // 如果購物車是開啟的，則關閉購物車
+        if (this.isCartVisible && this.isProfileVisible) {
+          this.isCartVisible = false;
+        }
+      },
       
       handleScroll() {
       const scrollPosition = window.scrollY + window.innerHeight;

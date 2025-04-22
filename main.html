@@ -8,6 +8,7 @@
     <link href="main.css" rel="stylesheet">
     <link href="cart.css" rel="stylesheet">
     <link href="scanner.css" rel="stylesheet">
+    <link href="profile.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
@@ -31,6 +32,9 @@
             
                     <button @click="toggleCart" class="cart-toggle-button">
                         <img src="navbar-image/cart.svg" alt="購物車" class="cart-icon">
+                    </button>
+                    <button @click="navigateToProfile" class="profile-toggle-button">
+                        <img src="navbar-image/user.svg" alt="會員資料" class="profile-icon">
                     </button>
                     <div id="name-display"></div>
             </div>
@@ -77,6 +81,25 @@
                 </div>
             </div>
         </div>
+        <div id="profile" class="cart" :class="{ show: isProfileVisible }">
+            <div class="cart-header">
+                <button @click="navigateToProfile" class="return-toggle-button">
+                    <img src="cart-image/return.png" alt="return" class="return-icon">
+                </button>
+                <h2 style="margin:0px 10px 0px 0px;padding: 0;">會員資料</h2>
+            </div>
+            
+            <div class="profile-content">
+                <div class="profile-info">
+                  <h3>會員資訊</h3>
+              
+                  <p>姓名: <span id="user-name"class="loading">載入中…</span></p>
+                  <p>會員等級: <span id="profile-level"  class="loading">載入中…</span></p>
+                  <p>點數: <span id="profile-points" class="loading">載入中…</span></p>
+                </div>
+              </div>
+        </div>
+        
         <div id="cart" class="cart" :class="{ show: isCartVisible }">
             <div class="cart-header">
                 <button @click="toggleCart" class="return-toggle-button">

@@ -1,68 +1,53 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
-import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js";
+import { initializeApp }              from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+import { getFirestore, doc, getDoc }  from "https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js";
 
+/* === 1. Firebase 設定 === */
 const firebaseConfig = {
-  apiKey: "AIzaSyDuNN0sGP4AaOe0ZoEX3liiA0ZMPr4myGY",
-  authDomain: "cart-75759.firebaseapp.com",
-  projectId: "cart-75759",
-  storageBucket: "cart-75759.firebasestorage.app",
-  messagingSenderId: "52529150826",
-  appId: "1:52529150826:web:fb5c117d824b70867cc313",
-  measurementId: "G-E35KRT7F04"
+  apiKey: "AIzaSyBdpDe32VGIgI4jm3qCixYmLshe1J84D6Y",
+  authDomain: "myproject-c6a8b.firebaseapp.com",
+  databaseURL: "https://myproject-c6a8b-default-rtdb.firebaseio.com",
+  projectId: "myproject-c6a8b",
+  storageBucket: "myproject-c6a8b.firebasestorage.app",
+  messagingSenderId: "683127505459",
+  appId: "1:683127505459:web:9eb8eefba788cafbda5946",
+  measurementId: "G-QREJXQHYYF"
 };
-
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db  = getFirestore(app);
 
+/* === 2. 取得登入帳號 === */
 const account_number = localStorage.getItem("account_number");
-
 if (!account_number) {
-  window.location.href = "/html/login.html";
-} else {
-  const userRef = doc(db, "users", account_number);
-
-  getDoc(userRef)
-    .then((docSnap) => {
-      if (docSnap.exists()) {
-        const userData = docSnap.data();
-        console.log("使用者已登入:", userData);
-
-        if (userData.name) {
-          document.getElementById('name-display').textContent = userData.name;
-          console.log("獲取的 name 值:", userData.name);
-        } else {
-          console.log("name 值未找到");
-        }
-
-       // ❌ 暫時關掉 Firestore 載入商品資料
-/*
-const productList = [];
-getDocs(collection(db, "products"))
-  .then(snapshot => {
-    snapshot.forEach(doc => {
-      const data = doc.data();
-      data.docId = doc.id;
-      productList.push(data);
-    });
-    if (window.app) {
-      window.app.products = productList;
-      window.app.loadMoreProducts();
-    }
-  })
-  .catch(error => {
-    console.error('從 Firestore 載入商品失敗:', error);
-  });
-*/
-
-      } else {
-        console.log("使用者資料未找到");
-        localStorage.removeItem("account_number");
-        window.location.href = "/html/login.html";
-      }
-    })
-    .catch((error) => {
-      console.error("獲取使用者資料時發生錯誤:", error);
-      localStorage.removeItem("account_number");
-      window.location.href = "/html/login.html";
-    });
+  alert("請先登入！");
+  location.href = "/html/login.html";
+  throw new Error("尚未登入，導向 login.html");
 }
+
+/* === 3. 抓取 Firestore -> users/{account_number} === */
+(async () => {
+  try {
+    const userRef  = doc(db, "users", account_number);
+    const docSnap  = await getDoc(userRef);
+
+    if (!docSnap.exists()) {
+      throw new Error("找不到使用者文件");
+    }
+
+    // 取出需要的欄位，給預設值防呆
+    const {
+      name   = "匿名",
+      level  = "一般會員",
+      points = 0
+    } = docSnap.data();
+
+    /* === 4. 塞進畫面 === */
+    document.getElementById("user-name")      .textContent = name;
+    document.getElementById("profile-level")  .textContent = level;
+    document.getElementById("profile-points") .textContent = points.toLocaleString();
+
+  } catch (err) {
+    console.error("讀取使用者資料失敗:", err);
+    localStorage.removeItem("account_number");
+    location.href = "/html/login.html";
+  }
+})();

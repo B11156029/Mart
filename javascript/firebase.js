@@ -1,4 +1,4 @@
-// firebase.js
+// firebase.js 水豚的firstore
 const firebaseConfig = {
     apiKey: "AIzaSyBdpDe32VGIgI4jm3qCixYmLshe1J84D6Y",
     authDomain: "myproject-c6a8b.firebaseapp.com",

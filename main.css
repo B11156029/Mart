@@ -196,7 +196,24 @@ input[type="text"]:focus {
     background-color: transparent;
 }
 
+.profile-toggle-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    height: 30px;
+    width: 20px;
+    background-color: transparent;
+}
 
+.profile-icon {
+    width: 24px;
+    height: 24px;
+    width: 20px;
+    height: 30px;
+    cursor: pointer;
+    border: none;
+}
 .camera-toggle-button {
     background: none;
     border: none;
