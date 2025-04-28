@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>水豚君搜尋引擎</title>
+    <link href="navbar-image/capy.png" rel="icon" />
     <link href="main.css" rel="stylesheet">
     <link href="cart.css" rel="stylesheet">
     <link href="scanner.css" rel="stylesheet">
@@ -135,11 +136,11 @@
                     </div>
                     <div class="cart-item-quantity">
                         <button @click="decreaseQuantity(item.product)" class="quantity-button">
-                            <img src="cart-image/remove.svg" alt="減少" class="quantity-image" style="width: 20px;height: 5px;">
+                            <img src="cart-image/remove.png" alt="減少" class="quantity-image" style="width: 20px;height: 5px;">
                         </button>
                         <span style="font-size: 20px;">{{ item.quantity }}</span>
                         <button @click="increaseQuantity(item.product)" class="quantity-button">
-                            <img src="cart-image/add.svg" alt="增加" class="quantity-image">
+                            <img src="cart-image/add.png" alt="增加" class="quantity-image">
                         </button>
                         <button @click="removeFromCart(item)" class="remove-button">刪除</button>
                     </div>

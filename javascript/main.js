@@ -220,45 +220,28 @@ const app = new Vue({
 
       editPrice(item) {
         const newPrice = prompt(`請輸入新的單價 (目前為 $${this.parsePrice(item.product.price)}):`);
+      
         if (newPrice !== null && !isNaN(newPrice) && newPrice >= 0) {
           import('./cart.js')
             .then(cartModule => {
               const result = cartModule.updatePrice(item.product.name, newPrice);
+      
               if (result.success) {
-                this.cart = cartModule.getCart();
+                this.cart = cartModule.getCart(); // 更新 Vue 購物車狀態
+      
                 const productIndex = this.products.findIndex(p => p.name === item.product.name);
                 if (productIndex !== -1) {
+                  // 更新 products 中的價格
                   this.$set(this.products[productIndex], 'price', newPrice);
+      
+                  // 如果有特價資訊，也一起移除（假設已失效）
                   if (this.products[productIndex].specialOffers) {
                     this.$delete(this.products[productIndex], 'specialOffers');
                   }
-
-                  fetch('http://localhost:3002/update-price', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                      productName: item.product.name,
-                      newPrice: newPrice
-                    })
-                  })
-                    .then(response => {
-                      if (!response.ok) {
-                        return response.text().then(text => { throw new Error(text) });
-                      }
-                      return response.json();
-                    })
-                    .then(() => {
-                      Swal.fire('成功', '價格已更新', 'success');
-                    })
-                    .catch(error => {
-                      console.error('請求失敗:', error);
-                      if (error.message && error.message.includes('Failed to fetch')) {
-                        Swal.fire('連接錯誤', '無法連接到服務器。價格已在購物車中更新，但未保存到數據庫。', 'warning');
-                      } else {
-                        Swal.fire('錯誤', error.toString(), 'error');
-                      }
-                    });
                 }
+      
+                // 顯示成功訊息
+                Swal.fire('成功', '價格已更新（僅更新購物車商品的價格，下次加入購物車還是以前的價格）', 'success');
               } else {
                 Swal.fire('錯誤', result.message || '更新價格失敗', 'error');
               }
