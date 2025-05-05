@@ -99386,5 +99386,15 @@
     "specialOffers": {
       "1": 115
     }
+  },
+  {
+    "barcode": "123",
+    "name": "水果奶奶",
+    "image": "",
+    "price": "139",
+    "description": "",
+    "specialOffers": {
+      "1": 139
+    }
   }
 ]
