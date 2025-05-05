@@ -12,6 +12,7 @@
     padding: 20px;
     z-index: 1002;
     transition: transform 0.3s ease-in-out;
+    bottom:0;
 }
 
 .cart.show {
@@ -136,7 +137,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     gap: 1px;
     border: 1px solid #ddd;
-    max-width: 92%;
+    max-width: 28rem;
 }
 
 .cart-content {
@@ -148,7 +149,6 @@
 .cart-item-info {
     display: flex;
     align-items: center;
-    gap: 20px;
     /* 增加間距 */
     flex: 3;
 }
@@ -162,13 +162,11 @@
 /* 增量減量按鈕 */
 .cart-item-quantity {
     display: flex;
-    gap: 8px;
+    gap: 5px;
     justify-content: flex-start;
-    margin-left: -10px;
     /* 確保內容靠左 */
     align-items: center;
     /* 可選：讓內容垂直居中 */
-    gap: 5px;
 }
 
 /* 修改與小計 */
@@ -210,6 +208,7 @@
         grid-template-columns: 1fr 1fr;
         grid-template-areas: "image details" "actions actions";
         gap: 1px;
+        width: 92%;
     }
     .cart-image {
         grid-area: image;
@@ -371,7 +370,7 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border: 1px solid #ddd;
-    max-width: 92%;
+    max-width: 28rem;
     cursor: pointer;
     text-align: left;
     /* 確保文字靠左對齊 */
