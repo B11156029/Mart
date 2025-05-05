@@ -132,10 +132,11 @@ export function calculateSubtotal(product, quantity) {
     return subtotal;
 }
 
-// 解析價格字符串為數字
-export function parsePrice(priceString) {
-    return parseFloat(priceString.replace(/[^\d.-]/g, '')) || 0;
-}
+export function parsePrice(input) {
+    if (input === null || input === undefined) return 0;
+    return parseFloat(String(input).replace(/[^\d.-]/g, '')) || 0;
+  }
+  
 
 // 獲取購物車總計
 export function getCartTotal() {
@@ -156,4 +157,12 @@ function saveCart() {
     } catch (e) {
         console.error('保存購物車數據失敗:', e);
     }
+}
+
+
+
+export function setCart(externalCart) {
+    // 做深拷貝，避免共享參考
+    cartData = JSON.parse(JSON.stringify(externalCart));
+    saveCart();
 }

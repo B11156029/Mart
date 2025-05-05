@@ -145,8 +145,8 @@ const app = new Vue({
 
       parsePrice(priceString) {
         priceString = String(priceString);
-        return priceString.replace(/[^0-9.]/g, '');
-      },
+        return priceString.replace(/[^0-9.-]/g, '');
+    },
 
       addToCart(product) {
         const cartItem = this.cart.find(item => item.product.name === product.name);
@@ -220,36 +220,39 @@ const app = new Vue({
 
       editPrice(item) {
         const newPrice = prompt(`請輸入新的單價 (目前為 $${this.parsePrice(item.product.price)}):`);
+        const parsedPrice = Number(newPrice);
       
-        if (newPrice !== null && newPrice.trim() !== '' && !isNaN(newPrice)) {
-          import('./cart.js')
-            .then(cartModule => {
-              const result = cartModule.updatePrice(item.product.name, Number(newPrice));
-      
-              if (result.success) {
-                this.cart = cartModule.getCart();
-      
-                const productIndex = this.products.findIndex(p => p.name === item.product.name);
-                if (productIndex !== -1) {
-                  this.$set(this.products[productIndex], 'price', Number(newPrice));
-                  if (this.products[productIndex].specialOffers) {
-                    this.$delete(this.products[productIndex], 'specialOffers');
-                  }
-                }
-      
-                Swal.fire('成功', '價格已更新（僅更新購物車商品的價格，下次加入購物車還是以前的價格）', 'success');
-              } else {
-                Swal.fire('錯誤', result.message || '更新價格失敗', 'error');
-              }
-            })
-            .catch(error => {
-              console.error('載入購物車模塊失敗:', error);
-              Swal.fire('錯誤', '載入購物車模塊失敗', 'error');
-            });
-        } else {
+        if (newPrice === null || newPrice.trim() === '' || isNaN(parsedPrice)) {
           alert('請輸入有效的價格');
+          return;
         }
+      
+        import('./cart.js')
+          .then(cartModule => {
+            const result = cartModule.updatePrice(item.product.name, parsedPrice);
+      
+            if (result.success) {
+              this.cart = cartModule.getCart();
+      
+              const productIndex = this.products.findIndex(p => p.name === item.product.name);
+              if (productIndex !== -1) {
+                this.$set(this.products[productIndex], 'price', parsedPrice);
+                if (this.products[productIndex].specialOffers) {
+                  this.$delete(this.products[productIndex], 'specialOffers');
+                }
+              }
+      
+              Swal.fire('成功', '價格已更新（僅更新購物車商品的價格，下次加入購物車還是以前的價格）', 'success');
+            } else {
+              Swal.fire('錯誤', result.message || '更新價格失敗', 'error');
+            }
+          })
+          .catch(error => {
+            console.error('載入購物車模塊失敗:', error);
+            Swal.fire('錯誤', '載入購物車模塊失敗', 'error');
+          });
       },
+      
       
 
       captureCart() {
@@ -329,17 +332,18 @@ const app = new Vue({
       },
 
       addCustomProduct() {
-        if (!this.customProduct.name || !this.customProduct.price) {
-          alert('請輸入商品名稱和價格');
+        const price = this.customProduct.price;
+      
+        if (!this.customProduct.name || price === '' || isNaN(price)) {
+          alert('請輸入商品名稱和有效價格');
           return;
         }
 
         const newProduct = {...this.customProduct};
 
         if (this.cartModule) {
-          this.cart = this.cartModule.addToCart(newProduct);
-        } else {
-          this.addToCart(newProduct);
+          this.cartModule.setCart(this.cart); // ✅ 同步 Vue 畫面上的資料到模組
+          this.cart = this.cartModule.addToCart(newProduct); // 然後再加商品
         }
 
         this.customProduct = {

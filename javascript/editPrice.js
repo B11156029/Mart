@@ -21,8 +21,8 @@ export function editPrice(item) {
 
         // 驗證輸入是否為有效數字
         const parsedPrice = parseFloat(parsePrice(newPrice));
-        if (isNaN(parsedPrice) || parsedPrice < 0) {
-            alert('❌ 請輸入有效的價格（必須為正數）');
+        if (isNaN(parsedPrice)) {
+            alert('❌ 請輸入有效的數字價格');
             return;
         }
 
