@@ -221,26 +221,22 @@ const app = new Vue({
       editPrice(item) {
         const newPrice = prompt(`請輸入新的單價 (目前為 $${this.parsePrice(item.product.price)}):`);
       
-        if (newPrice !== null && !isNaN(newPrice) && newPrice >= 0) {
+        if (newPrice !== null && newPrice.trim() !== '' && !isNaN(newPrice)) {
           import('./cart.js')
             .then(cartModule => {
-              const result = cartModule.updatePrice(item.product.name, newPrice);
+              const result = cartModule.updatePrice(item.product.name, Number(newPrice));
       
               if (result.success) {
-                this.cart = cartModule.getCart(); // 更新 Vue 購物車狀態
+                this.cart = cartModule.getCart();
       
                 const productIndex = this.products.findIndex(p => p.name === item.product.name);
                 if (productIndex !== -1) {
-                  // 更新 products 中的價格
-                  this.$set(this.products[productIndex], 'price', newPrice);
-      
-                  // 如果有特價資訊，也一起移除（假設已失效）
+                  this.$set(this.products[productIndex], 'price', Number(newPrice));
                   if (this.products[productIndex].specialOffers) {
                     this.$delete(this.products[productIndex], 'specialOffers');
                   }
                 }
       
-                // 顯示成功訊息
                 Swal.fire('成功', '價格已更新（僅更新購物車商品的價格，下次加入購物車還是以前的價格）', 'success');
               } else {
                 Swal.fire('錯誤', result.message || '更新價格失敗', 'error');
@@ -254,6 +250,7 @@ const app = new Vue({
           alert('請輸入有效的價格');
         }
       },
+      
 
       captureCart() {
         const cartElement = document.querySelector('#cart');
