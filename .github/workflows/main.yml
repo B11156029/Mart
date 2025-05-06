@@ -1,0 +1,54 @@
+name: Update main.json via GitHub Issue
+
+description: |
+  當有人發出包含特定格式的 GitHub Issue，將解析商品資訊並自動更新 main.json
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  update-from-issue:
+    runs-on: ubuntu-latest
+    if: contains(github.event.issue.title, '新增商品')
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 解析商品資料 from Issue Body
+        id: parse
+        run: |
+          echo "📥 Issue Body:"
+          echo "${{ github.event.issue.body }}"
+
+          echo "::set-output name=barcode::$(echo '${{ github.event.issue.body }}' | grep 'barcode:' | sed 's/.*barcode: *//')"
+          echo "::set-output name=name::$(echo '${{ github.event.issue.body }}' | grep 'name:' | sed 's/.*name: *//')"
+          echo "::set-output name=price::$(echo '${{ github.event.issue.body }}' | grep 'price:' | sed 's/.*price: *//')"
+          echo "::set-output name=image::$(echo '${{ github.event.issue.body }}' | grep 'image:' | sed 's/.*image: *//')"
+          echo "::set-output name=description::$(echo '${{ github.event.issue.body }}' | grep 'description:' | sed 's/.*description: *//')"
+          echo "::set-output name=specialOffers::$(echo '${{ github.event.issue.body }}' | grep 'specialOffers:' | sed 's/.*specialOffers: *//')"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Run update script
+        run: |
+          node update-json.js "${{ steps.parse.outputs.barcode }}" \
+                              "${{ steps.parse.outputs.name }}" \
+                              "${{ steps.parse.outputs.price }}" \
+                              "${{ steps.parse.outputs.image }}" \
+                              "${{ steps.parse.outputs.description }}" \
+                              "${{ steps.parse.outputs.specialOffers }}"
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add main.json
+          git commit -m "📦 透過 issue 更新商品：${{ steps.parse.outputs.barcode }}"
+          git push
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
