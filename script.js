@@ -1,4 +1,4 @@
-const token = "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"; // ⛔ 請替換為你自己的 GitHub Token
+const token = "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"; // ⛔ 請替換為你自己的 GitHub Token
 const owner = "B11156029";
 const repo = "Mart";
 const path = "main.json";
