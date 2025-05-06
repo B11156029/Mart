@@ -4,27 +4,33 @@ on:
   workflow_dispatch:
     inputs:
       barcode:
-        description: "輸入要更新的商品 barcode"
+        description: "要更新的商品條碼"
         required: true
-        default: "123456789"
+      name:
+        description: "商品名稱"
+        required: true
+      image:
+        description: "圖片網址"
+        required: true
+      price:
+        description: "價格"
+        required: true
+      description:
+        description: "描述"
+        required: true
+      specialOffers:
+        description: "優惠設定 (JSON 格式)"
+        required: true
 
 jobs:
-  update-json:
+  update:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 18
-
-      - name: Install dependencies
-        run: npm install node-fetch
-
-      - name: Run update script
+      - run: npm install node-fetch
+      - run: node update-json.js '${{ github.event.inputs.barcode }}' '${{ github.event.inputs.name }}' '${{ github.event.inputs.image }}' '${{ github.event.inputs.price }}' '${{ github.event.inputs.description }}' '${{ github.event.inputs.specialOffers }}'
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: node update-json.js ${{ github.event.inputs.barcode }}
