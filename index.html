@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>📦 Barcode JSON 編輯器</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h2>🔧 Barcode JSON 編輯器</h2>
+
+  <label for="barcode">輸入商品條碼</label>
+  <input id="barcode" placeholder="例如：2611828014315" />
+  <button onclick="loadData()">🔍 載入資料</button>
+  <button onclick="newItem()">➕ 新增商品</button>
+
+  <div id="form-area" style="display:none;">
+    <label for="edit-barcode">商品條碼 (barcode)</label>
+    <input id="edit-barcode" />
+
+    <label for="name">商品名稱 (name)</label>
+    <input id="name" />
+
+    <label for="image">圖片檔名 (image)</label>
+    <input id="image" />
+
+    <label for="price">價格 (price)</label>
+    <input id="price" />
+
+    <label for="description">描述 (description)</label>
+    <input id="description" />
+
+    <label for="specialOffers">特殊優惠 JSON 格式 (specialOffers)</label>
+    <textarea id="specialOffers" rows="3" placeholder='例如：{"1": 99}'></textarea>
+
+    <button onclick="saveData()">💾 儲存</button>
+  </div>
+
+  <div class="status" id="status">等待操作中...</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
