@@ -1,4 +1,4 @@
-const token = process.env.GITHUB_TOKEN;
+const token = "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"; // ⛔ 請替換為你自己的 GitHub Token
 const owner = "B11156029";
 const repo = "Mart";
 const path = "main.json";
