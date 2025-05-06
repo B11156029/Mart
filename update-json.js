@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 const fs = require("fs");
 
-const token = process.env.GITHUB_TOKEN;
+const token = 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;
 const owner = "B11156029";
 const repo = "Mart";
 const path = "main.json";
