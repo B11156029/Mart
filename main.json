@@ -9824,13 +9824,13 @@
     }
   },
   {
+    "barcode": "4710088423337",
     "name": "統一麥香阿薩姆奶茶 600ml",
     "image": "b8196c9137a64a68be47edb8aeaa0075.jpg",
     "price": "23",
-    "barcode": "4710088423337",
     "description": "",
     "specialOffers": {
-      "1": 23
+      "1": 22
     }
   },
   {
@@ -99405,6 +99405,9 @@
     "description": "",
     "specialOffers": {
       "1": 3
-    },"attributes": ["new"]
+    },
+    "attributes": [
+      "new"
+    ]
   }
 ]
