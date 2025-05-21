@@ -158,7 +158,6 @@ const app = new Vue({
         this.updateCartTotals();
         this.saveCart();
       },
-
       increaseQuantity(product) {
         this.addToCart(product);
       },
@@ -184,6 +183,17 @@ const app = new Vue({
         this.cart = this.cart.filter(cartItem => cartItem !== item);
         this.updateCartTotals();
         this.saveCart();
+      },
+      openShopee(product) {
+        // 優先使用產品中的 link 欄位，如果存在的話
+        if (product.link) {
+          window.open(product.link, '_blank');
+        } else {
+          // 如果沒有 link 欄位，則使用原有的搜尋邏輯作為備用方案
+          const productName = encodeURIComponent(product.name.split(' ')[0]); // Take the first part of the name for a cleaner search
+          const shopeeUrl = `https://shopee.tw/search?keyword=${productName}`;
+          window.open(shopeeUrl, '_blank');
+        }
       },
 
       saveCart() {
@@ -400,3 +410,29 @@ const app = new Vue({
   });
 
   window.app = app;
+//FAB 功能
+  document.addEventListener('DOMContentLoaded', function () {
+    const fabContainer = document.querySelector('.fab-container');
+    const mainFab = document.querySelector('.main-fab');
+    
+    if (fabContainer && mainFab) {
+      mainFab.addEventListener('click', function () {
+        fabContainer.classList.toggle('fab-active');
+      });
+  
+      // 點 mini-fab 就自動收起來
+      document.querySelectorAll('.mini-fab').forEach(button => {
+        button.addEventListener('click', () => {
+          fabContainer.classList.remove('fab-active');
+        });
+      });
+  
+      // 點畫面其他地方就關閉
+      document.addEventListener('click', function (e) {
+        if (!fabContainer.contains(e.target)) {
+          fabContainer.classList.remove('fab-active');
+        }
+      });
+    }
+  });
+  

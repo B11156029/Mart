@@ -19,7 +19,23 @@
 </head>
 
 <body>
-
+ <!-- 浮動操作按鈕 (FAB) -->
+ <div class="fab-container">
+    <div class="fab-button main-fab">
+        <i class="fab-icon">+</i>
+      </div>
+    <div class="fab-buttons">
+      <button class="fab-button mini-fab"><i class="fab-icon">★</i></button>
+      <button class="fab-button mini-fab"><i class="fab-icon">♥</i></button>
+      <button class="fab-button mini-fab"><i class="fab-icon">✓</i></button>
+      <button class="fab-button mini-fab"><i class="fab-icon">✉</i></button>
+      <a href="https://member.pxpay.com.tw/activity_redirect/pxplus_promo?fun=upgrade&id=2313585" target="_blank" class="fab-button mini-fab">
+        <img src="pxmart.jpg" alt="全聯" style="width: 70%; height: 70%; object-fit: contain;" />
+      </a>
+          </div>
+    
+  </div>
+  
     <div id="app" class="container">
         <!-- sticky-header用來固定導覽列在上方 -->
         <div class="sticky-header">
@@ -77,6 +93,9 @@
                         <span class="quantity-display">{{ getProductQuantity(product) }}</span>
                         <button @click="increaseQuantity(product)" class="quantity-button">
                             <img src="cart-image/add.svg" alt="增加" class="quantity-image">
+                        </button>
+                        <button @click="openShopee(product)" class="shopee-button quantity-button"> <!-- Added shopee-button class for potential styling -->
+                            <img src="Shopee.svg" alt="蝦皮購物" class="quantity-image"> <!-- Assuming Shopee.svg is in the root -->
                         </button>
                     </div>
                 </div>
@@ -157,6 +176,8 @@
         </div>
         
     </div>
+    
+   
 </body>
 
 </html>

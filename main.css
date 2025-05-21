@@ -135,6 +135,12 @@ input[type="text"]:focus {
     font-weight: bold;
 }
 
+.shopee-button img.quantity-image {
+    /* Shopee icon might need specific sizing if it's different from +/- icons */
+    width: 20px; /* Example: slightly larger for Shopee icon */
+    height: 20px; /* Example: slightly larger for Shopee icon */
+}
+
 /* 購物車相關樣式已移至cart.css */
 
 
@@ -416,3 +422,82 @@ hr {
 /* 掃描器相關樣式已移至scanner.css */
 
 /* 購物車相關樣式已移至cart.css */
+/* FAB 浮動操作按鈕樣式 */
+
+/* FAB 容器：固定在右下角 */
+.fab-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column-reverse; /* 主按鈕在最下，展開向上 */
+    align-items: flex-end;
+  }
+  
+  /* 主 FAB 按鈕 */
+  .main-fab {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #ff4081;
+    color: white;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    margin-top: 12px; /* 與上方 mini 按鈕的間距 */
+  }
+  
+  /* mini-fab 容器 */
+  .fab-buttons {
+    display: flex;
+    flex-direction: column-reverse; /* 從下往上排列 */
+    align-items: flex-end;
+    gap: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+  }
+  
+  /* mini 按鈕 */
+  .mini-fab {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: white;
+    color: #ff4081;
+    font-size: 20px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transform: scale(0);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  
+  /* 展開狀態 */
+  .fab-container.fab-active .fab-buttons {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  
+  .fab-container.fab-active .mini-fab {
+    transform: scale(1);
+  }
+  
+  .main-fab:hover {
+    transform: scale(1.1);
+  }
+  
+  .fab-icon {
+    font-style: normal;
+  }
+  
