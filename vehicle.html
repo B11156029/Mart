@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <title>📦 條碼產生器</title>
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f4f6f8;
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      color: #3f51b5;
+      font-weight: 700;
+      margin-bottom: 2.5rem;
+      font-size: 2rem;
+    }
+    .barcode-container {
+      background-color: white;
+      padding: 3rem 2rem;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 640px;
+      text-align: center;
+    }
+    input[type="text"] {
+      padding: 1rem;
+      width: 80%;
+      font-size: 1.2rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      outline: none;
+      transition: 0.3s;
+      margin-top: 0.8rem;
+    }
+    input[type="text"]:focus {
+      border-color: #3f51b5;
+      box-shadow: 0 0 6px rgba(63, 81, 181, 0.4);
+    }
+    button {
+      padding: 1rem 1.5rem;
+      background-color: #3f51b5;
+      color: white;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 10px;
+      margin-top: 1.2rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #303f9f;
+    }
+    .default-btn {
+      background-color: #757575;
+    }
+    .default-btn:hover {
+      background-color: #5e5e5e;
+    }
+    svg {
+      margin-top: 2.5rem;
+      width: 100%;
+      height: auto;
+    }
+    .history {
+      margin-top: 2.5rem;
+      text-align: left;
+    }
+    .history-item {
+      padding: 1rem;
+      margin: 0.6rem 0;
+      border-radius: 12px;
+      background-color: #f2f2f2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: 0.2s;
+      border: 2px solid transparent;
+    }
+
+    .history-item:hover {
+      background-color: #e9ecef;
+    }
+    .history-content strong {
+      color: #3f51b5;
+      font-weight: 600;
+    }
+    .delete-btn, .star-btn {
+      background-color: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      margin-left: 10px;
+      transition: transform 0.2s ease;
+    }
+    .delete-btn {
+      color: #f44336;
+    }
+    .delete-btn:hover {
+      transform: scale(1.2);
+    }
+    .star-btn {
+      color: #ffc107;
+    }
+    .star-btn:hover {
+      transform: scale(1.2);
+    }
+    .history-buttons {
+      display: flex;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>📦 一維條碼產生器</h1>
+  <div class="barcode-container">
+    <div>
+      <input type="text" id="barcodeInput" placeholder="請輸入條碼文字" />
+      <input type="text" id="noteInput" placeholder="請輸入備註（可選）" />
+      <br>
+      <button onclick="generateBarcode()">產生條碼</button>
+      <button onclick="useDefaultBarcode()" class="default-btn">使用預設條碼</button>
+    </div>
+    <svg id="barcode"></svg>
+    <div class="history" id="barcodeHistory">
+      <h3>🔁 歷史條碼：</h3>
+      <div id="historyList"></div>
+    </div>
+  </div>
+  <script>
+    function generateBarcode() {
+      const code = document.getElementById("barcodeInput").value.trim();
+      const note = document.getElementById("noteInput").value.trim();
+      if (!code) return alert("請輸入條碼內容！");
+      JsBarcode("#barcode", code, {
+        format: "CODE128", lineColor: "#000", width: 2, height: 100,
+        displayValue: true, fontOptions: "bold", fontSize: 18
+      });
+      saveToHistory(code, note);
+    }
+
+    function useDefaultBarcode() {
+  const history = JSON.parse(localStorage.getItem("barcodeHistory")) || [];
+  const defaultCode = localStorage.getItem("defaultBarcode");
+  const defaultEntry = history.find(entry => entry.code === defaultCode);
+  if (!defaultEntry) return alert("未設定預設條碼");
+  document.getElementById("barcodeInput").value = defaultEntry.code;
+  document.getElementById("noteInput").value = defaultEntry.note || "";
+  JsBarcode("#barcode", defaultEntry.code, {
+    format: "CODE128", lineColor: "#000", width: 2, height: 100,
+    displayValue: true, fontOptions: "bold", fontSize: 18
+  });
+  renderHistory(); // ✅ 加這行才會更新黃框
+}
+
+
+    function setDefaultBarcode(code) {
+      localStorage.setItem("defaultBarcode", code);
+      renderHistory();
+    }
+
+    function saveToHistory(code, note) {
+      let history = JSON.parse(localStorage.getItem("barcodeHistory")) || [];
+      if (!history.some(entry => entry.code === code)) {
+        history.unshift({ code, note });
+        if (history.length > 10) history.pop();
+        localStorage.setItem("barcodeHistory", JSON.stringify(history));
+        renderHistory();
+      }
+    }
+
+    function deleteHistory(index) {
+      let history = JSON.parse(localStorage.getItem("barcodeHistory")) || [];
+      history.splice(index, 1);
+      localStorage.setItem("barcodeHistory", JSON.stringify(history));
+      renderHistory();
+    }
+
+    function renderHistory() {
+      const historyList = document.getElementById("historyList");
+      const history = JSON.parse(localStorage.getItem("barcodeHistory")) || [];
+      const defaultCode = localStorage.getItem("defaultBarcode");
+      const currentCode = document.getElementById("barcodeInput").value.trim();
+      historyList.innerHTML = "";
+      history.forEach((entry, index) => {
+        const isSelected = entry.code === currentCode;
+        const item = document.createElement("div");
+        item.className = "history-item" + (isSelected ? " selected" : "");
+        item.onclick = () => {
+          document.getElementById("barcodeInput").value = entry.code;
+          document.getElementById("noteInput").value = entry.note || "";
+          generateBarcode();
+        };
+
+        const content = document.createElement("div");
+        content.className = "history-content";
+        content.innerHTML = `<strong>${entry.note || "📝 無備註"}</strong><br/><span style="font-family: monospace;">${entry.code}</span>`;
+
+        const starBtn = document.createElement("button");
+        starBtn.className = "star-btn";
+        starBtn.innerHTML = entry.code === defaultCode ? "⭐(預設)" : "⭐";
+        starBtn.onclick = (e) => {
+          e.stopPropagation();
+          setDefaultBarcode(entry.code);
+        };
+
+        const delBtn = document.createElement("button");
+        delBtn.className = "delete-btn";
+        delBtn.innerHTML = "❌";
+        delBtn.onclick = (e) => {
+          e.stopPropagation();
+          deleteHistory(index);
+        };
+
+        const btnGroup = document.createElement("div");
+        btnGroup.className = "history-buttons";
+        btnGroup.appendChild(starBtn);
+        btnGroup.appendChild(delBtn);
+
+        item.appendChild(content);
+        item.appendChild(btnGroup);
+        historyList.appendChild(item);
+      });
+
+      const defaultEntry = history.find(entry => entry.code === defaultCode);
+      if (defaultEntry) {
+        document.getElementById("barcodeInput").value = defaultEntry.code;
+        document.getElementById("noteInput").value = defaultEntry.note || "";
+        JsBarcode("#barcode", defaultEntry.code, {
+          format: "CODE128", lineColor: "#000", width: 2, height: 100,
+          displayValue: true, fontOptions: "bold", fontSize: 18
+        });
+      }
+    }
+
+    renderHistory();
+  </script>
+</body>
+</html>
