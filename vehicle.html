@@ -140,7 +140,7 @@
       const note = document.getElementById("noteInput").value.trim();
       if (!code) return alert("請輸入條碼內容！");
       JsBarcode("#barcode", code, {
-        format: "CODE128", lineColor: "#000", width: 2, height: 100,
+        format: "CODE39", lineColor: "#000", width: 2, height: 100,
         displayValue: true, fontOptions: "bold", fontSize: 18
       });
       saveToHistory(code, note);
@@ -154,7 +154,7 @@
   document.getElementById("barcodeInput").value = defaultEntry.code;
   document.getElementById("noteInput").value = defaultEntry.note || "";
   JsBarcode("#barcode", defaultEntry.code, {
-    format: "CODE128", lineColor: "#000", width: 2, height: 100,
+    format: "CODE39", lineColor: "#000", width: 2, height: 100,
     displayValue: true, fontOptions: "bold", fontSize: 18
   });
   renderHistory(); // ✅ 加這行才會更新黃框
