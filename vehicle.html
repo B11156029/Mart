@@ -115,7 +115,13 @@
     .history-buttons {
       display: flex;
       align-items: center;
-    }
+    }.fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+@keyframes fadeIn {
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
   </style>
 </head>
 <body>
@@ -135,29 +141,34 @@
     </div>
   </div>
   <script>
-    function generateBarcode() {
-      const code = document.getElementById("barcodeInput").value.trim();
-      const note = document.getElementById("noteInput").value.trim();
-      if (!code) return alert("請輸入條碼內容！");
-      JsBarcode("#barcode", code, {
-        format: "CODE39", lineColor: "#000", width: 2, height: 100,
-        displayValue: true, fontOptions: "bold", fontSize: 18
-      });
-      saveToHistory(code, note);
-    }
+   function generateBarcode() {
+  const code = document.getElementById("barcodeInput").value.trim();
+  const note = document.getElementById("noteInput").value.trim();
+  if (!code) return alert("請輸入條碼內容！");
 
-    function useDefaultBarcode() {
+  const barcodeEl = document.getElementById("barcode");
+  JsBarcode("#barcode", code, {
+    format: "CODE39",
+    lineColor: "#000",
+    width: 2,
+    height: 100,
+    displayValue: true,
+    fontOptions: "bold",
+    fontSize: 18
+  });
+  applyFadeIn(barcodeEl); // ✅ 確保每次都能觸發動畫
+  saveToHistory(code, note);
+}
+
+
+function useDefaultBarcode() {
   const history = JSON.parse(localStorage.getItem("barcodeHistory")) || [];
   const defaultCode = localStorage.getItem("defaultBarcode");
   const defaultEntry = history.find(entry => entry.code === defaultCode);
   if (!defaultEntry) return alert("未設定預設條碼");
   document.getElementById("barcodeInput").value = defaultEntry.code;
   document.getElementById("noteInput").value = defaultEntry.note || "";
-  JsBarcode("#barcode", defaultEntry.code, {
-    format: "CODE39", lineColor: "#000", width: 2, height: 100,
-    displayValue: true, fontOptions: "bold", fontSize: 18
-  });
-  renderHistory(); // ✅ 加這行才會更新黃框
+  generateBarcode(); // ✅ 統一處理產生動畫與儲存邏輯
 }
 
 
@@ -165,6 +176,14 @@
       localStorage.setItem("defaultBarcode", code);
       renderHistory();
     }
+
+
+    function applyFadeIn(el) {
+  el.classList.remove("fade-in");
+  void el.offsetWidth; // 強制重繪，確保能重新觸發動畫
+  setTimeout(() => el.classList.add("fade-in"), 0); // 延後加入動畫 class
+}
+
 
     function saveToHistory(code, note) {
       let history = JSON.parse(localStorage.getItem("barcodeHistory")) || [];
@@ -231,13 +250,10 @@
 
       const defaultEntry = history.find(entry => entry.code === defaultCode);
       if (defaultEntry) {
-        document.getElementById("barcodeInput").value = defaultEntry.code;
-        document.getElementById("noteInput").value = defaultEntry.note || "";
-        JsBarcode("#barcode", defaultEntry.code, {
-          format: "CODE93", lineColor: "#000", width: 2, height: 100,
-          displayValue: true, fontOptions: "bold", fontSize: 18
-        });
-      }
+  document.getElementById("barcodeInput").value = defaultEntry.code;
+  document.getElementById("noteInput").value = defaultEntry.note || "";
+  generateBarcode(); // ✅ 讓預設條碼自動顯示
+}
     }
 
     renderHistory();
