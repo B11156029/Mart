@@ -122,10 +122,118 @@
   0% { opacity: 0; transform: scale(0.95); }
   100% { opacity: 1; transform: scale(1); }
 }
+
+
+
+
+
+/* FAB 容器：固定在右下角 */
+.fab-container {
+    position: fixed;
+    bottom: 1200px;
+    right: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column-reverse; /* 主按鈕在最下，展開向上 */
+    align-items: flex-end;
+  }
+  
+  /* 主 FAB 按鈕 */
+  .main-fab {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #ff4081;
+    color: white;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    margin-top: 12px; /* 與上方 mini 按鈕的間距 */
+  }
+  
+  /* mini-fab 容器 */
+  .fab-buttons {
+    display: flex;
+    flex-direction: column-reverse; /* 從下往上排列 */
+    align-items: flex-end;
+    gap: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+  }
+  
+  /* mini 按鈕 */
+  .mini-fab {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: white;
+    color: #ff4081;
+    font-size: 20px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transform: scale(0);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  
+  /* 展開狀態 */
+  .fab-container.fab-active .fab-buttons {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  
+  .fab-container.fab-active .mini-fab {
+    transform: scale(1);
+  }
+  
+  .main-fab:hover {
+    transform: scale(1.1);
+  }
+  
+  .fab-icon {
+    font-style: normal;
+  }
+  .mini-fab img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 50%;
+  padding: 0; /* 移除原本 button 裡的 padding 影響 */
+}
+  
   </style>
 </head>
 <body>
   <h1>📦 一維條碼產生器</h1>
+  <!-- 浮動操作按鈕 (FAB) -->
+ <div class="fab-container">
+  <div class="fab-button main-fab">
+      <i class="fab-icon">+</i>
+    </div>
+  <div class="fab-buttons">
+    <button class="fab-button mini-fab"><i class="fab-icon">★</i></button>
+    <button class="fab-button mini-fab"><i class="fab-icon">♥</i></button>
+    <button class="fab-button mini-fab"><i class="fab-icon">✓</i></button>
+    <button class="fab-button mini-fab" onclick="location.href='vehicle.html'">
+      <img src="vehicle.jpg" alt="Vehicle"  />
+    </button>
+          <a href="https://member.pxpay.com.tw/activity_redirect/pxplus_promo?fun=upgrade&id=2313585" target="_blank" class="fab-button mini-fab">
+      <img src="pxmart.jpg" alt="全聯"/>
+    </a>
+        </div>
+  
+</div>
+ <!-- 浮動操作按鈕 (FAB) -->
   <div class="barcode-container">
     <div>
       <input type="text" id="barcodeInput" placeholder="請輸入條碼文字" />
@@ -257,6 +365,34 @@ function useDefaultBarcode() {
     }
 
     renderHistory();
+
+
+    //FAB 功能
+  document.addEventListener('DOMContentLoaded', function () {
+    const fabContainer = document.querySelector('.fab-container');
+    const mainFab = document.querySelector('.main-fab');
+    
+    if (fabContainer && mainFab) {
+      mainFab.addEventListener('click', function () {
+        fabContainer.classList.toggle('fab-active');
+      });
+  
+      // 點 mini-fab 就自動收起來
+      document.querySelectorAll('.mini-fab').forEach(button => {
+        button.addEventListener('click', () => {
+          fabContainer.classList.remove('fab-active');
+        });
+      });
+  
+      // 點畫面其他地方就關閉
+      document.addEventListener('click', function (e) {
+        if (!fabContainer.contains(e.target)) {
+          fabContainer.classList.remove('fab-active');
+        }
+      });
+    }
+  });
+  
   </script>
 </body>
 </html>
