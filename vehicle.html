@@ -234,7 +234,7 @@
         document.getElementById("barcodeInput").value = defaultEntry.code;
         document.getElementById("noteInput").value = defaultEntry.note || "";
         JsBarcode("#barcode", defaultEntry.code, {
-          format: "CODE128", lineColor: "#000", width: 2, height: 100,
+          format: "CODE93", lineColor: "#000", width: 2, height: 100,
           displayValue: true, fontOptions: "bold", fontSize: 18
         });
       }
