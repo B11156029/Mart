@@ -343,30 +343,49 @@ const app = new Vue({
 
       addCustomProduct() {
         const price = this.customProduct.price;
-      
-        if (!this.customProduct.name || price === '' || isNaN(price)) {
-          alert('請輸入商品名稱和有效價格');
-          return;
-        }
+
+  if (!this.customProduct.name || price === '' || isNaN(price)) {
+    alert('請輸入商品名稱和有效價格');
+    return;
+  }
+
+  // 除錯：記錄新增前的購物車狀態
+  console.log('新增自訂商品前的購物車:', JSON.parse(JSON.stringify(this.cart)));
 
         const newProduct = {...this.customProduct};
 
         if (this.cartModule) {
-          this.cartModule.setCart(this.cart); // ✅ 同步 Vue 畫面上的資料到模組
-          this.cart = this.cartModule.addToCart(newProduct); // 然後再加商品
-        }
+    // 除錯：檢查模組同步前的狀態
+    console.log('準備同步到模組的購物車:', JSON.parse(JSON.stringify(this.cart)));
+    
+    this.cartModule.setCart(this.cart);
+    this.cart = this.cartModule.addToCart(newProduct);
+    
+    // 除錯：檢查模組處理後的狀態
+    console.log('模組處理後的購物車:', JSON.parse(JSON.stringify(this.cart)));
+  } else {
+    // 如果模組不可用，直接在 Vue 中處理
+    const cartItem = this.cart.find(item => item.product.name === newProduct.name);
+    if (cartItem) {
+      cartItem.quantity++;
+    } else {
+      this.cart.push({ product: newProduct, quantity: 1 });
+    }
+    this.updateCartTotals();
+    this.saveCart();
+  }
 
-        this.customProduct = {
-          name: '',
-          price: '',
-          image: 'default.png',
-          barcode: null,
-          attributes: [],
-          specialOffers: null,
-          file: null
-        };
-        this.isAddingCustomProduct = false;
-      },
+  this.customProduct = {
+    name: '',
+    price: '',
+    image: 'default.png',
+    barcode: null,
+    attributes: [],
+    specialOffers: null,
+    file: null
+  };
+  this.isAddingCustomProduct = false;
+},
     },
 
     mounted() {
